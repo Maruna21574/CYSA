@@ -6,6 +6,7 @@ use App\Http\Controllers\AttemptResultController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\NotificationController;
@@ -25,7 +26,9 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\ResetPassword;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/dashboard')->name('home');
+// Public landing page (about, course topics, services, contact form).
+Route::get('/', [LandingController::class, 'show'])->name('home');
+Route::post('/kontakt', [LandingController::class, 'contact'])->middleware('throttle:5,10')->name('contact.store');
 
 // Public certificate verification (only validity, holder, course and date are shown).
 Route::get('/verify-certificate/{code?}', VerifyCertificateController::class)
