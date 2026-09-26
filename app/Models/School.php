@@ -30,6 +30,19 @@ class School extends Model
         ];
     }
 
+    public function setting(string $key, mixed $default = null): mixed
+    {
+        return $this->settings[$key] ?? $default;
+    }
+
+    /**
+     * Gamification (XP, levels, badges) is optional per school and on by default.
+     */
+    public function gamificationEnabled(): bool
+    {
+        return (bool) $this->setting('gamification', true);
+    }
+
     /**
      * @return HasMany<User, $this>
      */

@@ -75,6 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('school')->name('school.')->middleware('role:school_admin')->group(function () {
         Route::get('/', School\DashboardController::class)->name('dashboard');
         Route::resource('classrooms', ClassroomController::class);
+        Route::get('/settings', [School\SettingsController::class, 'edit'])->name('settings.edit');
+        Route::put('/settings', [School\SettingsController::class, 'update'])->name('settings.update');
         Route::get('/students/import', [StudentImportController::class, 'create'])->name('students.import');
         Route::post('/students/import', [StudentImportController::class, 'store'])
             ->middleware('throttle:10,1')
@@ -146,6 +148,7 @@ Route::middleware('auth')->group(function () {
         Route::livewire('/attempts/{attempt}', Livewire\Student\QuizPlayer::class)->name('attempts.play');
         Route::get('/results', [Student\ResultController::class, 'index'])->name('results.index');
         Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
+        Route::get('/achievements', Student\AchievementController::class)->name('achievements');
     });
 
     /*

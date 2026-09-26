@@ -3,20 +3,24 @@
 namespace App\Http\Controllers\Student;
 
 use App\Enums\AttemptStatus;
+use App\Gamification\GamificationService;
 use App\Http\Controllers\Controller;
+use App\Models\Badge;
 use App\Models\Course;
 use App\Models\CourseProgress;
 use App\Models\Quiz;
 use App\Models\QuizAttempt;
 use App\Services\Progress\ProgressService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function __invoke(Request $request, ProgressService $progress): View
+    public function __invoke(Request $request, ProgressService $progress, GamificationService $gamification): View
     {
         $user = $request->user();
+        $gamified = $gamification->enabledFor($user);
         $courses = Course::availableTo($user)->with('category:id,name')->orderBy('title')->get();
         $courseProgress = CourseProgress::where('user_id', $user->id)->get()->keyBy('course_id');
 
@@ -46,6 +50,10 @@ class DashboardController extends Controller
                 ->orderBy('due_at')
                 ->limit(5)
                 ->get(),
+            'gamification' => $gamified ? [
+                'stats' => $gamification->stats($user),
+                'badges' => Badge::whereIn('id', DB::table('user_badges')->where('user_id', $user->id)->select('badge_id'))->get(),
+            ] : null,
             'recent' => QuizAttempt::where('user_id', $user->id)
                 ->where('status', AttemptStatus::Completed)
                 ->with('quiz')

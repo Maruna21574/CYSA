@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Gamification\GamificationSubscriber;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -35,5 +37,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::before(fn (User $user): ?bool => $user->isSuperAdmin() ? true : null);
 
         Password::defaults(fn (): Password => Password::min(8)->letters()->numbers()->max(255));
+
+        // Optional gamification module (XP, levels, badges) - listens to domain events only.
+        Event::subscribe(GamificationSubscriber::class);
     }
 }

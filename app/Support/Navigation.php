@@ -29,6 +29,7 @@ class Navigation
                 ['label' => __('Prehľad školy'), 'route' => 'school.dashboard', 'icon' => 'home', 'active' => 'school.dashboard'],
                 ['label' => __('Používatelia'), 'route' => 'users.index', 'icon' => 'users', 'active' => ['users.*', 'school.students.*']],
                 ['label' => __('Triedy'), 'route' => 'school.classrooms.index', 'icon' => 'squares', 'active' => 'school.classrooms.*'],
+                ['label' => __('Nastavenia školy'), 'route' => 'school.settings.edit', 'icon' => 'adjustments', 'active' => 'school.settings.*'],
                 ...self::teacherItems(),
             ],
             UserRole::Teacher => [
@@ -40,6 +41,9 @@ class Navigation
                 ['label' => __('Moje kurzy'), 'route' => 'student.courses.index', 'icon' => 'book', 'active' => 'student.courses.*'],
                 ['label' => __('Moje výsledky'), 'route' => 'student.results.index', 'icon' => 'chart', 'active' => 'student.results.*'],
                 ['label' => __('Certifikáty'), 'route' => 'student.certificates.index', 'icon' => 'badge', 'active' => 'student.certificates.*'],
+                ...($user->school?->gamificationEnabled() ? [
+                    ['label' => __('Moje úspechy'), 'route' => 'student.achievements', 'icon' => 'trophy', 'active' => 'student.achievements'],
+                ] : []),
             ],
         };
 

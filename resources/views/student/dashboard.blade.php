@@ -1,6 +1,10 @@
 <x-layouts::app :title="__('Môj prehľad')">
     <x-page-header :title="__('Ahoj, :name!', ['name' => auth()->user()->first_name])" :description="__('Tu nájdeš svoje kurzy, testy a výsledky.')" />
 
+    @if ($gamification)
+        <x-gamification-card :stats="$gamification['stats']" :badges="$gamification['badges']" class="mb-6" />
+    @endif
+
     @if ($courses->isEmpty())
         <x-empty-state icon="book" :title="__('Zatiaľ nemáš priradené žiadne kurzy')" :description="__('Keď ti učiteľ priradí kurz, nájdeš ho tu.')" />
     @else
