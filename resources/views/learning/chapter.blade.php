@@ -32,6 +32,25 @@
             <x-empty-state icon="document" :title="__('Kapitola zatiaľ nemá obsah')" />
         @endif
 
+        @if ($quizzes->isNotEmpty())
+            <x-card :title="__('Over si, čo vieš')">
+                @include('learning._quiz-list', ['quizzes' => $quizzes])
+            </x-card>
+        @endif
+
+        @unless ($isPreview)
+            @if ($isCompleted)
+                <p class="flex items-center justify-center gap-2 rounded-lg bg-emerald-50 p-3 text-sm font-medium text-emerald-800" role="status">
+                    <x-icon name="check-circle" class="size-5" />{{ __('Túto kapitolu máš dokončenú.') }}
+                </p>
+            @else
+                <form method="POST" action="{{ route('student.chapters.complete', [$course, $chapter]) }}" class="flex justify-center">
+                    @csrf
+                    <x-button><x-icon name="check" class="size-4" />{{ __('Označiť kapitolu ako dokončenú') }}</x-button>
+                </form>
+            @endif
+        @endunless
+
         <nav class="flex items-center justify-between gap-4 border-t border-slate-200 pt-6" aria-label="{{ __('Navigácia medzi kapitolami') }}">
             @if ($previous)
                 <x-link-button variant="secondary" :href="route('chapters.show', [$course, $previous])">

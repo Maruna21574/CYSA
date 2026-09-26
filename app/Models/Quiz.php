@@ -31,6 +31,8 @@ class Quiz extends Model
         'pass_percentage' => 60,
         'show_result' => 'immediately',
         'show_correct_answers' => 'immediately',
+        'shuffle_questions' => false,
+        'shuffle_options' => false,
     ];
 
     /**

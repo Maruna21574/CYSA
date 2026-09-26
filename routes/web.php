@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\SchoolController;
+use App\Http\Controllers\AttemptResultController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearningController;
@@ -89,6 +90,16 @@ Route::middleware('auth')->group(function () {
     Route::prefix('student')->name('student.')->middleware('role:student')->group(function () {
         Route::view('/', 'student.dashboard')->name('dashboard');
         Route::get('/courses', [Student\CourseController::class, 'index'])->name('courses.index');
+        Route::post('/courses/{course}/chapters/{chapter}/complete', [Student\ChapterProgressController::class, 'store'])
+            ->scopeBindings()
+            ->name('chapters.complete');
+
+        Route::get('/quizzes/{quiz}', [Student\QuizController::class, 'show'])->name('quizzes.show');
+        Route::post('/quizzes/{quiz}/start', [Student\QuizController::class, 'start'])
+            ->middleware('throttle:10,1')
+            ->name('quizzes.start');
+        Route::livewire('/attempts/{attempt}', Livewire\Student\QuizPlayer::class)->name('attempts.play');
+        Route::get('/results', [Student\ResultController::class, 'index'])->name('results.index');
     });
 
     /*
@@ -102,4 +113,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/courses/{course}/cover', [MaterialController::class, 'cover'])->name('courses.cover');
     Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
     Route::get('/questions/{question}/image', QuestionImageController::class)->name('questions.image');
+    Route::get('/attempts/{attempt}', AttemptResultController::class)->name('attempts.show');
 });
