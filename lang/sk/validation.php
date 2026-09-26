@@ -1,0 +1,133 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Validation Language Lines
+    |--------------------------------------------------------------------------
+    | Rules missing here fall back to the English file (APP_FALLBACK_LOCALE).
+    */
+
+    'accepted' => 'Pole :attribute musí byť potvrdené.',
+    'active_url' => 'Pole :attribute musí byť platná URL adresa.',
+    'after' => 'Pole :attribute musí byť dátum po :date.',
+    'after_or_equal' => 'Pole :attribute musí byť dátum :date alebo neskorší.',
+    'alpha' => 'Pole :attribute môže obsahovať iba písmená.',
+    'alpha_dash' => 'Pole :attribute môže obsahovať iba písmená, číslice, pomlčky a podčiarkovníky.',
+    'alpha_num' => 'Pole :attribute môže obsahovať iba písmená a číslice.',
+    'array' => 'Pole :attribute musí byť zoznam.',
+    'before' => 'Pole :attribute musí byť dátum pred :date.',
+    'before_or_equal' => 'Pole :attribute musí byť dátum :date alebo skorší.',
+    'between' => [
+        'array' => 'Pole :attribute musí mať :min až :max položiek.',
+        'file' => 'Súbor :attribute musí mať :min až :max kB.',
+        'numeric' => 'Pole :attribute musí byť medzi :min a :max.',
+        'string' => 'Pole :attribute musí mať :min až :max znakov.',
+    ],
+    'boolean' => 'Pole :attribute musí byť áno alebo nie.',
+    'confirmed' => 'Potvrdenie poľa :attribute sa nezhoduje.',
+    'current_password' => 'Heslo je nesprávne.',
+    'date' => 'Pole :attribute musí byť platný dátum.',
+    'date_format' => 'Pole :attribute musí mať formát :format.',
+    'different' => 'Polia :attribute a :other sa musia líšiť.',
+    'digits' => 'Pole :attribute musí mať :digits číslic.',
+    'digits_between' => 'Pole :attribute musí mať :min až :max číslic.',
+    'dimensions' => 'Obrázok :attribute má nesprávne rozmery.',
+    'distinct' => 'Pole :attribute obsahuje duplicitnú hodnotu.',
+    'email' => 'Pole :attribute musí byť platná e-mailová adresa.',
+    'enum' => 'Zvolená hodnota poľa :attribute je neplatná.',
+    'exists' => 'Zvolená hodnota poľa :attribute je neplatná.',
+    'extensions' => 'Súbor :attribute musí mať jednu z prípon: :values.',
+    'file' => 'Pole :attribute musí byť súbor.',
+    'filled' => 'Pole :attribute musí mať hodnotu.',
+    'gt' => [
+        'array' => 'Pole :attribute musí mať viac ako :value položiek.',
+        'file' => 'Súbor :attribute musí mať viac ako :value kB.',
+        'numeric' => 'Pole :attribute musí byť väčšie ako :value.',
+        'string' => 'Pole :attribute musí mať viac ako :value znakov.',
+    ],
+    'gte' => [
+        'array' => 'Pole :attribute musí mať aspoň :value položiek.',
+        'file' => 'Súbor :attribute musí mať aspoň :value kB.',
+        'numeric' => 'Pole :attribute musí byť aspoň :value.',
+        'string' => 'Pole :attribute musí mať aspoň :value znakov.',
+    ],
+    'image' => 'Pole :attribute musí byť obrázok.',
+    'in' => 'Zvolená hodnota poľa :attribute je neplatná.',
+    'integer' => 'Pole :attribute musí byť celé číslo.',
+    'ip' => 'Pole :attribute musí byť platná IP adresa.',
+    'json' => 'Pole :attribute musí byť platný JSON.',
+    'lt' => [
+        'array' => 'Pole :attribute musí mať menej ako :value položiek.',
+        'file' => 'Súbor :attribute musí mať menej ako :value kB.',
+        'numeric' => 'Pole :attribute musí byť menšie ako :value.',
+        'string' => 'Pole :attribute musí mať menej ako :value znakov.',
+    ],
+    'lte' => [
+        'array' => 'Pole :attribute môže mať najviac :value položiek.',
+        'file' => 'Súbor :attribute môže mať najviac :value kB.',
+        'numeric' => 'Pole :attribute môže byť najviac :value.',
+        'string' => 'Pole :attribute môže mať najviac :value znakov.',
+    ],
+    'max' => [
+        'array' => 'Pole :attribute môže mať najviac :max položiek.',
+        'file' => 'Súbor :attribute môže mať najviac :max kB.',
+        'numeric' => 'Pole :attribute môže byť najviac :max.',
+        'string' => 'Pole :attribute môže mať najviac :max znakov.',
+    ],
+    'mimes' => 'Súbor :attribute musí byť typu: :values.',
+    'mimetypes' => 'Súbor :attribute musí byť typu: :values.',
+    'min' => [
+        'array' => 'Pole :attribute musí mať aspoň :min položiek.',
+        'file' => 'Súbor :attribute musí mať aspoň :min kB.',
+        'numeric' => 'Pole :attribute musí byť aspoň :min.',
+        'string' => 'Pole :attribute musí mať aspoň :min znakov.',
+    ],
+    'not_in' => 'Zvolená hodnota poľa :attribute je neplatná.',
+    'numeric' => 'Pole :attribute musí byť číslo.',
+    'password' => [
+        'letters' => 'Pole :attribute musí obsahovať aspoň jedno písmeno.',
+        'mixed' => 'Pole :attribute musí obsahovať aspoň jedno veľké a jedno malé písmeno.',
+        'numbers' => 'Pole :attribute musí obsahovať aspoň jednu číslicu.',
+        'symbols' => 'Pole :attribute musí obsahovať aspoň jeden špeciálny znak.',
+        'uncompromised' => 'Zadané :attribute sa objavilo v úniku dát. Zvoľ iné.',
+    ],
+    'present' => 'Pole :attribute musí byť prítomné.',
+    'prohibited' => 'Pole :attribute nie je povolené.',
+    'regex' => 'Pole :attribute má neplatný formát.',
+    'required' => 'Pole :attribute je povinné.',
+    'required_if' => 'Pole :attribute je povinné, keď :other je :value.',
+    'required_unless' => 'Pole :attribute je povinné, pokiaľ :other nie je :values.',
+    'required_with' => 'Pole :attribute je povinné, keď je vyplnené :values.',
+    'required_without' => 'Pole :attribute je povinné, keď nie je vyplnené :values.',
+    'same' => 'Polia :attribute a :other sa musia zhodovať.',
+    'size' => [
+        'array' => 'Pole :attribute musí mať :size položiek.',
+        'file' => 'Súbor :attribute musí mať :size kB.',
+        'numeric' => 'Pole :attribute musí byť :size.',
+        'string' => 'Pole :attribute musí mať :size znakov.',
+    ],
+    'string' => 'Pole :attribute musí byť text.',
+    'timezone' => 'Pole :attribute musí byť platné časové pásmo.',
+    'unique' => 'Hodnota poľa :attribute je už použitá.',
+    'uploaded' => 'Súbor :attribute sa nepodarilo nahrať.',
+    'url' => 'Pole :attribute musí byť platná URL adresa.',
+    'uuid' => 'Pole :attribute musí byť platné UUID.',
+
+    'custom' => [],
+
+    'attributes' => [
+        'email' => 'e-mail',
+        'password' => 'heslo',
+        'password_confirmation' => 'potvrdenie hesla',
+        'first_name' => 'meno',
+        'last_name' => 'priezvisko',
+        'name' => 'názov',
+        'title' => 'názov',
+        'description' => 'popis',
+        'role' => 'rola',
+        'school_id' => 'škola',
+    ],
+
+];
