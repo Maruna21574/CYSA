@@ -135,6 +135,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/courses/{course}/certificate', [Teacher\CourseCertificateController::class, 'update'])->name('courses.certificate.update');
         Route::post('/certificates/{certificate}/revoke', [CertificateController::class, 'revoke'])->name('certificates.revoke');
 
+        Route::get('/ai', [Teacher\AiGenerationController::class, 'index'])->name('ai.index');
+        Route::get('/ai/create', [Teacher\AiGenerationController::class, 'create'])->name('ai.create');
+        Route::post('/ai', [Teacher\AiGenerationController::class, 'store'])->middleware('throttle:5,1')->name('ai.store');
+        Route::get('/ai/{generation}', [Teacher\AiGenerationController::class, 'show'])->name('ai.show');
+
         Route::get('/analytics', [Teacher\AnalyticsController::class, 'index'])->name('analytics.index');
         Route::get('/research', [Teacher\ResearchController::class, 'index'])->name('research.index');
         Route::get('/research/{quiz}/export', [Teacher\ResearchController::class, 'export'])

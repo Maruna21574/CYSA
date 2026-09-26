@@ -7,6 +7,7 @@ use App\Enums\MaterialType;
 use App\Models\Chapter;
 use App\Models\Material;
 use App\Rules\AllowedMaterialFile;
+use App\Services\AI\AIQuizGenerationService;
 use App\Services\Audit\AuditLogger;
 use App\Services\Files\MaterialStorage;
 use App\Services\Notifications\CourseNotifier;
@@ -127,6 +128,7 @@ class ChapterMaterials extends Component
             'materials' => $this->chapter->materials()->get(),
             'maxUploadMb' => (int) (config('cysa.materials.max_upload_kb') / 1024),
             'extensions' => implode(', ', array_keys(AllowedMaterialFile::ALLOWED)),
+            'aiAvailable' => AIQuizGenerationService::isAvailable(),
         ]);
     }
 }

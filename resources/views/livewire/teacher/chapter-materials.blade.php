@@ -17,6 +17,11 @@
                             @if ($material->url) · <span class="break-all">{{ \Illuminate\Support\Str::limit($material->url, 60) }}</span> @endif
                         </span>
                     </span>
+                    @if ($aiAvailable && \App\Services\Files\TextExtraction\TextExtractor::supports($material))
+                        <a href="{{ route('teacher.ai.create', ['material' => $material->id]) }}" class="inline-flex items-center gap-1 rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">
+                            <x-icon name="sparkles" class="size-3.5" />{{ __('Otázky pomocou AI') }}
+                        </a>
+                    @endif
                     @if ($material->isFile())
                         <a href="{{ route('materials.show', $material) }}" target="_blank" rel="noopener" class="rounded p-1 text-slate-500 hover:text-slate-800">
                             <x-icon name="eye" class="size-4" /><span class="sr-only">{{ __('Otvoriť :title', ['title' => $material->title]) }}</span>

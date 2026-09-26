@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Enums\UserRole;
 use App\Models\User;
+use App\Services\AI\AIQuizGenerationService;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -59,7 +60,10 @@ class Navigation
             ['label' => __('Kurzy'), 'route' => 'teacher.courses.index', 'icon' => 'book', 'active' => 'teacher.courses.*'],
             ['label' => __('Banka otázok'), 'route' => 'teacher.questions.index', 'icon' => 'question', 'active' => 'teacher.questions.*'],
             ['label' => __('Testy'), 'route' => 'teacher.quizzes.index', 'icon' => 'shield', 'active' => 'teacher.quizzes.*'],
-            ['label' => __('Analytika'), 'route' => 'teacher.analytics.index', 'icon' => 'chart', 'active' => 'teacher.analytics.*'],
+            ['label' => __('Analytika'), 'route' => 'teacher.analytics.index', 'icon' => 'chart', 'active' => ['teacher.analytics.*', 'teacher.research.*']],
+            ...(AIQuizGenerationService::isAvailable() ? [
+                ['label' => __('AI návrhy'), 'route' => 'teacher.ai.index', 'icon' => 'sparkles', 'active' => 'teacher.ai.*'],
+            ] : []),
         ];
     }
 }

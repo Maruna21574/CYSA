@@ -5,6 +5,9 @@
         ['label' => $chapter->title],
     ]">
         <x-slot:actions>
+            @if (\App\Services\AI\AIQuizGenerationService::isAvailable() && filled(strip_tags((string) $chapter->content)))
+                <x-link-button variant="secondary" :href="route('teacher.ai.create', ['chapter' => $chapter->id])"><x-icon name="sparkles" class="size-4" />{{ __('Otázky z textu (AI)') }}</x-link-button>
+            @endif
             <x-link-button variant="secondary" :href="route('chapters.show', [$course, $chapter])"><x-icon name="eye" class="size-4" />{{ __('Náhľad') }}</x-link-button>
         </x-slot:actions>
     </x-page-header>

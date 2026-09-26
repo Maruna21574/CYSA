@@ -20,6 +20,7 @@ Navrhnuté pre bežný webhosting (bez Node servera a démonov) – viď [docs/D
 | Výskum | vstupný/výstupný test, párový t-test, Cohenovo d, pseudonymizovaný export |
 | Certifikáty | automatické vydanie, PDF s QR kódom, verejné overenie `/verify-certificate/{code}` |
 | Notifikácie | in-app + voliteľne e-mail, pripomienky termínov, oznámenia učiteľa |
+| AI | návrhy otázok z materiálov (PDF, DOCX, PPTX, ODT, TXT) a z textu kapitol, zhrnutie, kľúčové pojmy, vysvetlenia; vždy iba koncepty na schválenie učiteľom |
 | Gamifikácia | XP, levely, séria aktivity, odznaky (voliteľné pre školu) |
 | Bezpečnosť & GDPR | audit log, rate limiting, CSP, bezpečný upload, export a anonymizácia osobných údajov |
 

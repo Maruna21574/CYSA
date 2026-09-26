@@ -145,7 +145,25 @@ bash deploy.sh          # git pull, composer, migrácie, cache
 - **Súbory** – `storage/app/private/materials` (nahraté materiály, obrázky otázok a kurzov).
 - `.env` uložte bezpečne mimo repozitára – obsahuje `APP_KEY`, bez ktorého nejde dešifrovať session.
 
-## 12. Presun materiálov na S3 (voliteľné)
+## 12. AI generovanie otázok (voliteľné)
+
+Funkcia je skrytá, kým nie je nastavený API kľúč. Kľúč patrí iba do `.env` na serveri – nikdy nie do
+kódu ani do repozitára.
+
+```dotenv
+ANTHROPIC_API_KEY=sk-ant-…
+AI_PROVIDER=anthropic
+AI_MODEL=claude-opus-5      # iný model Claude podľa rozpočtu, napr. claude-sonnet-5
+AI_EFFORT=high              # low | medium | high | xhigh | max
+AI_DAILY_LIMIT=20           # generovaní na učiteľa za deň
+```
+
+- Generovanie beží vo fronte (cron), výsledok učiteľ uvidí do 1–2 minút a dostane notifikáciu.
+- Posiela sa iba text študijného materiálu, nikdy údaje o študentoch.
+- Návrhy sú vždy koncepty – do testu sa dostanú až po schválení učiteľom.
+- Pri modeloch Claude Opus 5 / Fable 5 je zapnutý serverový fallback pri odmietnutí požiadavky.
+
+## 13. Presun materiálov na S3 (voliteľné)
 
 ```bash
 composer require league/flysystem-aws-s3-v3 "^3.0"

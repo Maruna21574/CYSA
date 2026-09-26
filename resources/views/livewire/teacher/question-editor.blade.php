@@ -6,6 +6,13 @@
             : [['label' => __('Banka otázok'), 'url' => route('teacher.questions.index')], ['label' => $questionId ? __('Úprava') : __('Nová otázka')]]"
     />
 
+    @if ($isAiDraft)
+        <div class="mb-4 max-w-5xl rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900" role="note">
+            <p class="flex items-center gap-2 font-semibold"><x-icon name="sparkles" class="size-4" />{{ __('Návrh umelej inteligencie – čaká na vašu kontrolu') }}</p>
+            <p class="mt-1">{{ __('Overte správnosť otázky aj odpovedí. Otázku použijete v teste až po schválení.') }}</p>
+        </div>
+    @endif
+
     <form wire:submit="save" class="grid max-w-5xl gap-6 lg:grid-cols-3">
         <div class="flex flex-col gap-6 lg:col-span-2">
             <x-card class="flex flex-col gap-4">
@@ -104,6 +111,13 @@
 
             <x-card>
                 <x-form.textarea name="explanation" id="question-explanation" :label="__('Vysvetlenie (zobrazí sa po vyhodnotení)')" wire:model="explanation" rows="3" maxlength="5000" />
+                @if ($aiAvailable)
+                    <button type="button" wire:click="suggestExplanation" class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-indigo-700 hover:underline">
+                        <x-icon name="sparkles" class="size-4" />
+                        <span wire:loading.remove wire:target="suggestExplanation">{{ __('Navrhnúť vysvetlenie pomocou AI') }}</span>
+                        <span wire:loading wire:target="suggestExplanation">{{ __('AI premýšľa…') }}</span>
+                    </button>
+                @endif
             </x-card>
         </div>
 
@@ -145,8 +159,13 @@
             </x-card>
 
             <div class="flex flex-col gap-2">
-                <x-button>{{ __('Uložiť otázku') }}</x-button>
-                <x-link-button variant="secondary" :href="$quiz ? route('teacher.quizzes.show', $quiz) : route('teacher.questions.index')">{{ __('Zrušiť') }}</x-link-button>
+                @if ($isAiDraft)
+                    <x-button type="button" wire:click="saveAndApprove"><x-icon name="check" class="size-4" />{{ __('Uložiť a schváliť') }}</x-button>
+                    <x-button variant="secondary">{{ __('Uložiť bez schválenia') }}</x-button>
+                @else
+                    <x-button>{{ __('Uložiť otázku') }}</x-button>
+                @endif
+                <x-link-button variant="secondary" :href="match (true) { $aiGenerationId !== null => route('teacher.ai.show', $aiGenerationId), $quiz !== null => route('teacher.quizzes.show', $quiz), default => route('teacher.questions.index') }">{{ __('Zrušiť') }}</x-link-button>
             </div>
         </div>
     </form>

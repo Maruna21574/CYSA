@@ -3,18 +3,22 @@
 namespace App\Livewire\Teacher;
 
 use App\Enums\Difficulty;
+use App\Enums\QuestionStatus;
 use App\Enums\QuestionType;
 use App\Models\Course;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\Topic;
 use App\Rules\AllowedMaterialFile;
+use App\Services\AI\AiException;
+use App\Services\AI\AIQuizGenerationService;
 use App\Services\Files\MaterialStorage;
 use App\Services\Questions\QuestionService;
 use App\Services\Questions\QuestionValidator;
 use App\Support\Positioning;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -69,6 +73,16 @@ class QuestionEditor extends Component
 
     #[Locked]
     public ?string $currentImage = null;
+
+    /** The question is an AI suggestion waiting for review. */
+    #[Locked]
+    public bool $isAiDraft = false;
+
+    #[Locked]
+    public ?int $aiGenerationId = null;
+
+    #[Locked]
+    public bool $approveOnSave = false;
 
     public function mount(?Question $question = null): void
     {
@@ -181,6 +195,10 @@ class QuestionEditor extends Component
 
         $this->saveImage($question, $storage);
 
+        if ($this->approveOnSave && $existing) {
+            $question->forceFill(['status' => QuestionStatus::Approved])->save();
+        }
+
         if ($this->quizId && ! $existing) {
             $quiz = Quiz::findOrFail($this->quizId);
             $this->authorize('update', $quiz);
@@ -189,9 +207,63 @@ class QuestionEditor extends Component
             ]]);
         }
 
-        session()->flash('success', $existing ? __('Otázka bola uložená.') : __('Otázka bola vytvorená.'));
+        session()->flash('success', match (true) {
+            $this->approveOnSave => __('Otázka bola uložená a schválená.'),
+            (bool) $existing => __('Otázka bola uložená.'),
+            default => __('Otázka bola vytvorená.'),
+        });
+
+        if ($this->aiGenerationId) {
+            $this->redirectRoute('teacher.ai.show', ['generation' => $this->aiGenerationId]);
+
+            return;
+        }
 
         $this->redirectRoute($this->quizId ? 'teacher.quizzes.show' : 'teacher.questions.index', $this->quizId ? ['quiz' => $this->quizId] : []);
+    }
+
+    /**
+     * Review of an AI suggestion: save the edits and approve the question in one step.
+     */
+    public function saveAndApprove(QuestionService $service, QuestionValidator $structure, MaterialStorage $storage): void
+    {
+        $this->approveOnSave = true;
+        $this->save($service, $structure, $storage);
+        $this->approveOnSave = false;
+    }
+
+    /**
+     * Asks AI for a short explanation of the correct answer; the teacher can still edit it.
+     */
+    public function suggestExplanation(AIQuizGenerationService $ai): void
+    {
+        $this->questionId ? $this->authorize('update', Question::findOrFail($this->questionId)) : $this->authorize('create', Question::class);
+        abort_unless(AIQuizGenerationService::isAvailable(), 404);
+
+        if (! RateLimiter::attempt('ai-explanation:'.auth()->id(), 10, fn () => true, 60)) {
+            $this->addError('explanation', __('Príliš veľa požiadaviek. Skúste to o minútu.'));
+
+            return;
+        }
+
+        $correct = collect($this->options)
+            ->filter(fn (array $option): bool => (bool) $option['is_correct'] || $this->type === QuestionType::Matching->value)
+            ->map(fn (array $option): string => trim($option['body'].($option['match_body'] !== '' ? ' → '.$option['match_body'] : '')))
+            ->filter()
+            ->values()
+            ->all();
+
+        if (trim($this->body) === '' || $correct === []) {
+            $this->addError('explanation', __('Najprv vyplňte otázku a označte správnu odpoveď.'));
+
+            return;
+        }
+
+        try {
+            $this->explanation = $ai->generateExplanation($this->body, $correct);
+        } catch (AiException $e) {
+            $this->addError('explanation', $e->getMessage());
+        }
     }
 
     /**
@@ -274,6 +346,8 @@ class QuestionEditor extends Component
         $this->caseSensitive = (bool) $question->setting('case_sensitive', false);
         $this->partialCredit = (bool) $question->setting('partial_credit', false);
         $this->currentImage = $question->image_path;
+        $this->isAiDraft = $question->status === QuestionStatus::Draft;
+        $this->aiGenerationId = $question->ai_generation_id;
         $this->options = $question->options->map(fn ($option): array => [
             'id' => $option->id,
             'body' => $option->body,
@@ -297,6 +371,7 @@ class QuestionEditor extends Component
             'chapters' => $chapters,
             'topics' => Topic::options(),
             'quiz' => $this->quizId ? Quiz::find($this->quizId) : null,
+            'aiAvailable' => AIQuizGenerationService::isAvailable(),
         ])->title($this->questionId ? __('Úprava otázky') : __('Nová otázka'));
     }
 }

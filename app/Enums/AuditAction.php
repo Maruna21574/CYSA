@@ -64,6 +64,8 @@ enum AuditAction: string
     case SystemSettingsChanged = 'system.settings_changed';
     case UserAnonymized = 'user.anonymized';
 
+    case AiQuestionsRequested = 'ai.questions_requested';
+
     public function label(): string
     {
         return match ($this) {
@@ -114,6 +116,7 @@ enum AuditAction: string
             self::CertificateSettingsChanged => __('Zmena podmienok certifikátu'),
             self::SystemSettingsChanged => __('Zmena systémových nastavení'),
             self::UserAnonymized => __('Anonymizácia používateľa'),
+            self::AiQuestionsRequested => __('Generovanie otázok pomocou AI'),
         };
     }
 }
