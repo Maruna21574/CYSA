@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,6 +53,14 @@ class User extends Authenticatable
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+    /**
+     * @return BelongsToMany<Classroom, $this>
+     */
+    public function classrooms(): BelongsToMany
+    {
+        return $this->belongsToMany(Classroom::class)->withPivot('role')->withTimestamps();
     }
 
     /**
@@ -108,6 +117,45 @@ class User extends Authenticatable
     public function scopeActive(Builder $query): void
     {
         $query->where('is_active', true);
+    }
+
+    /**
+     * Users the given user may manage: everyone for a super admin, teachers and students
+     * of their own school for a school admin, nobody otherwise.
+     *
+     * @param  Builder<User>  $query
+     */
+    public function scopeManageableBy(Builder $query, User $actor): void
+    {
+        if ($actor->isSuperAdmin()) {
+            return;
+        }
+
+        if ($actor->role !== UserRole::SchoolAdmin) {
+            $query->whereRaw('1 = 0');
+
+            return;
+        }
+
+        $query->where('school_id', $actor->school_id)
+            ->whereIn('role', array_map(fn (UserRole $role): string => $role->value, UserRole::assignableBy($actor->role)));
+    }
+
+    /**
+     * Every word of the term has to match the first name, last name or e-mail.
+     *
+     * @param  Builder<User>  $query
+     */
+    public function scopeSearch(Builder $query, ?string $term): void
+    {
+        foreach (preg_split('/\s+/', trim((string) $term), -1, PREG_SPLIT_NO_EMPTY) as $word) {
+            $like = '%'.addcslashes($word, '%_\\').'%';
+
+            $query->where(fn (Builder $query) => $query
+                ->where('first_name', 'like', $like)
+                ->orWhere('last_name', 'like', $like)
+                ->orWhere('email', 'like', $like));
+        }
     }
 
     /**

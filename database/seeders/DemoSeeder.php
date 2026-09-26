@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ClassroomRole;
 use App\Enums\SchoolType;
 use App\Enums\UserRole;
+use App\Models\Classroom;
 use App\Models\School;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -23,7 +25,13 @@ class DemoSeeder extends Seeder
 
         $this->user('admin@cysa.test', 'Systémový', 'Administrátor', UserRole::SuperAdmin, null);
         $this->user('skola@cysa.test', 'Eva', 'Horváthová', UserRole::SchoolAdmin, $school);
-        $this->user('ucitel@cysa.test', 'Peter', 'Novák', UserRole::Teacher, $school);
+        $teacher = $this->user('ucitel@cysa.test', 'Peter', 'Novák', UserRole::Teacher, $school);
+
+        $classroom = $school->classrooms()->updateOrCreate(
+            ['name' => '4.A', 'school_year' => Classroom::currentSchoolYear()],
+            ['grade_level' => 4],
+        );
+        $classroom->members()->syncWithoutDetaching([$teacher->id => ['role' => ClassroomRole::Teacher->value]]);
 
         $students = [
             ['Jakub', 'Kováč'], ['Lucia', 'Vargová'], ['Tomáš', 'Tóth'],
@@ -31,7 +39,8 @@ class DemoSeeder extends Seeder
         ];
 
         foreach ($students as $index => [$firstName, $lastName]) {
-            $this->user('student'.($index + 1).'@cysa.test', $firstName, $lastName, UserRole::Student, $school);
+            $student = $this->user('student'.($index + 1).'@cysa.test', $firstName, $lastName, UserRole::Student, $school);
+            $classroom->members()->syncWithoutDetaching([$student->id => ['role' => ClassroomRole::Student->value]]);
         }
     }
 

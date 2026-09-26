@@ -41,6 +41,20 @@ enum UserRole: string
     }
 
     /**
+     * Roles the given user may assign when creating or editing accounts.
+     *
+     * @return list<self>
+     */
+    public static function assignableBy(UserRole $actor): array
+    {
+        return match ($actor) {
+            self::SuperAdmin => self::cases(),
+            self::SchoolAdmin => [self::Teacher, self::Student],
+            default => [],
+        };
+    }
+
+    /**
      * Every role except the super admin must belong to a school.
      */
     public function requiresSchool(): bool

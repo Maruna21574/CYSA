@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 class Navigation
 {
     /**
-     * @return list<array{label: string, route: string, icon: string, active: string}>
+     * @return list<array{label: string, route: string, icon: string, active: string|list<string>}>
      */
     public static function for(User $user): array
     {
@@ -21,14 +21,13 @@ class Navigation
             UserRole::SuperAdmin => [
                 ['label' => __('Prehľad'), 'route' => 'admin.dashboard', 'icon' => 'home', 'active' => 'admin.dashboard'],
                 ['label' => __('Školy'), 'route' => 'admin.schools.index', 'icon' => 'building', 'active' => 'admin.schools.*'],
-                ['label' => __('Používatelia'), 'route' => 'admin.users.index', 'icon' => 'users', 'active' => 'admin.users.*'],
+                ['label' => __('Používatelia'), 'route' => 'users.index', 'icon' => 'users', 'active' => 'users.*'],
                 ['label' => __('Audit log'), 'route' => 'admin.audit-logs.index', 'icon' => 'document', 'active' => 'admin.audit-logs.*'],
                 ['label' => __('Nastavenia'), 'route' => 'admin.settings.edit', 'icon' => 'adjustments', 'active' => 'admin.settings.*'],
             ],
             UserRole::SchoolAdmin => [
                 ['label' => __('Prehľad školy'), 'route' => 'school.dashboard', 'icon' => 'home', 'active' => 'school.dashboard'],
-                ['label' => __('Učitelia'), 'route' => 'school.teachers.index', 'icon' => 'users', 'active' => 'school.teachers.*'],
-                ['label' => __('Študenti'), 'route' => 'school.students.index', 'icon' => 'users', 'active' => 'school.students.*'],
+                ['label' => __('Používatelia'), 'route' => 'users.index', 'icon' => 'users', 'active' => ['users.*', 'school.students.*']],
                 ['label' => __('Triedy'), 'route' => 'school.classrooms.index', 'icon' => 'squares', 'active' => 'school.classrooms.*'],
                 ...self::teacherItems(),
             ],
@@ -48,7 +47,7 @@ class Navigation
     }
 
     /**
-     * @return list<array{label: string, route: string, icon: string, active: string}>
+     * @return list<array{label: string, route: string, icon: string, active: string|list<string>}>
      */
     private static function teacherItems(): array
     {

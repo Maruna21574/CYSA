@@ -15,5 +15,11 @@
     "Too Many Requests": "Príliš veľa požiadaviek",
     "Server Error": "Chyba servera",
     "Service Unavailable": "Služba je nedostupná",
-    "Unauthorized": "Neautorizovaný prístup"
+    "Unauthorized": "Neautorizovaný prístup",
+    "Showing": "Zobrazené",
+    "to": "až",
+    "of": "z",
+    "results": "výsledkov",
+    "Pagination Navigation": "Stránkovanie",
+    "Go to page :page": "Prejsť na stranu :page"
 }

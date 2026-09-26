@@ -4,21 +4,27 @@ namespace App\Livewire\Auth;
 
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
+/**
+ * Sets a new password from a reset link, or the first password from an account invitation.
+ * Invitations use their own password broker with a longer token lifetime.
+ */
 #[Layout('layouts::guest')]
-#[Title('Nové heslo')]
 class ResetPassword extends Component
 {
     #[Locked]
     public string $token = '';
+
+    #[Locked]
+    public bool $isInvitation = false;
 
     public string $email = '';
 
@@ -26,9 +32,13 @@ class ResetPassword extends Component
 
     public string $password_confirmation = '';
 
-    public function mount(string $token): void
+    /**
+     * @param  bool  $invitation  set by the route default of the invitation.accept route
+     */
+    public function mount(string $token, bool $invitation = false): void
     {
         $this->token = $token;
+        $this->isInvitation = $invitation;
         $this->email = (string) request()->string('email');
     }
 
@@ -47,7 +57,7 @@ class ResetPassword extends Component
     {
         $this->validate();
 
-        $status = Password::reset(
+        $status = Password::broker($this->isInvitation ? 'invitations' : null)->reset(
             [
                 'email' => Str::lower(trim($this->email)),
                 'password' => $this->password,
@@ -58,6 +68,7 @@ class ResetPassword extends Component
                 $user->forceFill([
                     'password' => $password,
                     'remember_token' => Str::random(60),
+                    'email_verified_at' => $user->email_verified_at ?? now(),
                 ])->save();
 
                 event(new PasswordReset($user));
@@ -71,5 +82,11 @@ class ResetPassword extends Component
         session()->flash('status', __($status));
 
         $this->redirectRoute('login');
+    }
+
+    public function render(): View
+    {
+        return view('livewire.auth.reset-password')
+            ->title($this->isInvitation ? __('Aktivácia účtu') : __('Nové heslo'));
     }
 }
