@@ -29,14 +29,20 @@ class RoleAccessTest extends TestCase
         ];
     }
 
+    /**
+     * @param  list<string>  $allowedRoutes
+     */
     #[DataProvider('roleProvider')]
-    public function test_dashboard_redirects_to_role_dashboard(UserRole $role): void
+    public function test_dashboard_redirects_to_role_dashboard(UserRole $role, array $allowedRoutes): void
     {
         $user = $this->userWithRole($role);
 
         $this->actingAs($user)
             ->get(route('dashboard'))
             ->assertRedirect(route($role->dashboardRoute()));
+
+        $this->actingAs($user)->get(route($role->dashboardRoute()))->assertOk();
+        $this->assertContains($role->dashboardRoute(), $allowedRoutes);
     }
 
     /**
