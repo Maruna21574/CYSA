@@ -15,6 +15,7 @@ enum AuditAction: string
     case PasswordResetRequested = 'auth.password_reset_requested';
     case PasswordReset = 'auth.password_reset';
     case AccountBlocked = 'auth.account_blocked';
+    case PasswordChanged = 'auth.password_changed';
 
     case SchoolCreated = 'school.created';
     case SchoolUpdated = 'school.updated';
@@ -70,6 +71,7 @@ enum AuditAction: string
             self::PasswordResetRequested => __('Žiadosť o obnovu hesla'),
             self::PasswordReset => __('Obnova hesla'),
             self::AccountBlocked => __('Prístup deaktivovaného účtu'),
+            self::PasswordChanged => __('Zmena hesla'),
             self::SchoolCreated => __('Vytvorenie školy'),
             self::SchoolUpdated => __('Úprava školy'),
             self::SchoolDeleted => __('Odstránenie školy'),

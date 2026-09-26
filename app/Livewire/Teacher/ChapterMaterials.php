@@ -9,6 +9,7 @@ use App\Models\Material;
 use App\Rules\AllowedMaterialFile;
 use App\Services\Audit\AuditLogger;
 use App\Services\Files\MaterialStorage;
+use App\Services\Notifications\CourseNotifier;
 use App\Support\Positioning;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
@@ -109,11 +110,15 @@ class ChapterMaterials extends Component
      */
     private function createMaterial(array $attributes): Material
     {
-        return $this->chapter->materials()->create([
+        $material = $this->chapter->materials()->create([
             ...$attributes,
             'uploaded_by' => auth()->id(),
             'position' => Positioning::next(Material::where('chapter_id', $this->chapter->id)),
         ]);
+
+        app(CourseNotifier::class)->materialAdded($material);
+
+        return $material;
     }
 
     public function render(): View

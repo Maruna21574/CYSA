@@ -8,6 +8,8 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionImageController;
 use App\Http\Controllers\School;
 use App\Http\Controllers\School\ClassroomController;
@@ -44,6 +46,15 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', LogoutController::class)->name('logout');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/read', [NotificationController::class, 'markAllRead'])->name('notifications.read');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/preferences', [ProfileController::class, 'updatePreferences'])->name('profile.preferences');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
+        ->middleware('throttle:6,1')
+        ->name('profile.password');
 
     /*
     | Account management - super admin (everyone) and school admin (own school).
@@ -101,6 +112,14 @@ Route::middleware('auth')->group(function () {
         Route::patch('/attempts/{attempt}/answers/{answer}/score', Teacher\AnswerScoreController::class)
             ->scopeBindings()
             ->name('attempts.answers.score');
+
+        Route::get('/courses/{course}/announcements', [Teacher\AnnouncementController::class, 'index'])->name('courses.announcements.index');
+        Route::post('/courses/{course}/announcements', [Teacher\AnnouncementController::class, 'store'])
+            ->middleware('throttle:20,1')
+            ->name('courses.announcements.store');
+        Route::delete('/courses/{course}/announcements/{announcement}', [Teacher\AnnouncementController::class, 'destroy'])
+            ->scopeBindings()
+            ->name('courses.announcements.destroy');
 
         Route::get('/courses/{course}/certificate', [Teacher\CourseCertificateController::class, 'edit'])->name('courses.certificate.edit');
         Route::put('/courses/{course}/certificate', [Teacher\CourseCertificateController::class, 'update'])->name('courses.certificate.update');

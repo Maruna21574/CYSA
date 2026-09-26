@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\CourseAssignment;
 use App\Models\User;
 use App\Services\Audit\AuditLogger;
+use App\Services\Notifications\CourseNotifier;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -101,6 +102,10 @@ class CourseAssignments extends Component
         ]);
 
         $audit->log(AuditAction::CourseAssigned, $this->course, newValues: $assignment->only(['classroom_id', 'user_id', 'available_from', 'due_at']));
+
+        if ($assignment->wasRecentlyCreated) {
+            app(CourseNotifier::class)->courseAvailable($this->course, $assignment);
+        }
 
         unset($this->studentResults);
         $this->dispatch('toast', message: __('Kurz bol priradený.'));

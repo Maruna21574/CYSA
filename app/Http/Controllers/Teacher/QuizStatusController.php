@@ -8,6 +8,7 @@ use App\Enums\QuizStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Quiz;
 use App\Services\Audit\AuditLogger;
+use App\Services\Notifications\CourseNotifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -39,6 +40,7 @@ class QuizStatusController extends Controller
         }
 
         $old = $quiz->status;
+        $firstPublish = $status === QuizStatus::Published && $quiz->published_at === null;
 
         $quiz->forceFill([
             'status' => $status,
@@ -50,6 +52,10 @@ class QuizStatusController extends Controller
             QuizStatus::Archived => AuditAction::QuizArchived,
             QuizStatus::Draft => AuditAction::QuizUnpublished,
         }, $quiz, ['status' => $old->value], ['status' => $status->value]);
+
+        if ($firstPublish) {
+            app(CourseNotifier::class)->quizPublished($quiz);
+        }
 
         return back()->with('success', match ($status) {
             QuizStatus::Published => __('Test bol publikovaný.'),

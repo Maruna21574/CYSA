@@ -84,6 +84,18 @@
         </div>
 
         <div class="flex flex-col gap-4">
+            @if ($announcements->isNotEmpty())
+                <x-card :title="__('Oznámenia učiteľa')">
+                    @foreach ($announcements as $announcement)
+                        <article class="border-b border-slate-100 py-3 first:pt-0 last:border-0">
+                            <h3 class="text-sm font-semibold text-slate-900">{{ $announcement->title }}</h3>
+                            <p class="text-xs text-slate-500">{{ $announcement->created_at->translatedFormat('j. n. Y') }}</p>
+                            <p class="mt-1 text-sm whitespace-pre-line text-slate-700">{{ $announcement->body }}</p>
+                        </article>
+                    @endforeach
+                </x-card>
+            @endif
+
             <x-card :title="__('Testy a kvízy')">
                 @if ($quizzes->isEmpty())
                     <p class="text-sm text-slate-500">{{ __('Kurz zatiaľ nemá žiadne testy.') }}</p>

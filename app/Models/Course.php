@@ -124,6 +124,14 @@ class Course extends Model
         return $this->hasMany(Certificate::class);
     }
 
+    /**
+     * @return HasMany<Announcement, $this>
+     */
+    public function announcements(): HasMany
+    {
+        return $this->hasMany(Announcement::class);
+    }
+
     public function isPublished(): bool
     {
         return $this->status === CourseStatus::Published;

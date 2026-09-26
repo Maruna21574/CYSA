@@ -46,6 +46,7 @@ class LearningController extends Controller
             'courseProgress' => CourseProgress::where('user_id', $user->id)->where('course_id', $course->id)->first(),
             'quizzes' => $this->quizzes($course, $isPreview),
             'bestResults' => $this->bestResults($course, $user),
+            'announcements' => $course->announcements()->with('author:id,first_name,last_name')->latest()->limit(3)->get(),
         ]);
     }
 

@@ -17,3 +17,5 @@ Schedule::command('queue:work --stop-when-empty --max-time=50 --tries=3')
     ->runInBackground();
 
 Schedule::command('quiz:expire-attempts')->everyMinute()->withoutOverlapping();
+
+Schedule::command('notifications:deadlines')->hourly()->withoutOverlapping();

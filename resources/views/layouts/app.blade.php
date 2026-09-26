@@ -78,6 +78,8 @@
 
             <div class="flex-1"></div>
 
+            <livewire:notification-bell />
+
             <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                 <button
                     type="button"
@@ -104,6 +106,10 @@
                         <span class="block font-medium text-slate-900">{{ $user->name }}</span>
                         <span class="block truncate text-slate-500">{{ $user->email }}</span>
                     </div>
+                    <a href="{{ route('profile.edit') }}" class="flex w-full items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                        <x-icon name="adjustments" class="size-4" />
+                        {{ __('Môj profil') }}
+                    </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:outline-none">

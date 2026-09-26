@@ -7,6 +7,7 @@ use App\Enums\CourseStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Services\Audit\AuditLogger;
+use App\Services\Notifications\CourseNotifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -34,6 +35,7 @@ class CourseStatusController extends Controller
         }
 
         $old = $course->status;
+        $firstPublish = $status === CourseStatus::Published && $course->published_at === null;
 
         $course->forceFill([
             'status' => $status,
@@ -46,6 +48,10 @@ class CourseStatusController extends Controller
             CourseStatus::Archived => AuditAction::CourseArchived,
             CourseStatus::Draft => AuditAction::CourseUnpublished,
         }, $course, ['status' => $old->value], ['status' => $status->value]);
+
+        if ($firstPublish) {
+            app(CourseNotifier::class)->courseAvailable($course);
+        }
 
         return back()->with('success', match ($status) {
             CourseStatus::Published => __('Kurz bol publikovaný. Študenti, ktorým je priradený, ho už vidia.'),

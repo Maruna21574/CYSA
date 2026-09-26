@@ -23,6 +23,11 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
 
+    protected $attributes = [
+        'is_active' => true,
+        'email_notifications' => false,
+    ];
+
     protected static function booted(): void
     {
         static::creating(function (User $user): void {
