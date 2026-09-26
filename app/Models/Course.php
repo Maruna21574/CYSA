@@ -45,6 +45,8 @@ class Course extends Model
             'status' => CourseStatus::class,
             'difficulty' => Difficulty::class,
             'sequential_chapters' => 'boolean',
+            'certificate_enabled' => 'boolean',
+            'certificate_min_percentage' => 'integer',
             'published_at' => 'datetime',
             'archived_at' => 'datetime',
         ];
@@ -104,6 +106,22 @@ class Course extends Model
     public function quizzes(): HasMany
     {
         return $this->hasMany(Quiz::class);
+    }
+
+    /**
+     * @return HasMany<CertificateRequirement, $this>
+     */
+    public function certificateRequirements(): HasMany
+    {
+        return $this->hasMany(CertificateRequirement::class);
+    }
+
+    /**
+     * @return HasMany<Certificate, $this>
+     */
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class);
     }
 
     public function isPublished(): bool

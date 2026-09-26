@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\AttemptResultController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MaterialController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\School\StudentImportController;
 use App\Http\Controllers\Student;
 use App\Http\Controllers\Teacher;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VerifyCertificateController;
 use App\Livewire;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
@@ -21,6 +23,11 @@ use App\Livewire\Auth\ResetPassword;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard')->name('home');
+
+// Public certificate verification (only validity, holder, course and date are shown).
+Route::get('/verify-certificate/{code?}', VerifyCertificateController::class)
+    ->middleware('throttle:30,1')
+    ->name('certificates.verify');
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +102,10 @@ Route::middleware('auth')->group(function () {
             ->scopeBindings()
             ->name('attempts.answers.score');
 
+        Route::get('/courses/{course}/certificate', [Teacher\CourseCertificateController::class, 'edit'])->name('courses.certificate.edit');
+        Route::put('/courses/{course}/certificate', [Teacher\CourseCertificateController::class, 'update'])->name('courses.certificate.update');
+        Route::post('/certificates/{certificate}/revoke', [CertificateController::class, 'revoke'])->name('certificates.revoke');
+
         Route::get('/analytics', [Teacher\AnalyticsController::class, 'index'])->name('analytics.index');
         Route::get('/research', [Teacher\ResearchController::class, 'index'])->name('research.index');
         Route::get('/research/{quiz}/export', [Teacher\ResearchController::class, 'export'])
@@ -115,6 +126,7 @@ Route::middleware('auth')->group(function () {
             ->name('quizzes.start');
         Route::livewire('/attempts/{attempt}', Livewire\Student\QuizPlayer::class)->name('attempts.play');
         Route::get('/results', [Student\ResultController::class, 'index'])->name('results.index');
+        Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
     });
 
     /*
@@ -129,4 +141,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
     Route::get('/questions/{question}/image', QuestionImageController::class)->name('questions.image');
     Route::get('/attempts/{attempt}', AttemptResultController::class)->name('attempts.show');
+    Route::get('/certificates/{certificate}/download', [CertificateController::class, 'download'])->name('certificates.download');
 });

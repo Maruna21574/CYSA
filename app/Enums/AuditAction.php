@@ -56,6 +56,10 @@ enum AuditAction: string
     case AttemptScoreChanged = 'attempt.score_changed';
     case DataExported = 'data.exported';
 
+    case CertificateIssued = 'certificate.issued';
+    case CertificateRevoked = 'certificate.revoked';
+    case CertificateSettingsChanged = 'certificate.settings_changed';
+
     public function label(): string
     {
         return match ($this) {
@@ -100,6 +104,9 @@ enum AuditAction: string
             self::QuizDeleted => __('Odstránenie testu'),
             self::AttemptScoreChanged => __('Zmena výsledku učiteľom'),
             self::DataExported => __('Export údajov'),
+            self::CertificateIssued => __('Vydanie certifikátu'),
+            self::CertificateRevoked => __('Zrušenie certifikátu'),
+            self::CertificateSettingsChanged => __('Zmena podmienok certifikátu'),
         };
     }
 }

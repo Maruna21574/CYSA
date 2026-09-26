@@ -37,6 +37,8 @@ class DemoCourseSeeder extends Seeder
         $course->school_id = $teacher->school_id;
         $course->author_id = $teacher->id;
         $course->status = CourseStatus::Published;
+        $course->certificate_enabled = true;
+        $course->certificate_min_percentage = 70;
         $course->published_at = now();
         $course->save();
 

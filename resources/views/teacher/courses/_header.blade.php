@@ -3,6 +3,7 @@
     $tabs = [
         'structure' => [__('Obsah kurzu'), route('teacher.courses.show', $course)],
         'assignments' => [__('Priradenie'), route('teacher.courses.assignments', $course)],
+        'certificate' => [__('Certifikát'), route('teacher.courses.certificate.edit', $course)],
         'edit' => [__('Nastavenia'), route('teacher.courses.edit', $course)],
     ];
 @endphp
