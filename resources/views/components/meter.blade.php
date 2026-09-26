@@ -1,10 +1,11 @@
-@props(['value' => null, 'label' => null])
+@props(['value' => null, 'label' => null, 'tone' => 'score'])
 
-{{-- Horizontal bar for a percentage 0-100; colour by level (red < 50 <= amber < 75 <= green). --}}
+{{-- Horizontal bar for a percentage 0-100. tone="score": colour by level (red < 50 <= amber < 75 <= green); tone="progress": neutral colour, progress is never "bad". --}}
 @php
     $percent = $value === null ? null : max(0, min(100, (float) $value));
     $color = match (true) {
         $percent === null => 'bg-slate-300',
+        $tone === 'progress' => $percent >= 100 ? 'bg-emerald-500' : 'bg-indigo-500',
         $percent < 50 => 'bg-red-500',
         $percent < 75 => 'bg-amber-500',
         default => 'bg-emerald-500',

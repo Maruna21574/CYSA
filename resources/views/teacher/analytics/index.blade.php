@@ -109,7 +109,7 @@
                             <td class="px-4 py-3 font-medium text-slate-900">{{ $row->user?->name }}</td>
                             <td class="px-4 py-3 text-slate-700">{{ $row->course?->title }}</td>
                             <td class="px-4 py-3 text-right tabular-nums">{{ $row->completed_chapters }} / {{ $row->total_chapters }}</td>
-                            <td class="px-4 py-3"><x-meter :value="$row->percentage" /></td>
+                            <td class="px-4 py-3"><x-meter tone="progress" :value="$row->percentage" /></td>
                         </tr>
                     @endforeach
                 </tbody>

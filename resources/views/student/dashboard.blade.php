@@ -26,7 +26,7 @@
             </section>
         @endif
 
-        <div class="grid gap-6 lg:grid-cols-3">
+        <div class="grid items-start gap-6 lg:grid-cols-3">
             <x-card :title="__('Moje kurzy')" class="lg:col-span-2">
                 @foreach ($courses as $course)
                     @php $progress = $courseProgress[$course->id] ?? null; @endphp
@@ -37,7 +37,7 @@
                                 <x-badge color="green">{{ __('Dokončený') }}</x-badge>
                             @endif
                         </div>
-                        <x-meter :value="$progress?->percentage ?? 0" :label="__('Progres kurzu :title', ['title' => $course->title])" />
+                        <x-meter tone="progress" :value="$progress?->percentage ?? 0" :label="__('Progres kurzu :title', ['title' => $course->title])" />
                     </a>
                 @endforeach
             </x-card>

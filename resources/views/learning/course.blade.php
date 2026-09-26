@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-3">
+    <div class="grid items-start gap-6 lg:grid-cols-3">
         <div class="flex flex-col gap-4 lg:col-span-2">
             @forelse ($course->modules as $module)
                 @continue($module->chapters->isEmpty() && ! $isPreview)

@@ -22,7 +22,7 @@
         <x-stat :label="__('Úspešné pokusy')" :value="Format::percent($summary['pass_rate'])" icon="check-circle" />
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-3">
+    <div class="grid items-start gap-6 lg:grid-cols-3">
         <x-card :title="__('Posledné odovzdané testy')" class="lg:col-span-2">
             @forelse ($recentAttempts as $attempt)
                 <a href="{{ route('attempts.show', $attempt) }}" class="flex items-center gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0 hover:text-indigo-700">

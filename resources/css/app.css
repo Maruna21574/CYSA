@@ -51,8 +51,9 @@
     @apply bg-transparent p-0;
 }
 
+/* Files are added as chapter materials; trix.css loads later, hence !important. */
 trix-toolbar .trix-button-group--file-tools {
-    display: none;
+    display: none !important;
 }
 trix-editor {
     @apply min-h-64 rounded-b-lg border border-slate-300 bg-white px-3 py-2;

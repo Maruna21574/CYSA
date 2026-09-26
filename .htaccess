@@ -1,0 +1,10 @@
+# Safety net for hostings where the web root cannot point to /public:
+# every request is served from /public, so .env, storage and vendor are never reachable.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

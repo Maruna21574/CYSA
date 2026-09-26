@@ -8,7 +8,7 @@
         <x-stat :label="__('Odovzdané testy')" :value="$attempts" :hint="__(':n certifikátov', ['n' => $certificates])" icon="shield" />
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-3">
+    <div class="grid items-start gap-6 lg:grid-cols-3">
         <x-card :title="__('Aktivita – odovzdané testy za 14 dní')" class="lg:col-span-2">
             @php $max = max(1, $activity->max()); @endphp
             <div class="flex h-40 items-end gap-1" role="img" aria-label="{{ __('Graf počtu odovzdaných testov po dňoch') }}">
