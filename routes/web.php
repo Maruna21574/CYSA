@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\AttemptResultController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\QuestionImageController;
+use App\Http\Controllers\School;
 use App\Http\Controllers\School\ClassroomController;
 use App\Http\Controllers\School\StudentImportController;
 use App\Http\Controllers\Student;
@@ -48,12 +50,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('admin')->name('admin.')->middleware('role:super_admin')->group(function () {
-        Route::view('/', 'admin.dashboard')->name('dashboard');
+        Route::get('/', Admin\DashboardController::class)->name('dashboard');
         Route::resource('schools', SchoolController::class)->except('show');
     });
 
     Route::prefix('school')->name('school.')->middleware('role:school_admin')->group(function () {
-        Route::view('/', 'school.dashboard')->name('dashboard');
+        Route::get('/', School\DashboardController::class)->name('dashboard');
         Route::resource('classrooms', ClassroomController::class);
         Route::get('/students/import', [StudentImportController::class, 'create'])->name('students.import');
         Route::post('/students/import', [StudentImportController::class, 'store'])
@@ -62,7 +64,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('teacher')->name('teacher.')->middleware('role:teacher,school_admin')->group(function () {
-        Route::view('/', 'teacher.dashboard')->name('dashboard');
+        Route::get('/', Teacher\DashboardController::class)->name('dashboard');
 
         Route::resource('courses', Teacher\CourseController::class);
         Route::patch('/courses/{course}/status', Teacher\CourseStatusController::class)->name('courses.status');
@@ -85,10 +87,23 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('quizzes', Teacher\QuizController::class);
         Route::patch('/quizzes/{quiz}/status', Teacher\QuizStatusController::class)->name('quizzes.status');
+        Route::get('/quizzes/{quiz}/results', [Teacher\QuizResultController::class, 'show'])->name('quizzes.results');
+        Route::get('/quizzes/{quiz}/results/export', [Teacher\QuizResultController::class, 'export'])
+            ->middleware('throttle:20,1')
+            ->name('quizzes.results.export');
+        Route::patch('/attempts/{attempt}/answers/{answer}/score', Teacher\AnswerScoreController::class)
+            ->scopeBindings()
+            ->name('attempts.answers.score');
+
+        Route::get('/analytics', [Teacher\AnalyticsController::class, 'index'])->name('analytics.index');
+        Route::get('/research', [Teacher\ResearchController::class, 'index'])->name('research.index');
+        Route::get('/research/{quiz}/export', [Teacher\ResearchController::class, 'export'])
+            ->middleware('throttle:20,1')
+            ->name('research.export');
     });
 
     Route::prefix('student')->name('student.')->middleware('role:student')->group(function () {
-        Route::view('/', 'student.dashboard')->name('dashboard');
+        Route::get('/', Student\DashboardController::class)->name('dashboard');
         Route::get('/courses', [Student\CourseController::class, 'index'])->name('courses.index');
         Route::post('/courses/{course}/chapters/{chapter}/complete', [Student\ChapterProgressController::class, 'store'])
             ->scopeBindings()

@@ -53,6 +53,9 @@ enum AuditAction: string
     case QuizArchived = 'quiz.archived';
     case QuizDeleted = 'quiz.deleted';
 
+    case AttemptScoreChanged = 'attempt.score_changed';
+    case DataExported = 'data.exported';
+
     public function label(): string
     {
         return match ($this) {
@@ -95,6 +98,8 @@ enum AuditAction: string
             self::QuizUnpublished => __('Stiahnutie testu do konceptu'),
             self::QuizArchived => __('Archivácia testu'),
             self::QuizDeleted => __('Odstránenie testu'),
+            self::AttemptScoreChanged => __('Zmena výsledku učiteľom'),
+            self::DataExported => __('Export údajov'),
         };
     }
 }

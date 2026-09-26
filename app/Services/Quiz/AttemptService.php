@@ -4,6 +4,7 @@ namespace App\Services\Quiz;
 
 use App\Enums\AttemptStatus;
 use App\Enums\QuestionType;
+use App\Events\QuizAttemptRegraded;
 use App\Events\QuizAttemptSubmitted;
 use App\Models\Question;
 use App\Models\QuestionOption;
@@ -182,6 +183,38 @@ class AttemptService
         QuizAttemptSubmitted::dispatch($submitted);
 
         return $submitted;
+    }
+
+    /**
+     * Manual correction of one answer by the teacher (e.g. an acceptable short answer the
+     * automatic grading did not know). Recalculates the attempt totals.
+     */
+    public function overridePoints(QuizAnswer $answer, float $points): QuizAttempt
+    {
+        $attempt = DB::transaction(function () use ($answer, $points): QuizAttempt {
+            $attempt = QuizAttempt::whereKey($answer->quiz_attempt_id)->lockForUpdate()->firstOrFail();
+            $points = round(max(0, min($points, (float) $answer->max_points)), 2);
+
+            $answer->forceFill([
+                'points_awarded' => $points,
+                'is_correct' => $points >= (float) $answer->max_points,
+            ])->save();
+
+            $score = (float) $attempt->answers()->sum('points_awarded');
+            $percentage = (float) $attempt->max_score > 0 ? round($score / (float) $attempt->max_score * 100, 2) : 0.0;
+
+            $attempt->forceFill([
+                'score' => $score,
+                'percentage' => $percentage,
+                'passed' => $percentage >= $attempt->quiz->pass_percentage,
+            ])->save();
+
+            return $attempt;
+        });
+
+        QuizAttemptRegraded::dispatch($attempt);
+
+        return $attempt;
     }
 
     /**

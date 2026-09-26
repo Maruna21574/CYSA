@@ -85,4 +85,17 @@
     @if (! empty($snapshot['explanation']))
         <p class="mt-3 rounded-lg bg-slate-50 p-3 text-sm text-slate-700"><span class="font-semibold">{{ __('Vysvetlenie:') }}</span> {{ $snapshot['explanation'] }}</p>
     @endif
+
+    @if (! $isOwner && auth()->user()->can('viewResults', $attempt->quiz) && ! $attempt->isInProgress())
+        <form method="POST" action="{{ route('teacher.attempts.answers.score', [$attempt, $answer]) }}" class="mt-3 flex flex-wrap items-end gap-2 border-t border-slate-100 pt-3">
+            @csrf
+            @method('PATCH')
+            <div>
+                <label for="score-{{ $answer->id }}" class="block text-xs font-medium text-slate-600">{{ __('Upraviť body (max. :max)', ['max' => $fmt($answer->max_points)]) }}</label>
+                <input id="score-{{ $answer->id }}" type="number" name="points" min="0" max="{{ (float) $answer->max_points }}" step="0.25" value="{{ (float) $answer->points_awarded }}"
+                       class="mt-1 block w-28 rounded-lg border border-slate-300 px-2 py-1 text-sm">
+            </div>
+            <x-button variant="secondary" class="py-1">{{ __('Uložiť body') }}</x-button>
+        </form>
+    @endif
 </article>
