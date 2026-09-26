@@ -6,6 +6,7 @@ use App\Enums\AuditAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SchoolRequest;
 use App\Models\School;
+use App\Models\SystemSetting;
 use App\Services\Audit\AuditLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
@@ -32,7 +33,10 @@ class SchoolController extends Controller
 
     public function store(SchoolRequest $request): RedirectResponse
     {
-        $school = School::create($request->validated());
+        $school = School::create([
+            ...$request->validated(),
+            'settings' => ['gamification' => (bool) SystemSetting::get('default_gamification', true)],
+        ]);
 
         $this->audit->log(AuditAction::SchoolCreated, $school, newValues: $request->validated());
 

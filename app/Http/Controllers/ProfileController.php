@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\AuditAction;
 use App\Services\Audit\AuditLogger;
+use App\Services\Users\PersonalDataExporter;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -18,6 +20,19 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         return view('profile.edit', ['user' => $request->user()->load('school')]);
+    }
+
+    /**
+     * GDPR: download of all personal data the platform stores about the signed-in user.
+     */
+    public function export(Request $request, PersonalDataExporter $exporter, AuditLogger $audit): JsonResponse
+    {
+        $audit->log(AuditAction::DataExported, $request->user(), metadata: ['type' => 'personal_data']);
+
+        return response()->json($exporter->export($request->user()), 200, [
+            'Content-Disposition' => 'attachment; filename="moje-udaje-'.now()->format('Ymd').'.json"',
+            'Cache-Control' => 'no-store, private',
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     public function updatePreferences(Request $request): RedirectResponse

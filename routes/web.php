@@ -14,6 +14,7 @@ use App\Http\Controllers\QuestionImageController;
 use App\Http\Controllers\School;
 use App\Http\Controllers\School\ClassroomController;
 use App\Http\Controllers\School\StudentImportController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Student;
 use App\Http\Controllers\Teacher;
 use App\Http\Controllers\UserController;
@@ -50,7 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/read', [NotificationController::class, 'markAllRead'])->name('notifications.read');
 
+    Route::get('/search', SearchController::class)->middleware('throttle:60,1')->name('search');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/export', [ProfileController::class, 'export'])->middleware('throttle:5,1')->name('profile.export');
     Route::put('/profile/preferences', [ProfileController::class, 'updatePreferences'])->name('profile.preferences');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
         ->middleware('throttle:6,1')
@@ -65,11 +69,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/users/{user}/invitation', [UserController::class, 'sendInvitation'])
             ->middleware('throttle:10,1')
             ->name('users.invitation');
+        Route::post('/users/{user}/anonymize', [UserController::class, 'anonymize'])->name('users.anonymize');
     });
 
     Route::prefix('admin')->name('admin.')->middleware('role:super_admin')->group(function () {
         Route::get('/', Admin\DashboardController::class)->name('dashboard');
         Route::resource('schools', SchoolController::class)->except('show');
+        Route::view('/audit-logs', 'admin.audit-logs')->name('audit-logs.index');
+        Route::get('/settings', [Admin\SettingsController::class, 'edit'])->name('settings.edit');
+        Route::put('/settings', [Admin\SettingsController::class, 'update'])->name('settings.update');
     });
 
     Route::prefix('school')->name('school.')->middleware('role:school_admin')->group(function () {

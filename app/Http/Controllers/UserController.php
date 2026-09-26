@@ -76,6 +76,21 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', __('Používateľ bol odstránený.'));
     }
 
+    /**
+     * GDPR erasure of the account (irreversible).
+     */
+    public function anonymize(Request $request, User $user): RedirectResponse
+    {
+        Gate::authorize('delete', $user);
+        abort_if($user->is($request->user()), 403, __('Vlastný účet nemôžete anonymizovať.'));
+
+        $request->validate(['confirmation' => ['required', 'in:ANONYMIZOVAŤ']], ['confirmation.in' => __('Na potvrdenie napíšte ANONYMIZOVAŤ.')]);
+
+        $this->users->anonymize($user);
+
+        return redirect()->route('users.index')->with('success', __('Osobné údaje používateľa boli anonymizované.'));
+    }
+
     public function sendInvitation(User $user): RedirectResponse
     {
         Gate::authorize('update', $user);

@@ -1,0 +1,1 @@
+@include('errors.layout', ['code' => 410, 'title' => __('Už nie je dostupné'), 'message' => (isset($exception) && $exception->getMessage() !== '') ? $exception->getMessage() : __('Táto položka bola zrušená a už nie je dostupná.')])

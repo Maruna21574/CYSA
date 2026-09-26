@@ -35,5 +35,10 @@
                 <div><x-button>{{ __('Zmeniť heslo') }}</x-button></div>
             </x-card>
         </form>
+
+        <x-card :title="__('Moje údaje (GDPR)')">
+            <p class="text-sm text-slate-600">{{ __('Stiahnite si všetky údaje, ktoré o vás platforma uchováva (účet, triedy, progres, výsledky testov, certifikáty, notifikácie). Ak chcete účet vymazať, obráťte sa na administrátora školy.') }}</p>
+            <x-link-button variant="secondary" class="mt-3" :href="route('profile.export')"><x-icon name="download" class="size-4" />{{ __('Stiahnuť moje údaje (JSON)') }}</x-link-button>
+        </x-card>
     </div>
 </x-layouts::app>

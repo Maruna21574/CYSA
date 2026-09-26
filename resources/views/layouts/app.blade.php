@@ -76,7 +76,11 @@
                 <x-icon name="menu" class="size-6" />
             </button>
 
-            <div class="flex-1"></div>
+            <form method="GET" action="{{ route('search') }}" class="flex-1" role="search">
+                <label for="global-search" class="sr-only">{{ __('Hľadať v aplikácii') }}</label>
+                <input id="global-search" name="q" type="search" maxlength="100" placeholder="{{ __('Hľadať kurzy, materiály…') }}" value="{{ request()->routeIs('search') ? request('q') : '' }}"
+                       class="block w-full max-w-md rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm placeholder:text-slate-400 focus:border-indigo-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+            </form>
 
             <livewire:notification-bell />
 
@@ -120,6 +124,8 @@
                 </div>
             </div>
         </header>
+
+        <x-system-banner />
 
         <main id="main" class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
             <div class="mx-auto max-w-7xl">

@@ -1,0 +1,1 @@
+@include('errors.layout', ['code' => 403, 'title' => __('Prístup zamietnutý'), 'message' => (isset($exception) && $exception->getMessage() !== '' && $exception->getMessage() !== 'This action is unauthorized.') ? $exception->getMessage() : __('Na túto stránku nemáte oprávnenie. Ak si myslíte, že ide o chybu, obráťte sa na učiteľa alebo administrátora školy.')])

@@ -31,5 +31,14 @@
                 <x-button variant="danger">{{ __('Odstrániť účet') }}</x-button>
             </form>
         </x-card>
+
+        <x-card :title="__('Anonymizácia (GDPR)')" class="mt-4 max-w-2xl border-red-200">
+            <p class="text-sm text-slate-600">{{ __('Nevratne nahradí meno a e-mail zástupnými údajmi, zruší účet, členstvo v triedach a certifikáty. Pseudonymizované výsledky testov zostanú pre štatistiky.') }}</p>
+            <form method="POST" action="{{ route('users.anonymize', $user) }}" class="mt-3 flex flex-wrap items-end gap-2">
+                @csrf
+                <x-form.input name="confirmation" :label="__('Na potvrdenie napíšte ANONYMIZOVAŤ')" autocomplete="off" class="max-w-xs" />
+                <x-button variant="danger">{{ __('Anonymizovať') }}</x-button>
+            </form>
+        </x-card>
     @endunless
 </x-layouts::app>

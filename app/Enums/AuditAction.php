@@ -61,6 +61,9 @@ enum AuditAction: string
     case CertificateRevoked = 'certificate.revoked';
     case CertificateSettingsChanged = 'certificate.settings_changed';
 
+    case SystemSettingsChanged = 'system.settings_changed';
+    case UserAnonymized = 'user.anonymized';
+
     public function label(): string
     {
         return match ($this) {
@@ -109,6 +112,8 @@ enum AuditAction: string
             self::CertificateIssued => __('Vydanie certifikátu'),
             self::CertificateRevoked => __('Zrušenie certifikátu'),
             self::CertificateSettingsChanged => __('Zmena podmienok certifikátu'),
+            self::SystemSettingsChanged => __('Zmena systémových nastavení'),
+            self::UserAnonymized => __('Anonymizácia používateľa'),
         };
     }
 }

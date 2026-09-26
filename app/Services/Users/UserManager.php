@@ -101,6 +101,42 @@ class UserManager
         $this->audit->log(AuditAction::UserDeleted, $user, $this->auditable($user->getAttributes()));
     }
 
+    /**
+     * GDPR erasure: personal data are replaced by placeholders, the account is closed and
+     * removed from classrooms. Pseudonymous results (research code) stay for statistics;
+     * certificates are revoked and their holder name anonymized.
+     */
+    public function anonymize(User $user): void
+    {
+        $originalEmail = $user->email;
+
+        DB::transaction(function () use ($user, $originalEmail): void {
+            $user->forceFill([
+                'first_name' => __('Anonymizovaný'),
+                'last_name' => __('používateľ'),
+                'email' => "anonymized-{$user->id}@deleted.invalid",
+                'password' => $this->unusablePasswordHash ??= Hash::make(Str::password(40)),
+                'remember_token' => null,
+                'is_active' => false,
+                'email_notifications' => false,
+            ])->save();
+
+            $user->classrooms()->detach();
+            $user->notifications()->delete();
+            DB::table('password_reset_tokens')->where('email', $originalEmail)->delete();
+            DB::table('sessions')->where('user_id', $user->id)->delete();
+            DB::table('certificates')->where('user_id', $user->id)->update([
+                'holder_name' => __('Anonymizovaný používateľ'),
+                'revoked_at' => DB::raw('COALESCE(revoked_at, CURRENT_TIMESTAMP)'),
+                'revoked_reason' => 'GDPR',
+            ]);
+
+            $user->delete();
+        });
+
+        $this->audit->log(AuditAction::UserAnonymized, $user, metadata: ['user_id' => $user->id]);
+    }
+
     public function invite(User $user): void
     {
         $token = Password::broker('invitations')->createToken($user);
