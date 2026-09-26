@@ -7,6 +7,7 @@
     <title>{{ isset($title) ? $title.' · '.config('app.name') : config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    @stack('head')
 </head>
 <body class="h-full font-sans text-slate-900 antialiased">
     <x-toasts />

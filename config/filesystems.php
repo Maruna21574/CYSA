@@ -30,6 +30,17 @@ return [
 
     'disks' => [
 
+        // Private study materials and course covers. Never publicly reachable - files are served
+        // only through MaterialController / CourseCoverController after an authorization check.
+        // Switch to S3 by setting MATERIALS_DISK=s3.
+        'materials' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/materials'),
+            'serve' => false,
+            'throw' => false,
+            'report' => false,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

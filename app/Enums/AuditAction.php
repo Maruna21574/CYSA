@@ -35,6 +35,17 @@ enum AuditAction: string
     case ClassroomMemberAdded = 'classroom.member_added';
     case ClassroomMemberRemoved = 'classroom.member_removed';
 
+    case CourseCreated = 'course.created';
+    case CourseUpdated = 'course.updated';
+    case CoursePublished = 'course.published';
+    case CourseUnpublished = 'course.unpublished';
+    case CourseArchived = 'course.archived';
+    case CourseDeleted = 'course.deleted';
+    case CourseAssigned = 'course.assigned';
+    case CourseUnassigned = 'course.unassigned';
+    case MaterialUploaded = 'material.uploaded';
+    case MaterialDeleted = 'material.deleted';
+
     public function label(): string
     {
         return match ($this) {
@@ -61,6 +72,16 @@ enum AuditAction: string
             self::ClassroomDeleted => __('Odstránenie triedy'),
             self::ClassroomMemberAdded => __('Pridanie člena triedy'),
             self::ClassroomMemberRemoved => __('Odobratie člena triedy'),
+            self::CourseCreated => __('Vytvorenie kurzu'),
+            self::CourseUpdated => __('Úprava kurzu'),
+            self::CoursePublished => __('Publikovanie kurzu'),
+            self::CourseUnpublished => __('Stiahnutie kurzu do konceptu'),
+            self::CourseArchived => __('Archivácia kurzu'),
+            self::CourseDeleted => __('Odstránenie kurzu'),
+            self::CourseAssigned => __('Priradenie kurzu'),
+            self::CourseUnassigned => __('Zrušenie priradenia kurzu'),
+            self::MaterialUploaded => __('Nahranie materiálu'),
+            self::MaterialDeleted => __('Odstránenie materiálu'),
         };
     }
 }

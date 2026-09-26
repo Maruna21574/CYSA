@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
             throw new RuntimeException('Demo data must not be seeded in production. Use "php artisan app:create-super-admin" instead.');
         }
 
-        $this->call(DemoSeeder::class);
+        $this->call([DemoSeeder::class, DemoCourseSeeder::class]);
     }
 }

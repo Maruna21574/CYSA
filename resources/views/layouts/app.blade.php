@@ -11,6 +11,7 @@
     <title>{{ isset($title) ? $title.' · '.config('app.name') : config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    @stack('head')
 </head>
 <body class="h-full font-sans text-slate-900 antialiased" x-data="{ sidebarOpen: false }" @keydown.escape.window="sidebarOpen = false">
     <a href="#main" class="sr-only z-50 rounded bg-white px-4 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2">{{ __('Preskočiť na obsah') }}</a>

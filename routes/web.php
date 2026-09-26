@@ -3,8 +3,12 @@
 use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LearningController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\School\ClassroomController;
 use App\Http\Controllers\School\StudentImportController;
+use App\Http\Controllers\Student;
+use App\Http\Controllers\Teacher;
 use App\Http\Controllers\UserController;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
@@ -56,9 +60,36 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('teacher')->name('teacher.')->middleware('role:teacher,school_admin')->group(function () {
         Route::view('/', 'teacher.dashboard')->name('dashboard');
+
+        Route::resource('courses', Teacher\CourseController::class);
+        Route::patch('/courses/{course}/status', Teacher\CourseStatusController::class)->name('courses.status');
+        Route::get('/courses/{course}/assignments', [Teacher\CourseController::class, 'assignments'])->name('courses.assignments');
+        Route::controller(Teacher\ChapterController::class)
+            ->prefix('/courses/{course}/chapters')
+            ->name('courses.chapters.')
+            ->scopeBindings()
+            ->group(function () {
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{chapter}/edit', 'edit')->name('edit');
+                Route::put('/{chapter}', 'update')->name('update');
+                Route::delete('/{chapter}', 'destroy')->name('destroy');
+            });
     });
 
     Route::prefix('student')->name('student.')->middleware('role:student')->group(function () {
         Route::view('/', 'student.dashboard')->name('dashboard');
+        Route::get('/courses', [Student\CourseController::class, 'index'])->name('courses.index');
     });
+
+    /*
+    | Learning pages and private files, shared by students and teachers (preview).
+    | Access is decided by CoursePolicy / ChapterPolicy / MaterialPolicy.
+    */
+    Route::get('/courses/{course}', [LearningController::class, 'course'])->name('courses.show');
+    Route::get('/courses/{course}/chapters/{chapter}', [LearningController::class, 'chapter'])
+        ->scopeBindings()
+        ->name('chapters.show');
+    Route::get('/courses/{course}/cover', [MaterialController::class, 'cover'])->name('courses.cover');
+    Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
 });

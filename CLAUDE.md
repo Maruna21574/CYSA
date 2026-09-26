@@ -9,3 +9,6 @@
 - Livewire komponenty sú class-based (`app/Livewire`, view v `resources/views/livewire`), layouty `layouts::app` / `layouts::guest`.
 - Bezpečnostné udalosti zapisuj cez `App\Services\Audit\AuditLogger` s hodnotou z `App\Enums\AuditAction`; `audit_logs` je append-only.
 - AI generovanie otázok je posledná fáza projektu.
+- Súbory (materiály, obálky kurzov) iba cez `App\Services\Files\MaterialStorage` na disku `config('cysa.materials.disk')`; upload validuje `App\Rules\AllowedMaterialFile` (prípona + finfo obsah). Nikdy nie verejný disk.
+- HTML obsah kapitol sa sanitizuje v mutátore `Chapter::content` (`App\Support\ContentSanitizer`); pri novom rich-text poli použi rovnaký sanitizér.
+- Prístup ku kurzu: `CoursePolicy` (autor / school admin školy; študent iba publikovaný + priradený cez `Course::availableTo`).
