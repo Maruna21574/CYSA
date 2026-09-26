@@ -46,6 +46,13 @@ enum AuditAction: string
     case MaterialUploaded = 'material.uploaded';
     case MaterialDeleted = 'material.deleted';
 
+    case QuizCreated = 'quiz.created';
+    case QuizUpdated = 'quiz.updated';
+    case QuizPublished = 'quiz.published';
+    case QuizUnpublished = 'quiz.unpublished';
+    case QuizArchived = 'quiz.archived';
+    case QuizDeleted = 'quiz.deleted';
+
     public function label(): string
     {
         return match ($this) {
@@ -82,6 +89,12 @@ enum AuditAction: string
             self::CourseUnassigned => __('Zrušenie priradenia kurzu'),
             self::MaterialUploaded => __('Nahranie materiálu'),
             self::MaterialDeleted => __('Odstránenie materiálu'),
+            self::QuizCreated => __('Vytvorenie testu'),
+            self::QuizUpdated => __('Úprava testu'),
+            self::QuizPublished => __('Publikovanie testu'),
+            self::QuizUnpublished => __('Stiahnutie testu do konceptu'),
+            self::QuizArchived => __('Archivácia testu'),
+            self::QuizDeleted => __('Odstránenie testu'),
         };
     }
 }

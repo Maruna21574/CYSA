@@ -4,6 +4,7 @@ namespace App\Support;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -36,9 +37,9 @@ class Positioning
     }
 
     /**
-     * @param  Builder<Model>  $siblings
+     * @param  Builder<Model>|QueryBuilder  $siblings
      */
-    public static function next(Builder $siblings): int
+    public static function next(Builder|QueryBuilder $siblings): int
     {
         return ((int) $siblings->max('position')) + 1;
     }

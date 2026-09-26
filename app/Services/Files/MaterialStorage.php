@@ -6,6 +6,7 @@ use App\Enums\MaterialType;
 use App\Models\Chapter;
 use App\Models\Course;
 use App\Models\Material;
+use App\Models\Question;
 use App\Rules\AllowedMaterialFile;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -46,6 +47,18 @@ class MaterialStorage
     public function storeCover(UploadedFile $file, Course $course): string
     {
         return $this->put($file, "courses/{$course->id}/cover", AllowedMaterialFile::extensionOf($file));
+    }
+
+    public function storeQuestionImage(UploadedFile $file, Question $question): string
+    {
+        return $this->put($file, "questions/{$question->id}", AllowedMaterialFile::extensionOf($file));
+    }
+
+    public function imageResponse(string $path): Response
+    {
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        return $this->respond($this->disk(), $path, AllowedMaterialFile::CANONICAL_MIME[$extension] ?? 'image/jpeg', 'image.'.$extension, false);
     }
 
     public function delete(?string $path, ?string $disk = null): void

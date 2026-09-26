@@ -98,6 +98,14 @@ class Course extends Model
         return $this->hasMany(CourseAssignment::class);
     }
 
+    /**
+     * @return HasMany<Quiz, $this>
+     */
+    public function quizzes(): HasMany
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
     public function isPublished(): bool
     {
         return $this->status === CourseStatus::Published;

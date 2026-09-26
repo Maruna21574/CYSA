@@ -5,11 +5,13 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\QuestionImageController;
 use App\Http\Controllers\School\ClassroomController;
 use App\Http\Controllers\School\StudentImportController;
 use App\Http\Controllers\Student;
 use App\Http\Controllers\Teacher;
 use App\Http\Controllers\UserController;
+use App\Livewire;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\ResetPassword;
@@ -75,6 +77,13 @@ Route::middleware('auth')->group(function () {
                 Route::put('/{chapter}', 'update')->name('update');
                 Route::delete('/{chapter}', 'destroy')->name('destroy');
             });
+
+        Route::livewire('/questions', Livewire\Teacher\QuestionBank::class)->name('questions.index');
+        Route::livewire('/questions/create', Livewire\Teacher\QuestionEditor::class)->name('questions.create');
+        Route::livewire('/questions/{question}/edit', Livewire\Teacher\QuestionEditor::class)->name('questions.edit');
+
+        Route::resource('quizzes', Teacher\QuizController::class);
+        Route::patch('/quizzes/{quiz}/status', Teacher\QuizStatusController::class)->name('quizzes.status');
     });
 
     Route::prefix('student')->name('student.')->middleware('role:student')->group(function () {
@@ -92,4 +101,5 @@ Route::middleware('auth')->group(function () {
         ->name('chapters.show');
     Route::get('/courses/{course}/cover', [MaterialController::class, 'cover'])->name('courses.cover');
     Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
+    Route::get('/questions/{question}/image', QuestionImageController::class)->name('questions.image');
 });
