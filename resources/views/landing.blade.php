@@ -68,11 +68,11 @@
 
             <div class="flex items-center gap-2">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">
+                    <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-100 hover:text-brand-700">
                         <x-icon name="home" class="size-4" />{{ __('Do aplikácie') }}
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">
+                    <a href="{{ route('login') }}" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-100 hover:text-brand-700">
                         <x-icon name="lock" class="size-4" />{{ __('Prihlásenie') }}
                     </a>
                 @endauth
@@ -113,7 +113,7 @@
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-3">
-                    <a href="#kontakt" class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white shadow-sm hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+                    <a href="#kontakt" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-brand-100 hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                         {{ __('Chcem ukážku pre školu') }}
                     </a>
                     <a href="#kurzy" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50">
@@ -169,7 +169,7 @@
                                 <li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 size-4 shrink-0 text-emerald-600" />{{ __($item) }}</li>
                             @endforeach
                         </ul>
-                        <a href="#kontakt" class="mt-8 inline-flex justify-center rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">{{ __('Mám záujem') }}</a>
+                        <a href="#kontakt" class="mt-8 inline-flex justify-center rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-100 hover:text-brand-700">{{ __('Mám záujem') }}</a>
                     </article>
                 @endforeach
             </div>
@@ -283,7 +283,7 @@
                                 <x-form.checkbox name="consent" :label="__('Súhlasím so spracovaním uvedených údajov na účel odpovede na moju správu.')" />
                             </div>
                             <div class="sm:col-span-2">
-                                <button type="submit" class="w-full rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 sm:w-auto">{{ __('Odoslať správu') }}</button>
+                                <button type="submit" class="w-full rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white transition hover:bg-brand-100 hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 sm:w-auto">{{ __('Odoslať správu') }}</button>
                             </div>
                         </form>
                     @endif
@@ -309,7 +309,7 @@
                     <p class="mt-4 max-w-xs leading-6 text-slate-600">
                         {{ __('Online vzdelávacia platforma kybernetickej bezpečnosti pre základné a stredné školy. Kurzy, testy a certifikáty na jednom mieste.') }}
                     </p>
-                    <a href="#kontakt" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 font-semibold text-white shadow-sm hover:bg-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+                    <a href="#kontakt" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 font-semibold text-white shadow-sm transition hover:bg-brand-100 hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                         {{ __('Chcem ukážku pre školu') }}<x-icon name="chevron-right" class="size-4" />
                     </a>
                 </div>
