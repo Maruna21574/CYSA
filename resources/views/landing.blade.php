@@ -251,24 +251,44 @@
         </section>
 
         {{-- Contact --}}
-        <section id="kontakt" class="scroll-mt-28 bg-slate-900 py-24 text-white" aria-labelledby="kontakt-nadpis">
-            <div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-5">
+        <section id="kontakt" class="relative isolate scroll-mt-28 overflow-hidden bg-brand-600 py-24 text-white" aria-labelledby="kontakt-nadpis">
+            {{-- Decorative circles --}}
+            <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+                <div class="absolute -top-40 -left-40 size-[32rem] rounded-full border-[5rem] border-white/5"></div>
+                <div class="absolute -right-24 -bottom-48 size-[28rem] rounded-full bg-accent/20 blur-3xl"></div>
+            </div>
+
+            <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-5">
                 <div class="lg:col-span-2">
-                    <h2 id="kontakt-nadpis" class="text-3xl font-extrabold tracking-tight sm:text-4xl">{{ __('Kontakt') }}</h2>
-                    <p class="mt-4 text-slate-300">{{ __('Chcete platformu vyskúšať vo vašej škole či firme alebo máte otázku ku kurzom? Napíšte nám – ozveme sa čo najskôr.') }}</p>
-                    @if (config('cysa.contact_email'))
-                        <p class="mt-8 flex items-center gap-3 text-slate-200">
-                            <x-icon name="bell" class="size-5 text-accent" />
-                            <a href="mailto:{{ config('cysa.contact_email') }}" class="font-semibold hover:underline">{{ config('cysa.contact_email') }}</a>
-                        </p>
-                    @endif
-                    <p class="mt-3 flex items-center gap-3 text-slate-200">
-                        <x-icon name="badge" class="size-5 text-accent" />
-                        <a href="{{ route('certificates.verify') }}" class="font-semibold hover:underline">{{ __('Overenie certifikátu') }}</a>
-                    </p>
+                    <p class="text-sm font-bold tracking-wider text-brand-200 uppercase">{{ __('Kontakt') }}</p>
+                    <h2 id="kontakt-nadpis" class="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{{ __('Máte záujem alebo otázku?') }}</h2>
+                    <p class="mt-4 text-lg leading-8 text-brand-100">{{ __('Chcete platformu vyskúšať vo vašej škole či firme alebo máte otázku ku kurzom? Napíšte nám – ozveme sa čo najskôr.') }}</p>
+
+                    <ul class="mt-10 flex flex-col gap-4">
+                        @if (config('cysa.contact_email'))
+                            <li>
+                                <a href="mailto:{{ config('cysa.contact_email') }}" class="group flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition hover:bg-white/10">
+                                    <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-white"><x-icon name="mail" class="size-5" /></span>
+                                    <span>
+                                        <span class="block text-xs font-semibold tracking-wider text-brand-200 uppercase">{{ __('E-mail') }}</span>
+                                        <span class="block font-semibold group-hover:underline">{{ config('cysa.contact_email') }}</span>
+                                    </span>
+                                </a>
+                            </li>
+                        @endif
+                        <li>
+                            <a href="{{ route('certificates.verify') }}" class="group flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition hover:bg-white/10">
+                                <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-white"><x-icon name="badge" class="size-5" /></span>
+                                <span>
+                                    <span class="block text-xs font-semibold tracking-wider text-brand-200 uppercase">{{ __('Certifikáty') }}</span>
+                                    <span class="block font-semibold group-hover:underline">{{ __('Overenie certifikátu') }}</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="rounded-2xl bg-white p-6 text-slate-900 shadow-xl sm:p-8 lg:col-span-3">
+                <div class="rounded-3xl bg-white p-6 text-slate-900 shadow-2xl ring-1 ring-black/5 sm:p-10 lg:col-span-3">
                     @if (session('contact_sent'))
                         <div class="flex flex-col items-center py-10 text-center" role="status">
                             <span class="rounded-full bg-accent/15 p-3 text-accent"><x-icon name="check" class="size-8" /></span>
@@ -276,6 +296,8 @@
                             <p class="mt-1 text-slate-600">{{ __('Ozveme sa vám čo najskôr.') }}</p>
                         </div>
                     @else
+                        <h3 class="text-xl font-extrabold text-brand-700">{{ __('Napíšte nám') }}</h3>
+                        <p class="mt-1 mb-6 text-sm text-slate-500">{{ __('Polia označené ako nepovinné nemusíte vypĺňať.') }}</p>
                         @if (session('error'))
                             <p class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-700" role="alert">{{ session('error') }}</p>
                         @endif
@@ -298,7 +320,9 @@
                                 <x-form.checkbox name="consent" :label="__('Súhlasím so spracovaním uvedených údajov na účel odpovede na moju správu.')" />
                             </div>
                             <div class="sm:col-span-2">
-                                <button type="submit" class="w-full rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white transition hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 sm:w-auto">{{ __('Odoslať správu') }}</button>
+                                <button type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 sm:w-auto">
+                                    <x-icon name="mail" class="size-5" />{{ __('Odoslať správu') }}
+                                </button>
                             </div>
                         </form>
                     @endif
