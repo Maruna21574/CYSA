@@ -4,7 +4,7 @@
 **{{ __('Meno') }}:** {{ $data['name'] }}
 **{{ __('E-mail') }}:** {{ $data['email'] }}
 @if ($data['school'])
-**{{ __('Škola') }}:** {{ $data['school'] }}
+**{{ __('Škola / firma') }}:** {{ $data['school'] }}
 @endif
 **{{ __('Téma') }}:** {{ $data['subject'] }}
 

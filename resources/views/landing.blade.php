@@ -14,19 +14,20 @@
         ['building', 'Pre školy', 'Správa školy', ['Triedy a študenti na jednom mieste', 'Import študentov z CSV', 'Prehľad výsledkov celej školy', 'Bezpečné a v súlade s GDPR']],
         ['book', 'Pre učiteľov', 'Kurzy a testy', ['Kurzy, kapitoly a materiály', 'Testy so 6 typmi otázok', 'AI návrhy otázok z materiálov', 'Analytika a export výsledkov']],
         ['trophy', 'Pre študentov', 'Učenie hrou', ['Kurzy krok za krokom', 'Okamžité vyhodnotenie testov', 'Body, levely a odznaky', 'Certifikát s overením cez QR']],
+        ['users', 'Pre firmy', 'Školenie zamestnancov', ['Povinné základy: phishing, heslá, GDPR', 'Hromadný import zamestnancov', 'Prehľad, kto má kurz splnený', 'Certifikát ako doklad o absolvovaní']],
     ];
 
     $features = [
         'Vstupný a výstupný test na meranie pokroku', 'Automatické vyhodnotenie všetkých typov otázok', 'Certifikáty v PDF s QR overením',
         'Náhodné poradie otázok a časový limit', 'Notifikácie o nových testoch a termínoch', 'Analytika úspešnosti podľa tém',
-        'Pozvánky pre študentov e-mailom', 'Oznámenia učiteľa pre celú triedu', 'Audit a ochrana osobných údajov',
+        'Pozvánky pre žiakov aj zamestnancov e-mailom', 'Oznámenia pre celú triedu alebo tím', 'Audit a ochrana osobných údajov',
     ];
 
     $steps = [
-        ['Škola sa zaregistruje', 'Administrátor školy dostane prístup a pridá učiteľov a triedy.'],
-        ['Učiteľ pripraví kurz', 'Použije hotový kurz alebo si vytvorí vlastný – s materiálmi a testami.'],
-        ['Študenti sa učia', 'Prechádzajú kapitoly, riešia testy a hneď vidia výsledok aj vysvetlenie.'],
-        ['Vidíte pokrok', 'Porovnanie vstupného a výstupného testu ukáže, čo sa žiaci naozaj naučili.'],
+        ['Organizácia sa zaregistruje', 'Administrátor školy alebo firmy dostane prístup a pridá učiteľov, školiteľov a skupiny.'],
+        ['Pripraví sa kurz', 'Použijete hotový kurz alebo si vytvoríte vlastný – s materiálmi a testami.'],
+        ['Účastníci sa učia', 'Žiaci aj zamestnanci prechádzajú kapitoly, riešia testy a hneď vidia výsledok aj vysvetlenie.'],
+        ['Vidíte pokrok', 'Vstupný a výstupný test ukáže, čo sa ľudia naozaj naučili, a prehľad, kto má povinný kurz splnený.'],
     ];
 @endphp
 <!DOCTYPE html>
@@ -34,9 +35,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ __('CYSA – online vzdelávacia platforma kybernetickej bezpečnosti pre základné a stredné školy. Kurzy, testy, certifikáty a analytika pre učiteľov.') }}">
+    <meta name="description" content="{{ __('CYSA – online vzdelávacia platforma kybernetickej bezpečnosti pre školy aj firmy. Kurzy, testy a certifikáty pre žiakov aj zamestnancov – phishing, heslá, GDPR a ďalšie základy.') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name') }} · {{ __('Kybernetická bezpečnosť pre školy') }}</title>
+    <title>{{ config('app.name') }} · {{ __('Kybernetická bezpečnosť pre školy a firmy') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -98,23 +99,24 @@
         <section class="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-16 pb-10 sm:px-6 lg:grid-cols-2 lg:pt-24">
             <div>
                 <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
-                    <x-icon name="sparkles" class="size-4" />{{ __('Pre základné a stredné školy') }}
+                    <x-icon name="sparkles" class="size-4" />{{ __('Pre školy aj firmy') }}
                 </p>
                 <h1 class="text-4xl leading-tight font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
                     {{ __('Kybernetická') }}<br>
                     <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('bezpečnosť') }}</span> {{ __('pre') }}
-                    <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('školy') }}</span>
+                    <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('školy') }}</span> {{ __('a') }}
+                    <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('firmy') }}</span>
                 </h1>
-                <p class="mt-2 -rotate-3 pl-24 text-3xl font-semibold text-emerald-600 italic sm:pl-40" aria-hidden="true">{{ __('hravo a bezpečne') }}</p>
+                <p class="mt-2 -rotate-3 pl-24 text-3xl font-semibold text-accent italic sm:pl-40" aria-hidden="true">{{ __('hravo a bezpečne') }}</p>
 
                 <p class="mt-8 max-w-lg text-lg text-slate-700">
-                    {{ __('Online kurzy, testy a certifikáty, ktoré naučia žiakov chrániť heslá, rozpoznať phishing a bezpečne sa správať na internete.') }}
-                    <strong class="font-semibold text-slate-900">{{ __('Učiteľ vidí pokrok celej triedy.') }}</strong>
+                    {{ __('Online kurzy, testy a certifikáty, ktoré naučia žiakov aj zamestnancov chrániť heslá, rozpoznať phishing a bezpečne sa správať na internete.') }}
+                    <strong class="font-semibold text-slate-900">{{ __('Učiteľ aj zamestnávateľ vidí, kto má kurz splnený.') }}</strong>
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="#kontakt" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
-                        {{ __('Chcem ukážku pre školu') }}
+                        {{ __('Chcem ukážku') }}
                     </a>
                     <a href="#kurzy" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50">
                         {{ __('Pozrieť témy kurzov') }}<x-icon name="chevron-right" class="size-4" />
@@ -134,7 +136,7 @@
                     <ul class="mt-4 flex flex-col gap-2 text-sm">
                         <li class="rounded-lg border border-slate-200 px-4 py-2.5">Janko2010</li>
                         <li class="rounded-lg border border-slate-200 px-4 py-2.5">qwerty123</li>
-                        <li class="flex items-center justify-between rounded-lg border border-emerald-500 bg-emerald-50 px-4 py-2.5 font-medium text-emerald-900">ModryKocurSkaceCezPlot!7 <x-icon name="check-circle" class="size-5 text-emerald-600" /></li>
+                        <li class="flex items-center justify-between rounded-lg border border-accent bg-accent/10 px-4 py-2.5 font-medium text-brand-700">ModryKocurSkaceCezPlot!7 <x-icon name="check-circle" class="size-5 text-accent" /></li>
                         <li class="rounded-lg border border-slate-200 px-4 py-2.5">Heslo1234</li>
                     </ul>
                 </div>
@@ -158,15 +160,15 @@
         {{-- Services --}}
         <section id="sluzby" class="mx-auto max-w-6xl scroll-mt-28 px-4 pt-16 sm:px-6" aria-labelledby="sluzby-nadpis">
             <h2 id="sluzby-nadpis" class="sr-only">{{ __('Služby') }}</h2>
-            <div class="grid gap-6 md:grid-cols-3">
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($services as [$icon, $audience, $title, $items])
                     <article class="flex flex-col rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:shadow-lg">
                         <span class="mx-auto mb-4 rounded-2xl bg-brand-50 p-4 text-brand-600"><x-icon :name="$icon" class="size-10" /></span>
                         <p class="text-sm font-semibold text-slate-600">{{ __($audience) }}</p>
-                        <h3 class="mt-1 text-2xl font-extrabold text-emerald-600">{{ __($title) }}</h3>
+                        <h3 class="mt-1 text-2xl font-extrabold text-accent">{{ __($title) }}</h3>
                         <ul class="mt-6 flex flex-col gap-2 text-left text-sm text-slate-700">
                             @foreach ($items as $item)
-                                <li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 size-4 shrink-0 text-emerald-600" />{{ __($item) }}</li>
+                                <li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 size-4 shrink-0 text-accent" />{{ __($item) }}</li>
                             @endforeach
                         </ul>
                         <a href="#kontakt" class="mt-8 inline-flex justify-center rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent">{{ __('Mám záujem') }}</a>
@@ -185,6 +187,9 @@
                 <p class="mt-4 text-slate-700">
                     {{ __('Naším cieľom je, aby sa bezpečné správanie na internete učilo prakticky, na príkladoch zo života žiakov – a aby škola vedela zmerať, čo sa žiaci naozaj naučili.') }}
                 </p>
+                <p class="mt-4 text-slate-700">
+                    {{ __('Rovnaké základy – rozpoznať phishing, chrániť heslá a osobné údaje – dnes potrebuje každý zamestnanec. Preto CYSA ponúka kurzy aj firmám a organizáciám ako povinné bezpečnostné školenie s dokladom o absolvovaní.') }}
+                </p>
             </div>
             <dl class="grid grid-cols-2 gap-4">
                 @foreach ([['8', 'tém kybernetickej bezpečnosti'], ['6', 'typov otázok v testoch'], ['24/7', 'prístup z počítača aj mobilu'], ['GDPR', 'bezpečné spracovanie údajov']] as [$value, $label])
@@ -200,7 +205,7 @@
         <section id="kurzy" class="scroll-mt-28 bg-slate-50 py-24" aria-labelledby="kurzy-nadpis">
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <h2 id="kurzy-nadpis" class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">{{ __('Aké kurzy u nás nájdete') }}</h2>
-                <p class="mt-3 max-w-2xl text-slate-700">{{ __('Každá téma obsahuje výklad, študijné materiály a krátke testy s vysvetlením správnych odpovedí. Učitelia si môžu vytvárať aj vlastné kurzy.') }}</p>
+                <p class="mt-3 max-w-2xl text-slate-700">{{ __('Každá téma obsahuje výklad, študijné materiály a krátke testy s vysvetlením správnych odpovedí. Učitelia aj firemní školitelia si môžu vytvárať vlastné kurzy.') }}</p>
 
                 <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach ($topics as [$icon, $title, $text])
@@ -220,14 +225,14 @@
             <ol class="mt-10 grid gap-6 md:grid-cols-4">
                 @foreach ($steps as [$title, $text])
                     <li class="relative rounded-2xl border border-slate-200 p-6">
-                        <span class="flex size-10 items-center justify-center rounded-full bg-emerald-600 text-lg font-bold text-white">{{ $loop->iteration }}</span>
+                        <span class="flex size-10 items-center justify-center rounded-full bg-accent text-lg font-bold text-white">{{ $loop->iteration }}</span>
                         <h3 class="mt-4 font-bold text-slate-900">{{ __($title) }}</h3>
                         <p class="mt-2 text-sm text-slate-600">{{ __($text) }}</p>
                     </li>
                 @endforeach
             </ol>
 
-            <h3 class="mt-20 text-2xl font-extrabold text-slate-900">{{ __('Všetko, čo škola potrebuje, na jednom mieste') }}</h3>
+            <h3 class="mt-20 text-2xl font-extrabold text-slate-900">{{ __('Všetko, čo škola alebo firma potrebuje, na jednom mieste') }}</h3>
             <ul class="mt-6 grid gap-x-8 gap-y-3 text-slate-700 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($features as $feature)
                     <li class="flex items-start gap-2"><x-icon name="check-circle" class="mt-0.5 size-5 shrink-0 text-brand-600" />{{ __($feature) }}</li>
@@ -240,15 +245,15 @@
             <div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-5">
                 <div class="lg:col-span-2">
                     <h2 id="kontakt-nadpis" class="text-3xl font-extrabold tracking-tight sm:text-4xl">{{ __('Kontakt') }}</h2>
-                    <p class="mt-4 text-slate-300">{{ __('Chcete platformu vyskúšať vo vašej škole alebo máte otázku ku kurzom? Napíšte nám – ozveme sa čo najskôr.') }}</p>
+                    <p class="mt-4 text-slate-300">{{ __('Chcete platformu vyskúšať vo vašej škole či firme alebo máte otázku ku kurzom? Napíšte nám – ozveme sa čo najskôr.') }}</p>
                     @if (config('cysa.contact_email'))
                         <p class="mt-8 flex items-center gap-3 text-slate-200">
-                            <x-icon name="bell" class="size-5 text-emerald-400" />
+                            <x-icon name="bell" class="size-5 text-accent" />
                             <a href="mailto:{{ config('cysa.contact_email') }}" class="font-semibold hover:underline">{{ config('cysa.contact_email') }}</a>
                         </p>
                     @endif
                     <p class="mt-3 flex items-center gap-3 text-slate-200">
-                        <x-icon name="badge" class="size-5 text-emerald-400" />
+                        <x-icon name="badge" class="size-5 text-accent" />
                         <a href="{{ route('certificates.verify') }}" class="font-semibold hover:underline">{{ __('Overenie certifikátu') }}</a>
                     </p>
                 </div>
@@ -256,7 +261,7 @@
                 <div class="rounded-2xl bg-white p-6 text-slate-900 shadow-xl sm:p-8 lg:col-span-3">
                     @if (session('contact_sent'))
                         <div class="flex flex-col items-center py-10 text-center" role="status">
-                            <span class="rounded-full bg-emerald-100 p-3 text-emerald-600"><x-icon name="check" class="size-8" /></span>
+                            <span class="rounded-full bg-accent/15 p-3 text-accent"><x-icon name="check" class="size-8" /></span>
                             <p class="mt-4 text-xl font-bold">{{ __('Ďakujeme, správa bola odoslaná.') }}</p>
                             <p class="mt-1 text-slate-600">{{ __('Ozveme sa vám čo najskôr.') }}</p>
                         </div>
@@ -274,7 +279,7 @@
 
                             <x-form.input name="name" :label="__('Meno a priezvisko')" required maxlength="100" autocomplete="name" />
                             <x-form.input name="email" type="email" :label="__('E-mail')" required maxlength="255" autocomplete="email" />
-                            <x-form.input name="school" :label="__('Škola (nepovinné)')" maxlength="150" autocomplete="organization" />
+                            <x-form.input name="school" :label="__('Škola / firma (nepovinné)')" maxlength="150" autocomplete="organization" />
                             <x-form.select name="subject" :label="__('Téma')" :options="collect($subjects)->map(fn ($label) => __($label))->all()" required />
                             <div class="sm:col-span-2">
                                 <x-form.textarea name="message" :label="__('Správa')" rows="5" required maxlength="3000" />
@@ -307,10 +312,10 @@
                         <span class="text-2xl font-bold tracking-tight">{{ config('app.name') }}</span>
                     </a>
                     <p class="mt-4 max-w-xs leading-6 text-slate-600">
-                        {{ __('Online vzdelávacia platforma kybernetickej bezpečnosti pre základné a stredné školy. Kurzy, testy a certifikáty na jednom mieste.') }}
+                        {{ __('Online vzdelávacia platforma kybernetickej bezpečnosti pre školy aj firmy. Kurzy, testy a certifikáty pre žiakov aj zamestnancov na jednom mieste.') }}
                     </p>
                     <a href="#kontakt" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 font-semibold text-white shadow-sm transition hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
-                        {{ __('Chcem ukážku pre školu') }}<x-icon name="chevron-right" class="size-4" />
+                        {{ __('Chcem ukážku') }}<x-icon name="chevron-right" class="size-4" />
                     </a>
                 </div>
 
@@ -357,7 +362,7 @@
             </div>
 
             <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-brand-200 pt-6 text-slate-600 sm:flex-row">
-                <p>© {{ now()->year }} {{ config('app.name') }} · {{ __('Kybernetická bezpečnosť pre školy') }}</p>
+                <p>© {{ now()->year }} {{ config('app.name') }} · {{ __('Kybernetická bezpečnosť pre školy a firmy') }}</p>
                 <a href="#obsah" class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-semibold text-brand-600 shadow-xs ring-1 ring-brand-200 hover:bg-brand-100">
                     <x-icon name="arrow-up" class="size-4" />{{ __('Späť hore') }}
                 </a>

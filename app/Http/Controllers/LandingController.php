@@ -15,7 +15,7 @@ use Illuminate\View\View;
  */
 class LandingController extends Controller
 {
-    public const SUBJECTS = ['demo' => 'Ukážka platformy pre školu', 'courses' => 'Kurzy a obsah', 'technical' => 'Technická podpora', 'other' => 'Iné'];
+    public const SUBJECTS = ['demo' => 'Ukážka platformy pre školu', 'company' => 'Školenie zamestnancov pre firmu', 'courses' => 'Kurzy a obsah', 'technical' => 'Technická podpora', 'other' => 'Iné'];
 
     public function show(): View
     {
@@ -39,7 +39,7 @@ class LandingController extends Controller
         ], [
             'consent.accepted' => __('Na odoslanie správy potrebujeme váš súhlas so spracovaním údajov.'),
         ], [
-            'name' => __('meno'), 'school' => __('škola'), 'subject' => __('téma'), 'message' => __('správa'),
+            'name' => __('meno'), 'school' => __('škola / firma'), 'subject' => __('téma'), 'message' => __('správa'),
         ]);
 
         $recipient = config('cysa.contact_email');
