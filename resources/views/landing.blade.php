@@ -150,20 +150,38 @@
         </section>
 
         {{-- Services --}}
-        <section id="sluzby" class="mx-auto max-w-6xl scroll-mt-28 px-4 pt-16 sm:px-6" aria-labelledby="sluzby-nadpis">
-            <h2 id="sluzby-nadpis" class="sr-only">{{ __('Služby') }}</h2>
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <section id="sluzby" class="mx-auto max-w-6xl scroll-mt-28 px-4 pt-20 sm:px-6" aria-labelledby="sluzby-nadpis">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-sm font-bold tracking-wider text-brand-600 uppercase">{{ __('Služby') }}</p>
+                <h2 id="sluzby-nadpis" class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">{{ __('Pre koho je CYSA') }}</h2>
+                <p class="mt-4 text-lg text-slate-600">{{ __('Jedna platforma pre školy, učiteľov, študentov aj firmy.') }}</p>
+            </div>
+
+            <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($services as [$icon, $audience, $title, $items])
-                    <article class="flex flex-col rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:shadow-lg">
-                        <span class="mx-auto mb-4 rounded-2xl bg-brand-50 p-4 text-brand-600"><x-icon :name="$icon" class="size-10" /></span>
-                        <p class="text-sm font-semibold text-slate-600">{{ __($audience) }}</p>
-                        <h3 class="mt-1 text-2xl font-extrabold text-accent">{{ __($title) }}</h3>
-                        <ul class="mt-6 flex flex-col gap-2 text-left text-sm text-slate-700">
+                    <article class="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl">
+                        <span class="absolute inset-x-0 top-0 h-1 bg-brand-600 transition group-hover:bg-accent" aria-hidden="true"></span>
+
+                        <span class="flex size-12 items-center justify-center rounded-xl bg-brand-600 text-white transition group-hover:bg-accent">
+                            <x-icon :name="$icon" class="size-6" />
+                        </span>
+                        <p class="mt-5 text-xs font-bold tracking-wider text-slate-500 uppercase">{{ __($audience) }}</p>
+                        <h3 class="mt-1 text-xl font-extrabold text-brand-700">{{ __($title) }}</h3>
+
+                        <ul class="mt-5 flex flex-col gap-3 border-t border-slate-100 pt-5 text-sm text-slate-700">
                             @foreach ($items as $item)
-                                <li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 size-4 shrink-0 text-accent" />{{ __($item) }}</li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                                        <x-icon name="check" class="size-3.5" />
+                                    </span>
+                                    {{ __($item) }}
+                                </li>
                             @endforeach
                         </ul>
-                        <a href="#kontakt" class="mt-8 inline-flex justify-center rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent">{{ __('Mám záujem') }}</a>
+
+                        <a href="#kontakt" class="mt-auto inline-flex items-center gap-1 pt-6 text-sm font-semibold text-brand-600 hover:text-brand-800">
+                            {{ __('Mám záujem') }}<x-icon name="chevron-right" class="size-4 transition group-hover:translate-x-1" />
+                        </a>
                     </article>
                 @endforeach
             </div>
