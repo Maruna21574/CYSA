@@ -108,8 +108,8 @@
                     <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('firmy') }}</span>
                 </h1>
                 <p class="mt-8 max-w-lg text-lg text-slate-700">
-                    {{ __('Online kurzy, testy a certifikáty, ktoré naučia študentov aj zamestnancov chrániť heslá, rozpoznať phishing a bezpečne sa správať na internete.') }}
-                    <strong class="font-semibold text-slate-900">{{ __('Učiteľ aj zamestnávateľ vidí, kto má kurz splnený.') }}</strong>
+                    <strong class="font-semibold text-slate-900">{{ __('Pre študentov základných a stredných škôl aj zamestnancov firiem.') }}</strong>
+                    {{ __('Online kurzy kybernetickej bezpečnosti, testy s okamžitým vyhodnotením a certifikáty o absolvovaní.') }}
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-3">
