@@ -17,7 +17,7 @@
     <div class="grid gap-6 lg:grid-cols-2">
         <x-card :title="__('Triedy')">
             @forelse ($classrooms as $classroom)
-                <a href="{{ route('school.classrooms.show', $classroom) }}" class="flex justify-between border-b border-slate-100 py-2 text-sm last:border-0 hover:text-indigo-700">
+                <a href="{{ route('school.classrooms.show', $classroom) }}" class="flex justify-between border-b border-slate-100 py-2 text-sm last:border-0 hover:text-brand-700">
                     <span class="font-medium">{{ $classroom->name }} <span class="font-normal text-slate-500">({{ $classroom->school_year }})</span></span>
                     <span class="text-slate-500">{{ trans_choice('{1} :count študent|[2,4] :count študenti|[0,*] :count študentov', $classroom->students_count, ['count' => $classroom->students_count]) }}</span>
                 </a>

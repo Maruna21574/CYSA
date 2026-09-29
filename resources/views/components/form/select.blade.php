@@ -18,9 +18,9 @@
         @if ($hasError) aria-invalid="true" @endif
         {{ $attributes->except('id')->class([
             'mt-1 block w-full rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 shadow-xs',
-            'focus:outline-none focus:ring-2 focus:ring-indigo-600/30',
+            'focus:outline-none focus:ring-2 focus:ring-brand-600/30',
             'border-red-400 focus:border-red-500' => $hasError,
-            'border-slate-300 focus:border-indigo-600' => ! $hasError,
+            'border-slate-300 focus:border-brand-600' => ! $hasError,
         ]) }}
     >
         @if ($placeholder !== null)

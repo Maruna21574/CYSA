@@ -18,7 +18,7 @@
                         </span>
                     </span>
                     @if ($aiAvailable && \App\Services\Files\TextExtraction\TextExtractor::supports($material))
-                        <a href="{{ route('teacher.ai.create', ['material' => $material->id]) }}" class="inline-flex items-center gap-1 rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">
+                        <a href="{{ route('teacher.ai.create', ['material' => $material->id]) }}" class="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-xs font-semibold text-brand-700 hover:bg-brand-100">
                             <x-icon name="sparkles" class="size-3.5" />{{ __('Otázky pomocou AI') }}
                         </a>
                     @endif
@@ -47,14 +47,14 @@
             <div>
                 <label for="material-upload" class="sr-only">{{ __('Súbor') }}</label>
                 <input id="material-upload" type="file" wire:model="upload"
-                       class="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-indigo-700"
+                       class="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700"
                        aria-describedby="material-upload-hint">
                 <p id="material-upload-hint" class="mt-1 text-xs text-slate-500">{{ __('Povolené: :types. Najviac :size MB.', ['types' => $extensions, 'size' => $maxUploadMb]) }}</p>
                 @error('upload') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div x-show="uploading" x-cloak class="h-2 overflow-hidden rounded-full bg-slate-100" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100">
-                <div class="h-full bg-indigo-600 transition-all" :style="`width: ${progress}%`"></div>
+                <div class="h-full bg-brand-600 transition-all" :style="`width: ${progress}%`"></div>
             </div>
 
             <x-form.input name="uploadTitle" id="upload-title" :label="__('Názov (nepovinné)')" wire:model="uploadTitle" maxlength="255" />

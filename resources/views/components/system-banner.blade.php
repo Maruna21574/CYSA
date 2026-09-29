@@ -9,7 +9,7 @@
     <div @class([
         'flex items-center gap-2 px-4 py-2 text-sm sm:px-6 lg:px-8',
         'bg-amber-100 text-amber-900' => $warning,
-        'bg-indigo-50 text-indigo-900' => ! $warning,
+        'bg-brand-50 text-brand-900' => ! $warning,
     ]) role="status">
         <x-icon :name="$warning ? 'alert' : 'bell'" class="size-4" />
         <span>{{ $message }}</span>

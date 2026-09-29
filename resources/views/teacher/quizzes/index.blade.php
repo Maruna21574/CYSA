@@ -29,11 +29,11 @@
                 @foreach ($quizzes as $quiz)
                     <tr>
                         <td class="px-4 py-3">
-                            <a href="{{ route('teacher.quizzes.show', $quiz) }}" class="font-medium text-slate-900 hover:text-indigo-700 hover:underline">{{ $quiz->title }}</a>
+                            <a href="{{ route('teacher.quizzes.show', $quiz) }}" class="font-medium text-slate-900 hover:text-brand-700 hover:underline">{{ $quiz->title }}</a>
                             <span class="block text-xs text-slate-500">{{ $quiz->course->title }}@if ($quiz->chapter) · {{ $quiz->chapter->title }}@endif</span>
                         </td>
                         <td class="px-4 py-3 text-slate-700">
-                            <x-badge :color="$quiz->purpose->isResearch() ? 'indigo' : 'slate'">{{ $quiz->purpose->label() }}</x-badge>
+                            <x-badge :color="$quiz->purpose->isResearch() ? 'brand' : 'slate'">{{ $quiz->purpose->label() }}</x-badge>
                         </td>
                         <td class="px-4 py-3 text-right tabular-nums">{{ $quiz->questions_count }}</td>
                         <td class="px-4 py-3 whitespace-nowrap text-slate-600">{{ $quiz->due_at?->translatedFormat('j. n. Y H:i') ?? '—' }}</td>

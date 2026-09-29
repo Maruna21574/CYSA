@@ -8,15 +8,15 @@
         @page { margin: 0; }
         body { margin: 0; font-family: "DejaVu Sans", sans-serif; color: #0f172a; }
         /* A4 landscape = 297 x 210 mm; dompdf needs explicit sizes for absolute boxes. */
-        .frame { position: absolute; top: 12mm; left: 12mm; width: 271mm; height: 184mm; border: 3px solid #4f46e5; }
-        .inner { position: absolute; top: 16mm; left: 16mm; width: 263mm; height: 176mm; border: 1px solid #c7d2fe; }
+        .frame { position: absolute; top: 12mm; left: 12mm; width: 271mm; height: 184mm; border: 3px solid #1c3763; }
+        .inner { position: absolute; top: 16mm; left: 16mm; width: 263mm; height: 176mm; border: 1px solid #b9c8e0; }
         .content { position: absolute; top: 28mm; left: 30mm; width: 237mm; }
-        .brand { font-size: 13pt; font-weight: bold; color: #4f46e5; letter-spacing: 2px; }
-        h1 { margin: 10mm 0 2mm; font-size: 34pt; letter-spacing: 6px; color: #312e81; text-align: center; }
+        .brand { font-size: 13pt; font-weight: bold; color: #1c3763; letter-spacing: 2px; }
+        h1 { margin: 10mm 0 2mm; font-size: 34pt; letter-spacing: 6px; color: #122442; text-align: center; }
         .subtitle { text-align: center; font-size: 12pt; color: #475569; }
         .name { margin: 8mm 0 3mm; text-align: center; font-size: 28pt; font-weight: bold; }
         .text { text-align: center; font-size: 12pt; color: #334155; }
-        .course { margin: 3mm 0 0; text-align: center; font-size: 18pt; font-weight: bold; color: #312e81; }
+        .course { margin: 3mm 0 0; text-align: center; font-size: 18pt; font-weight: bold; color: #122442; }
         .footer { position: absolute; top: 150mm; left: 30mm; width: 237mm; }
         .footer table { width: 100%; border-collapse: collapse; }
         .footer td { vertical-align: bottom; font-size: 9.5pt; color: #334155; }

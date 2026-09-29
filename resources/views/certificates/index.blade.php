@@ -8,8 +8,8 @@
     @if ($certificates->isNotEmpty())
         <div class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             @foreach ($certificates as $certificate)
-                <article class="flex flex-col gap-3 rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-white p-5 shadow-xs">
-                    <div class="flex items-center gap-2 text-indigo-700"><x-icon name="badge" class="size-6" /><span class="text-xs font-semibold tracking-wide uppercase">{{ __('Certifikát') }}</span></div>
+                <article class="flex flex-col gap-3 rounded-xl border border-brand-200 bg-gradient-to-br from-brand-50 to-white p-5 shadow-xs">
+                    <div class="flex items-center gap-2 text-brand-700"><x-icon name="badge" class="size-6" /><span class="text-xs font-semibold tracking-wide uppercase">{{ __('Certifikát') }}</span></div>
                     <h2 class="font-semibold text-slate-900">{{ $certificate->course_title }}</h2>
                     <p class="text-sm text-slate-600">{{ __('Vydaný :date', ['date' => $certificate->issued_at->translatedFormat('j. n. Y')]) }}</p>
                     <p class="font-mono text-xs text-slate-500">{{ $certificate->code }}</p>

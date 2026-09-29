@@ -6,6 +6,19 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* CYSA brand blue, 600 = #1C3763 */
+    --color-brand-50: #eef2f8;
+    --color-brand-100: #dce4f0;
+    --color-brand-200: #b9c8e0;
+    --color-brand-300: #8ea6cb;
+    --color-brand-400: #5d7eaf;
+    --color-brand-500: #365a8e;
+    --color-brand-600: #1c3763;
+    --color-brand-700: #172e53;
+    --color-brand-800: #122442;
+    --color-brand-900: #0d1b32;
+    --color-brand-950: #081120;
 }
 
 [x-cloak] {
@@ -36,10 +49,10 @@
     @apply list-decimal pl-6;
 }
 .prose-content a {
-    @apply font-medium text-indigo-700 underline;
+    @apply font-medium text-brand-700 underline;
 }
 .prose-content blockquote {
-    @apply border-l-4 border-indigo-200 pl-4 text-slate-600 italic;
+    @apply border-l-4 border-brand-200 pl-4 text-slate-600 italic;
 }
 .prose-content pre {
     @apply overflow-x-auto rounded-lg bg-slate-900 p-4 text-sm text-slate-100;

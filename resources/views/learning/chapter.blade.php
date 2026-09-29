@@ -1,6 +1,6 @@
 <x-layouts::app :title="$chapter->title">
     @if ($isPreview)
-        <div class="mb-4 rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-sm text-indigo-800" role="status">
+        <div class="mb-4 rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm text-brand-800" role="status">
             {{ __('Náhľad kapitoly.') }}
             <a href="{{ route('teacher.courses.chapters.edit', [$course, $chapter]) }}" class="font-semibold underline">{{ __('Upraviť kapitolu') }}</a>
         </div>

@@ -18,11 +18,11 @@
                         </button>
                         <span class="mt-0.5 w-6 shrink-0 text-sm font-semibold text-slate-400">{{ $loop->iteration }}.</span>
                         <div class="min-w-0 flex-1">
-                            <a href="{{ route('teacher.questions.edit', $question) }}" class="text-sm font-medium text-slate-900 hover:text-indigo-700 hover:underline">{{ \Illuminate\Support\Str::limit($question->body, 160) }}</a>
+                            <a href="{{ route('teacher.questions.edit', $question) }}" class="text-sm font-medium text-slate-900 hover:text-brand-700 hover:underline">{{ \Illuminate\Support\Str::limit($question->body, 160) }}</a>
                             <div class="mt-1 flex flex-wrap gap-1">
                                 <x-badge>{{ $question->type->label() }}</x-badge>
                                 @foreach ($question->topics as $topic)
-                                    <x-badge color="indigo">{{ $topic->name }}</x-badge>
+                                    <x-badge color="brand">{{ $topic->name }}</x-badge>
                                 @endforeach
                             </div>
                         </div>
@@ -48,7 +48,7 @@
         <x-card>
             <div class="mb-3 flex items-center justify-between gap-2">
                 <h2 id="bank-heading" class="text-base font-semibold text-slate-900">{{ __('Pridať z banky otázok') }}</h2>
-                <a href="{{ route('teacher.questions.create', ['quiz' => $quiz->id]) }}" class="inline-flex items-center gap-1 text-sm font-medium text-indigo-700 hover:underline">
+                <a href="{{ route('teacher.questions.create', ['quiz' => $quiz->id]) }}" class="inline-flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline">
                     <x-icon name="plus" class="size-4" />{{ __('Nová otázka') }}
                 </a>
             </div>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <label class="flex items-center gap-2 text-sm text-slate-700">
-                    <input type="checkbox" wire:model.live="onlyThisCourse" class="size-4 rounded text-indigo-600">{{ __('Len otázky tohto kurzu') }}
+                    <input type="checkbox" wire:model.live="onlyThisCourse" class="size-4 rounded text-brand-600">{{ __('Len otázky tohto kurzu') }}
                 </label>
             </div>
 
@@ -87,7 +87,7 @@
                             <span class="block text-slate-800">{{ \Illuminate\Support\Str::limit($candidate->body, 120) }}</span>
                             <span class="text-xs text-slate-500">{{ $candidate->type->label() }}</span>
                         </div>
-                        <button type="button" wire:click="add({{ $candidate->id }})" class="shrink-0 rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">
+                        <button type="button" wire:click="add({{ $candidate->id }})" class="shrink-0 rounded-md bg-brand-50 px-2 py-1 text-xs font-semibold text-brand-700 hover:bg-brand-100">
                             {{ __('Pridať') }}
                         </button>
                     </li>

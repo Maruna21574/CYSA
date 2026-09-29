@@ -10,7 +10,7 @@
 
             <x-card class="flex flex-col gap-4">
                 <x-form.input name="file" type="file" :label="__('CSV súbor')" accept=".csv,text/csv" :hint="__('Najviac 1 MB a 1000 študentov.')" required
-                    class="file:mr-3 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-indigo-700" />
+                    class="file:mr-3 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700" />
 
                 <x-form.select name="classroom_id" :label="__('Zaradiť do triedy')" :options="$classrooms" :placeholder="__('— nezaradiť —')" />
 

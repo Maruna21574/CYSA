@@ -58,7 +58,7 @@
                 @foreach ($this->studentResults as $student)
                     <li wire:key="student-result-{{ $student->id }}" class="flex items-center justify-between gap-2 rounded-lg px-2 py-1.5 hover:bg-slate-50">
                         <span class="text-sm"><span class="block font-medium">{{ $student->name }}</span><span class="text-xs text-slate-500">{{ $student->email }}</span></span>
-                        <button type="button" wire:click="assignStudent({{ $student->id }})" class="rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">{{ __('Priradiť') }}</button>
+                        <button type="button" wire:click="assignStudent({{ $student->id }})" class="rounded-md bg-brand-50 px-2 py-1 text-xs font-semibold text-brand-700 hover:bg-brand-100">{{ __('Priradiť') }}</button>
                     </li>
                 @endforeach
             </ul>

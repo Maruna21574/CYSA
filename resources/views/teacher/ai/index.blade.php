@@ -17,7 +17,7 @@
                 @foreach ($generations as $generation)
                     <tr>
                         <td class="px-4 py-3">
-                            <a href="{{ route('teacher.ai.show', $generation) }}" class="font-medium text-slate-900 hover:text-indigo-700 hover:underline">{{ $generation->sourceLabel() }}</a>
+                            <a href="{{ route('teacher.ai.show', $generation) }}" class="font-medium text-slate-900 hover:text-brand-700 hover:underline">{{ $generation->sourceLabel() }}</a>
                             <span class="block text-xs text-slate-500">{{ $generation->course?->title }}</span>
                         </td>
                         <td class="px-4 py-3 whitespace-nowrap text-slate-600">{{ $generation->created_at->translatedFormat('j. n. Y H:i') }}</td>

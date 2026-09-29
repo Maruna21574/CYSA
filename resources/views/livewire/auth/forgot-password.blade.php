@@ -15,6 +15,6 @@
     </form>
 
     <p class="mt-6 text-center text-sm">
-        <a href="{{ route('login') }}" class="font-medium text-indigo-700 hover:underline">{{ __('Späť na prihlásenie') }}</a>
+        <a href="{{ route('login') }}" class="font-medium text-brand-700 hover:underline">{{ __('Späť na prihlásenie') }}</a>
     </p>
 </div>

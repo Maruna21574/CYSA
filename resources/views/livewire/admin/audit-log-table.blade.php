@@ -55,7 +55,7 @@
                         <td class="px-4 py-2 text-xs text-slate-500">{{ $log->auditable_type ? class_basename($log->auditable_type).' #'.$log->auditable_id : '—' }}</td>
                         <td class="px-4 py-2 font-mono text-xs text-slate-500">{{ $log->ip_address }}</td>
                         <td class="px-4 py-2 text-right">
-                            <button type="button" wire:click="toggle({{ $log->id }})" class="text-sm font-medium text-indigo-700 hover:underline" aria-expanded="{{ $expanded === $log->id ? 'true' : 'false' }}">
+                            <button type="button" wire:click="toggle({{ $log->id }})" class="text-sm font-medium text-brand-700 hover:underline" aria-expanded="{{ $expanded === $log->id ? 'true' : 'false' }}">
                                 {{ $expanded === $log->id ? __('Skryť') : __('Detail') }}
                             </button>
                         </td>

@@ -42,7 +42,7 @@
             <div class="mb-3 flex rounded-lg bg-slate-100 p-1" role="radiogroup" aria-label="{{ __('Typ člena') }}">
                 @foreach (['student' => __('Študenta'), 'teacher' => __('Učiteľa')] as $value => $label)
                     <label @class([
-                        'flex-1 cursor-pointer rounded-md px-3 py-1.5 text-center text-sm font-medium has-focus-visible:outline-2 has-focus-visible:outline-indigo-600',
+                        'flex-1 cursor-pointer rounded-md px-3 py-1.5 text-center text-sm font-medium has-focus-visible:outline-2 has-focus-visible:outline-brand-600',
                         'bg-white text-slate-900 shadow-xs' => $addRole === $value,
                         'text-slate-600' => $addRole !== $value,
                     ])>
@@ -61,7 +61,7 @@
                             <span class="block font-medium text-slate-900">{{ $candidate->name }}</span>
                             <span class="text-xs text-slate-500">{{ $candidate->email }}</span>
                         </span>
-                        <button type="button" wire:click="add({{ $candidate->id }})" class="rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">
+                        <button type="button" wire:click="add({{ $candidate->id }})" class="rounded-md bg-brand-50 px-2 py-1 text-xs font-semibold text-brand-700 hover:bg-brand-100">
                             {{ __('Pridať') }}<span class="sr-only"> {{ $candidate->name }}</span>
                         </button>
                     </li>

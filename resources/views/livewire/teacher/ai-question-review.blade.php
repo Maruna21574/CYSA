@@ -1,7 +1,7 @@
 <div @if (! $generation->status->isFinished()) wire:poll.4s @endif class="flex flex-col gap-6">
     @if (! $generation->status->isFinished())
         <x-card class="flex items-center gap-4" role="status">
-            <span class="size-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600" aria-hidden="true"></span>
+            <span class="size-8 animate-spin rounded-full border-4 border-brand-200 border-t-brand-600" aria-hidden="true"></span>
             <div>
                 <p class="font-medium text-slate-900">{{ $generation->status->label() }}…</p>
                 <p class="text-sm text-slate-600">{{ __('AI pripravuje návrhy otázok. Stránka sa aktualizuje sama; môžete ju aj zavrieť – po dokončení dostanete notifikáciu.') }}</p>
@@ -62,11 +62,11 @@
                             <x-badge :color="$question->status === \App\Enums\QuestionStatus::Approved ? 'green' : 'amber'">{{ $question->status->label() }}</x-badge>
                             <x-badge>{{ $question->type->label() }}</x-badge>
                             @foreach ($question->topics as $topic)
-                                <x-badge color="indigo">{{ $topic->name }}</x-badge>
+                                <x-badge color="brand">{{ $topic->name }}</x-badge>
                             @endforeach
                         </div>
                         <div class="flex gap-3 text-sm">
-                            <a href="{{ route('teacher.questions.edit', $question) }}" class="font-medium text-indigo-700 hover:underline">{{ __('Upraviť') }}</a>
+                            <a href="{{ route('teacher.questions.edit', $question) }}" class="font-medium text-brand-700 hover:underline">{{ __('Upraviť') }}</a>
                             @if ($question->status === \App\Enums\QuestionStatus::Draft)
                                 <button type="button" wire:click="approve({{ $question->id }})" class="font-medium text-emerald-700 hover:underline">{{ __('Schváliť') }}</button>
                             @endif
@@ -109,7 +109,7 @@
                     @if ($materialText->keywords)
                         <div class="mt-3 flex flex-wrap gap-1">
                             @foreach ($materialText->keywords as $keyword)
-                                <x-badge color="indigo">{{ $keyword }}</x-badge>
+                                <x-badge color="brand">{{ $keyword }}</x-badge>
                             @endforeach
                         </div>
                     @endif

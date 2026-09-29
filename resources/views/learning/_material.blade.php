@@ -32,7 +32,7 @@
             @break
 
         @case(\App\Enums\MaterialType::Link)
-            <a href="{{ $material->url }}" target="_blank" rel="noopener noreferrer nofollow" class="inline-flex items-center gap-1 break-all text-sm font-medium text-indigo-700 hover:underline">
+            <a href="{{ $material->url }}" target="_blank" rel="noopener noreferrer nofollow" class="inline-flex items-center gap-1 break-all text-sm font-medium text-brand-700 hover:underline">
                 {{ $material->url }} <x-icon name="chevron-right" class="size-4" />
             </a>
             @break

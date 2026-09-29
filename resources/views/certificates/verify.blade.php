@@ -5,7 +5,7 @@
     <form method="GET" action="{{ route('certificates.verify') }}" class="mt-5 flex gap-2" role="search">
         <label for="code" class="sr-only">{{ __('Kód certifikátu') }}</label>
         <input id="code" name="code" type="text" value="{{ $code }}" maxlength="24" autocomplete="off" required
-               class="block w-full rounded-lg border border-slate-300 px-3 py-2 font-mono text-sm uppercase focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+               class="block w-full rounded-lg border border-slate-300 px-3 py-2 font-mono text-sm uppercase focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
         <x-button>{{ __('Overiť') }}</x-button>
     </form>
 

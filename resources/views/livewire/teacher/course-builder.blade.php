@@ -17,7 +17,7 @@
                             <div class="flex-1">
                                 <label for="module-title-{{ $module->id }}" class="sr-only">{{ __('Názov modulu') }}</label>
                                 <input id="module-title-{{ $module->id }}" type="text" wire:model="editingModuleTitle" maxlength="255"
-                                       class="block w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+                                       class="block w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                                 @error('editingModuleTitle') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                             </div>
                             <x-button class="py-1.5">{{ __('Uložiť') }}</x-button>
@@ -41,7 +41,7 @@
                                 <x-icon name="drag" class="size-4" />
                                 <span class="sr-only">{{ __('Presunúť kapitolu :title', ['title' => $chapter->title]) }}</span>
                             </button>
-                            <a href="{{ route('teacher.courses.chapters.edit', [$course, $chapter]) }}" class="flex-1 text-sm font-medium text-slate-800 hover:text-indigo-700 hover:underline">
+                            <a href="{{ route('teacher.courses.chapters.edit', [$course, $chapter]) }}" class="flex-1 text-sm font-medium text-slate-800 hover:text-brand-700 hover:underline">
                                 {{ $chapter->title }}
                             </a>
                             <span class="hidden items-center gap-2 text-xs text-slate-500 sm:flex">
@@ -64,7 +64,7 @@
                 </ol>
 
                 <footer class="border-t border-slate-100 px-4 py-2">
-                    <a href="{{ route('teacher.courses.chapters.create', [$course, 'module' => $module->id]) }}" class="inline-flex items-center gap-1 text-sm font-medium text-indigo-700 hover:underline">
+                    <a href="{{ route('teacher.courses.chapters.create', [$course, 'module' => $module->id]) }}" class="inline-flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline">
                         <x-icon name="plus" class="size-4" />{{ __('Pridať kapitolu') }}
                     </a>
                 </footer>
@@ -78,7 +78,7 @@
         <div class="flex-1">
             <label for="new-module" class="sr-only">{{ __('Názov nového modulu') }}</label>
             <input id="new-module" type="text" wire:model="newModuleTitle" maxlength="255" placeholder="{{ __('Názov nového modulu, napr. Bezpečné heslá') }}"
-                   class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+                   class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
             @error('newModuleTitle') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
         </div>
         <x-button><x-icon name="plus" class="size-4" />{{ __('Pridať modul') }}</x-button>

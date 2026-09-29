@@ -45,7 +45,7 @@
                 @foreach ($questions as $question)
                     <tr wire:key="question-{{ $question->id }}">
                         <td class="max-w-xl px-4 py-3">
-                            <a href="{{ route('teacher.questions.edit', $question) }}" class="font-medium text-slate-900 hover:text-indigo-700 hover:underline">
+                            <a href="{{ route('teacher.questions.edit', $question) }}" class="font-medium text-slate-900 hover:text-brand-700 hover:underline">
                                 {{ \Illuminate\Support\Str::limit($question->body, 140) }}
                             </a>
                             <div class="mt-1 flex flex-wrap gap-1">
@@ -53,7 +53,7 @@
                                     <x-badge color="amber">{{ $question->status->label() }}</x-badge>
                                 @endif
                                 @foreach ($question->topics as $topic)
-                                    <x-badge color="indigo">{{ $topic->name }}</x-badge>
+                                    <x-badge color="brand">{{ $topic->name }}</x-badge>
                                 @endforeach
                                 @if ($question->course)
                                     <x-badge>{{ $question->course->title }}</x-badge>

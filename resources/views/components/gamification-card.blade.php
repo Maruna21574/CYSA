@@ -7,16 +7,16 @@
     $progress = $to > $from ? ($stats->xp_total - $from) / ($to - $from) * 100 : 100;
 @endphp
 
-<section {{ $attributes->class('rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-600 to-sky-600 p-5 text-white shadow-xs') }} aria-label="{{ __('Moje úspechy') }}">
+<section {{ $attributes->class('rounded-xl border border-brand-200 bg-gradient-to-br from-brand-600 to-brand-500 p-5 text-white shadow-xs') }} aria-label="{{ __('Moje úspechy') }}">
     <div class="flex flex-wrap items-center gap-6">
         <div>
-            <p class="text-xs font-medium tracking-wide text-indigo-100 uppercase">{{ __('Level') }}</p>
+            <p class="text-xs font-medium tracking-wide text-brand-100 uppercase">{{ __('Level') }}</p>
             <p class="text-4xl font-bold tabular-nums">{{ $level }}</p>
         </div>
         <div class="min-w-48 flex-1">
             <div class="mb-1 flex justify-between text-sm">
                 <span class="font-semibold tabular-nums">{{ $stats->xp_total }} XP</span>
-                <span class="text-indigo-100 tabular-nums">{{ __('ďalší level pri :xp XP', ['xp' => $to]) }}</span>
+                <span class="text-brand-100 tabular-nums">{{ __('ďalší level pri :xp XP', ['xp' => $to]) }}</span>
             </div>
             <div class="h-2.5 overflow-hidden rounded-full bg-white/25" role="progressbar" aria-valuenow="{{ round($progress) }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('Postup k ďalšiemu levelu') }}">
                 <div class="h-full rounded-full bg-white" style="width: {{ $progress }}%"></div>
@@ -26,7 +26,7 @@
             <x-icon name="fire" class="size-7 text-amber-300" />
             <div>
                 <p class="text-xl font-bold tabular-nums">{{ $stats->current_streak }}</p>
-                <p class="text-xs text-indigo-100">{{ trans_choice('{0} dní v rade|{1} deň v rade|[2,4] dni v rade|[5,*] dní v rade', $stats->current_streak) }}</p>
+                <p class="text-xs text-brand-100">{{ trans_choice('{0} dní v rade|{1} deň v rade|[2,4] dni v rade|[5,*] dní v rade', $stats->current_streak) }}</p>
             </div>
         </div>
     </div>

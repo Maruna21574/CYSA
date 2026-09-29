@@ -9,8 +9,8 @@
             [route('teacher.questions.create'), 'question', __('Nová otázka')],
             [route('teacher.courses.index'), 'upload', __('Nahrať materiál')],
         ] as [$url, $icon, $label])
-            <a href="{{ $url }}" class="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm font-semibold text-slate-800 shadow-xs transition hover:border-indigo-300 hover:text-indigo-700 focus-visible:outline-2 focus-visible:outline-indigo-600">
-                <span class="rounded-lg bg-indigo-50 p-2 text-indigo-700"><x-icon :name="$icon" /></span>{{ $label }}
+            <a href="{{ $url }}" class="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm font-semibold text-slate-800 shadow-xs transition hover:border-brand-300 hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-brand-600">
+                <span class="rounded-lg bg-brand-50 p-2 text-brand-700"><x-icon :name="$icon" /></span>{{ $label }}
             </a>
         @endforeach
     </nav>
@@ -25,7 +25,7 @@
     <div class="grid items-start gap-6 lg:grid-cols-3">
         <x-card :title="__('Posledné odovzdané testy')" class="lg:col-span-2">
             @forelse ($recentAttempts as $attempt)
-                <a href="{{ route('attempts.show', $attempt) }}" class="flex items-center gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0 hover:text-indigo-700">
+                <a href="{{ route('attempts.show', $attempt) }}" class="flex items-center gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0 hover:text-brand-700">
                     <span class="flex-1"><span class="font-medium">{{ $attempt->user?->name }}</span> <span class="text-slate-500">· {{ $attempt->quiz?->title }}</span></span>
                     <span class="text-xs text-slate-500">{{ $attempt->finished_at?->diffForHumans() }}</span>
                     <x-score :attempt="$attempt" />
@@ -45,12 +45,12 @@
                 @empty
                     <p class="text-sm text-slate-500">{{ __('Nikto nemá priemer pod 50 %.') }}</p>
                 @endforelse
-                <a href="{{ route('teacher.analytics.index') }}" class="mt-3 inline-block text-sm font-medium text-indigo-700 hover:underline">{{ __('Celá analytika') }}</a>
+                <a href="{{ route('teacher.analytics.index') }}" class="mt-3 inline-block text-sm font-medium text-brand-700 hover:underline">{{ __('Celá analytika') }}</a>
             </x-card>
 
             <x-card :title="__('Blížiace sa termíny')">
                 @forelse ($deadlines as $quiz)
-                    <a href="{{ route('teacher.quizzes.results', $quiz) }}" class="flex items-start gap-2 border-b border-slate-100 py-2 text-sm last:border-0 hover:text-indigo-700">
+                    <a href="{{ route('teacher.quizzes.results', $quiz) }}" class="flex items-start gap-2 border-b border-slate-100 py-2 text-sm last:border-0 hover:text-brand-700">
                         <x-icon name="calendar" class="mt-0.5 size-4 text-slate-400" />
                         <span class="flex-1"><span class="block font-medium">{{ $quiz->title }}</span><span class="text-xs text-slate-500">{{ $quiz->course?->title }}</span></span>
                         <span class="text-xs whitespace-nowrap text-slate-600">{{ $quiz->due_at->translatedFormat('j. n. H:i') }}</span>

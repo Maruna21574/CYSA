@@ -9,11 +9,11 @@
 
         <div class="flex items-center justify-between gap-4">
             <label for="remember" class="flex items-center gap-2 text-sm text-slate-700">
-                <input id="remember" type="checkbox" wire:model="remember" class="size-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600">
+                <input id="remember" type="checkbox" wire:model="remember" class="size-4 rounded border-slate-300 text-brand-600 focus:ring-brand-600">
                 {{ __('Zapamätať si ma') }}
             </label>
 
-            <a href="{{ route('password.request') }}" class="text-sm font-medium text-indigo-700 hover:underline">{{ __('Zabudnuté heslo?') }}</a>
+            <a href="{{ route('password.request') }}" class="text-sm font-medium text-brand-700 hover:underline">{{ __('Zabudnuté heslo?') }}</a>
         </div>
 
         <x-button class="w-full">

@@ -4,7 +4,7 @@
 
         <div class="sm:w-44">
             <label for="filter-role" class="sr-only">{{ __('Rola') }}</label>
-            <select id="filter-role" wire:model.live="role" class="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+            <select id="filter-role" wire:model.live="role" class="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                 <option value="">{{ __('Všetky roly') }}</option>
                 @foreach ($this->roleOptions as $value => $label)
                     <option value="{{ $value }}">{{ $label }}</option>
@@ -15,7 +15,7 @@
         @if ($this->schoolOptions)
             <div class="sm:w-56">
                 <label for="filter-school" class="sr-only">{{ __('Škola') }}</label>
-                <select id="filter-school" wire:model.live="schoolId" class="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+                <select id="filter-school" wire:model.live="schoolId" class="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                     <option value="">{{ __('Všetky školy') }}</option>
                     @foreach ($this->schoolOptions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -26,7 +26,7 @@
 
         <div class="sm:w-40">
             <label for="filter-status" class="sr-only">{{ __('Stav') }}</label>
-            <select id="filter-status" wire:model.live="status" class="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+            <select id="filter-status" wire:model.live="status" class="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                 <option value="">{{ __('Všetky stavy') }}</option>
                 <option value="active">{{ __('Aktívne') }}</option>
                 <option value="inactive">{{ __('Deaktivované') }}</option>
@@ -58,7 +58,7 @@
                             <span class="text-slate-500">{{ $user->email }}</span>
                         </td>
                         <td class="px-4 py-3">
-                            <x-badge :color="$user->role->canTeach() ? 'indigo' : 'slate'">{{ $user->role->label() }}</x-badge>
+                            <x-badge :color="$user->role->canTeach() ? 'brand' : 'slate'">{{ $user->role->label() }}</x-badge>
                         </td>
                         @if ($this->schoolOptions)
                             <td class="px-4 py-3 text-slate-700">{{ $user->school?->name ?? '—' }}</td>
@@ -80,7 +80,7 @@
                                         {{ $user->is_active ? __('Deaktivovať') : __('Aktivovať') }}<span class="sr-only"> {{ $user->name }}</span>
                                     </button>
                                 @endunless
-                                <a href="{{ route('users.edit', $user) }}" class="font-medium text-indigo-700 hover:underline">
+                                <a href="{{ route('users.edit', $user) }}" class="font-medium text-brand-700 hover:underline">
                                     {{ __('Upraviť') }}<span class="sr-only"> {{ $user->name }}</span>
                                 </a>
                             </div>

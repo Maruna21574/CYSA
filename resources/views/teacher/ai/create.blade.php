@@ -21,7 +21,7 @@
                     <div class="mt-2 grid gap-2 sm:grid-cols-2">
                         @foreach (\App\Enums\QuestionType::cases() as $type)
                             <label class="flex items-center gap-2 text-sm">
-                                <input type="checkbox" name="types[]" value="{{ $type->value }}" class="size-4 rounded text-indigo-600"
+                                <input type="checkbox" name="types[]" value="{{ $type->value }}" class="size-4 rounded text-brand-600"
                                        @checked(in_array($type->value, old('types', ['single_choice', 'multiple_choice', 'true_false']), true))>
                                 {{ $type->label() }}
                             </label>

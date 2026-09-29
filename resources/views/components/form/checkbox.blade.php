@@ -12,7 +12,7 @@
         value="1"
         @checked(old($name, $checked))
         @if ($hint) aria-describedby="{{ $id }}-hint" @endif
-        {{ $attributes->except('id')->class('mt-0.5 size-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600') }}
+        {{ $attributes->except('id')->class('mt-0.5 size-4 rounded border-slate-300 text-brand-600 focus:ring-brand-600') }}
     >
     <div>
         <label for="{{ $id }}" class="text-sm font-medium text-slate-700">{{ $label }}</label>

@@ -42,8 +42,8 @@
             <button type="button" wire:click="goTo({{ $index }})" wire:key="nav-{{ $item['question_id'] }}"
                 @if ($index === $current) aria-current="step" @endif
                 @class([
-                    'size-9 rounded-lg text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-indigo-600',
-                    'bg-indigo-600 text-white' => $index === $current,
+                    'size-9 rounded-lg text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-brand-600',
+                    'bg-brand-600 text-white' => $index === $current,
                     'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' => $index !== $current && $answered,
                     'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50' => $index !== $current && ! $answered,
                 ])>
@@ -79,8 +79,8 @@
                             <legend class="sr-only">{{ __('Vyber jednu odpoveď') }}</legend>
                             <div class="flex flex-col gap-2">
                                 @foreach ($question['options'] as $option)
-                                    <label wire:key="opt-{{ $option['id'] }}" class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 px-4 py-3 hover:bg-slate-50 has-checked:border-indigo-600 has-checked:bg-indigo-50">
-                                        <input type="radio" name="q-{{ $qid }}" value="{{ $option['id'] }}" wire:model.live="responses.{{ $qid }}.selected.0" class="mt-0.5 size-4 text-indigo-600">
+                                    <label wire:key="opt-{{ $option['id'] }}" class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 px-4 py-3 hover:bg-slate-50 has-checked:border-brand-600 has-checked:bg-brand-50">
+                                        <input type="radio" name="q-{{ $qid }}" value="{{ $option['id'] }}" wire:model.live="responses.{{ $qid }}.selected.0" class="mt-0.5 size-4 text-brand-600">
                                         <span class="text-sm text-slate-800">{{ $option['body'] }}</span>
                                     </label>
                                 @endforeach
@@ -93,8 +93,8 @@
                             <legend class="mb-2 text-sm text-slate-600">{{ __('Označ všetky správne odpovede.') }}</legend>
                             <div class="flex flex-col gap-2">
                                 @foreach ($question['options'] as $option)
-                                    <label wire:key="opt-{{ $option['id'] }}" class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 px-4 py-3 hover:bg-slate-50 has-checked:border-indigo-600 has-checked:bg-indigo-50">
-                                        <input type="checkbox" value="{{ $option['id'] }}" wire:model.live="responses.{{ $qid }}.selected" class="mt-0.5 size-4 rounded text-indigo-600">
+                                    <label wire:key="opt-{{ $option['id'] }}" class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 px-4 py-3 hover:bg-slate-50 has-checked:border-brand-600 has-checked:bg-brand-50">
+                                        <input type="checkbox" value="{{ $option['id'] }}" wire:model.live="responses.{{ $qid }}.selected" class="mt-0.5 size-4 rounded text-brand-600">
                                         <span class="text-sm text-slate-800">{{ $option['body'] }}</span>
                                     </label>
                                 @endforeach
@@ -105,7 +105,7 @@
                     @case(\App\Enums\QuestionType::ShortAnswer)
                         <label for="answer-{{ $qid }}" class="block text-sm font-medium text-slate-700">{{ __('Tvoja odpoveď') }}</label>
                         <input id="answer-{{ $qid }}" type="text" maxlength="500" autocomplete="off" wire:model.live.debounce.700ms="responses.{{ $qid }}.text"
-                               class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+                               class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                         @break
 
                     @case(\App\Enums\QuestionType::FillBlank)
@@ -115,7 +115,7 @@
                                     <label for="blank-{{ $qid }}-{{ $m[1] }}" class="sr-only">{{ __('Medzera :n', ['n' => $m[1]]) }}</label>
                                     <input id="blank-{{ $qid }}-{{ $m[1] }}" type="text" maxlength="500" autocomplete="off"
                                            wire:model.live.debounce.700ms="responses.{{ $qid }}.blanks.{{ $m[1] }}"
-                                           class="mx-1 inline-block w-36 rounded-md border border-slate-300 px-2 py-1 text-base focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+                                           class="mx-1 inline-block w-36 rounded-md border border-slate-300 px-2 py-1 text-base focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                                 @else
                                     <span class="whitespace-pre-line">{{ $segment }}</span>
                                 @endif

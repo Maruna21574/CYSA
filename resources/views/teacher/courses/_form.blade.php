@@ -24,5 +24,5 @@
 
     <x-form.input name="cover" type="file" :label="$course->cover_path ? __('Nahradiť obrázok') : __('Nahrať obrázok')" accept=".jpg,.jpeg,.png,.webp"
         :hint="__('JPG, PNG alebo WebP, najviac 5 MB.')"
-        class="file:mr-3 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-indigo-700" />
+        class="file:mr-3 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700" />
 </x-card>

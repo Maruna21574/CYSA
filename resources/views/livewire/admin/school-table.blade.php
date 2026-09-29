@@ -33,7 +33,7 @@
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right">
-                            <a href="{{ route('admin.schools.edit', $school) }}" class="font-medium text-indigo-700 hover:underline">
+                            <a href="{{ route('admin.schools.edit', $school) }}" class="font-medium text-brand-700 hover:underline">
                                 {{ __('Upraviť') }}<span class="sr-only"> {{ $school->name }}</span>
                             </a>
                         </td>

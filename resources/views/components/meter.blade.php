@@ -5,7 +5,7 @@
     $percent = $value === null ? null : max(0, min(100, (float) $value));
     $color = match (true) {
         $percent === null => 'bg-slate-300',
-        $tone === 'progress' => $percent >= 100 ? 'bg-emerald-500' : 'bg-indigo-500',
+        $tone === 'progress' => $percent >= 100 ? 'bg-emerald-500' : 'bg-brand-500',
         $percent < 50 => 'bg-red-500',
         $percent < 75 => 'bg-amber-500',
         default => 'bg-emerald-500',

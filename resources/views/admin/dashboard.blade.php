@@ -15,7 +15,7 @@
                 @foreach ($activity as $day => $count)
                     <div class="flex flex-1 flex-col items-center gap-1" title="{{ \Illuminate\Support\Carbon::parse($day)->translatedFormat('j. n.') }}: {{ $count }}">
                         <span class="text-[10px] tabular-nums text-slate-500">{{ $count ?: '' }}</span>
-                        <div class="w-full rounded-t bg-indigo-500" style="height: {{ max(2, $count / $max * 120) }}px"></div>
+                        <div class="w-full rounded-t bg-brand-500" style="height: {{ max(2, $count / $max * 120) }}px"></div>
                         <span class="text-[10px] text-slate-400">{{ \Illuminate\Support\Carbon::parse($day)->format('j.') }}</span>
                     </div>
                 @endforeach
@@ -41,7 +41,7 @@
             <p class="text-sm text-slate-500">{{ __('Žiadne udalosti.') }}</p>
         @endforelse
         @if (Route::has('admin.audit-logs.index'))
-            <a href="{{ route('admin.audit-logs.index') }}" class="mt-3 inline-block text-sm font-medium text-indigo-700 hover:underline">{{ __('Celý audit log') }}</a>
+            <a href="{{ route('admin.audit-logs.index') }}" class="mt-3 inline-block text-sm font-medium text-brand-700 hover:underline">{{ __('Celý audit log') }}</a>
         @endif
     </x-card>
 </x-layouts::app>

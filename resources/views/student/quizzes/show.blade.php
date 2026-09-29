@@ -25,7 +25,7 @@
                         @else
                             <x-badge>{{ __('Výsledok zatiaľ nie je zverejnený') }}</x-badge>
                         @endif
-                        <a href="{{ route('attempts.show', $attempt) }}" class="text-sm font-medium text-indigo-700 hover:underline">{{ __('Detail') }}</a>
+                        <a href="{{ route('attempts.show', $attempt) }}" class="text-sm font-medium text-brand-700 hover:underline">{{ __('Detail') }}</a>
                     </div>
                 @empty
                     <p class="text-sm text-slate-500">{{ __('Test si zatiaľ neabsolvoval(a).') }}</p>

@@ -36,7 +36,7 @@
                 <template x-if="toast.type !== 'error'"><x-icon name="check" /></template>
             </span>
             <p class="flex-1 text-sm text-slate-800" x-text="toast.message"></p>
-            <button type="button" @click="remove(toast.id)" class="rounded text-slate-400 hover:text-slate-600 focus-visible:outline-2 focus-visible:outline-indigo-600">
+            <button type="button" @click="remove(toast.id)" class="rounded text-slate-400 hover:text-slate-600 focus-visible:outline-2 focus-visible:outline-brand-600">
                 <span class="sr-only">{{ __('Zavrieť') }}</span>
                 <x-icon name="x" class="size-4" />
             </button>

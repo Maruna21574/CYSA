@@ -46,24 +46,24 @@
     {{-- Decorative background circles --}}
     <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[46rem] overflow-hidden bg-gradient-to-b from-slate-100 to-white" aria-hidden="true">
         <div class="absolute -top-40 left-1/2 size-[64rem] -translate-x-1/2 rounded-full border-[7rem] border-white/80"></div>
-        <div class="absolute top-24 -right-40 size-[34rem] rounded-full bg-indigo-100/60 blur-3xl"></div>
+        <div class="absolute top-24 -right-40 size-[34rem] rounded-full bg-brand-100/60 blur-3xl"></div>
     </div>
 
     {{-- Top navigation --}}
     <header class="sticky top-3 z-40 px-4" x-data="{ open: false }">
         <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white/95 px-4 py-3 shadow-sm backdrop-blur sm:px-6" aria-label="{{ __('Hlavná navigácia') }}">
-            <a href="{{ route('home') }}" class="flex items-center gap-2 text-indigo-700">
+            <a href="{{ route('home') }}" class="flex items-center gap-2 text-brand-700">
                 <x-icon name="shield" class="size-8" />
                 <span class="text-2xl font-bold tracking-tight">{{ config('app.name') }}</span>
             </a>
 
             <ul class="hidden items-center gap-6 text-sm font-semibold text-slate-700 lg:flex">
-                <li><a href="#o-nas" class="hover:text-indigo-700">{{ __('O nás') }}</a></li>
-                <li><a href="#kurzy" class="hover:text-indigo-700">{{ __('Kurzy') }}</a></li>
-                <li><a href="#sluzby" class="hover:text-indigo-700">{{ __('Služby') }}</a></li>
-                <li><a href="#ako-to-funguje" class="hover:text-indigo-700">{{ __('Ako to funguje') }}</a></li>
-                <li><a href="#kontakt" class="hover:text-indigo-700">{{ __('Kontakt') }}</a></li>
-                <li><a href="{{ route('certificates.verify') }}" class="hover:text-indigo-700">{{ __('Overiť certifikát') }}</a></li>
+                <li><a href="#o-nas" class="hover:text-brand-700">{{ __('O nás') }}</a></li>
+                <li><a href="#kurzy" class="hover:text-brand-700">{{ __('Kurzy') }}</a></li>
+                <li><a href="#sluzby" class="hover:text-brand-700">{{ __('Služby') }}</a></li>
+                <li><a href="#ako-to-funguje" class="hover:text-brand-700">{{ __('Ako to funguje') }}</a></li>
+                <li><a href="#kontakt" class="hover:text-brand-700">{{ __('Kontakt') }}</a></li>
+                <li><a href="{{ route('certificates.verify') }}" class="hover:text-brand-700">{{ __('Overiť certifikát') }}</a></li>
             </ul>
 
             <div class="flex items-center gap-2">
@@ -97,13 +97,13 @@
         {{-- Hero --}}
         <section class="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-16 pb-10 sm:px-6 lg:grid-cols-2 lg:pt-24">
             <div>
-                <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
+                <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
                     <x-icon name="sparkles" class="size-4" />{{ __('Pre základné a stredné školy') }}
                 </p>
                 <h1 class="text-4xl leading-tight font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
                     {{ __('Kybernetická') }}<br>
-                    <span class="underline decoration-indigo-600 decoration-4 underline-offset-8">{{ __('bezpečnosť') }}</span> {{ __('pre') }}
-                    <span class="underline decoration-indigo-600 decoration-4 underline-offset-8">{{ __('školy') }}</span>
+                    <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('bezpečnosť') }}</span> {{ __('pre') }}
+                    <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('školy') }}</span>
                 </h1>
                 <p class="mt-2 -rotate-3 pl-24 text-3xl font-semibold text-emerald-600 italic sm:pl-40" aria-hidden="true">{{ __('hravo a bezpečne') }}</p>
 
@@ -124,7 +124,7 @@
 
             {{-- Illustration built from app UI elements --}}
             <div class="relative mx-auto mb-12 w-full max-w-md lg:max-w-none" aria-hidden="true">
-                <div class="absolute inset-0 -z-10 rotate-6 rounded-[2.5rem] bg-gradient-to-br from-indigo-600 to-sky-500 opacity-90"></div>
+                <div class="absolute inset-0 -z-10 rotate-6 rounded-[2.5rem] bg-gradient-to-br from-brand-600 to-brand-400 opacity-90"></div>
                 <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-2xl">
                     <div class="mb-4 flex items-center justify-between">
                         <span class="text-sm font-semibold text-slate-500">{{ __('Otázka 3 z 10') }}</span>
@@ -150,7 +150,7 @@
                 <div class="absolute -top-6 -right-2 w-44 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:-right-8">
                     <span class="block text-xs text-slate-500">{{ __('Pokrok triedy 4.A') }}</span>
                     <span class="mt-1 block text-2xl font-bold text-slate-900">+38 %</span>
-                    <span class="mt-2 block h-2 overflow-hidden rounded-full bg-slate-100"><span class="block h-full w-4/5 rounded-full bg-indigo-600"></span></span>
+                    <span class="mt-2 block h-2 overflow-hidden rounded-full bg-slate-100"><span class="block h-full w-4/5 rounded-full bg-brand-600"></span></span>
                 </div>
             </div>
         </section>
@@ -161,7 +161,7 @@
             <div class="grid gap-6 md:grid-cols-3">
                 @foreach ($services as [$icon, $audience, $title, $items])
                     <article class="flex flex-col rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:shadow-lg">
-                        <span class="mx-auto mb-4 rounded-2xl bg-indigo-50 p-4 text-indigo-600"><x-icon :name="$icon" class="size-10" /></span>
+                        <span class="mx-auto mb-4 rounded-2xl bg-brand-50 p-4 text-brand-600"><x-icon :name="$icon" class="size-10" /></span>
                         <p class="text-sm font-semibold text-slate-600">{{ __($audience) }}</p>
                         <h3 class="mt-1 text-2xl font-extrabold text-emerald-600">{{ __($title) }}</h3>
                         <ul class="mt-6 flex flex-col gap-2 text-left text-sm text-slate-700">
@@ -190,7 +190,7 @@
                 @foreach ([['8', 'tém kybernetickej bezpečnosti'], ['6', 'typov otázok v testoch'], ['24/7', 'prístup z počítača aj mobilu'], ['GDPR', 'bezpečné spracovanie údajov']] as [$value, $label])
                     <div class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-6">
                         <dt class="text-sm text-slate-600">{{ __($label) }}</dt>
-                        <dd class="order-first text-3xl font-extrabold text-indigo-700">{{ $value }}</dd>
+                        <dd class="order-first text-3xl font-extrabold text-brand-700">{{ $value }}</dd>
                     </div>
                 @endforeach
             </dl>
@@ -205,7 +205,7 @@
                 <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach ($topics as [$icon, $title, $text])
                         <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition hover:-translate-y-0.5 hover:shadow-md">
-                            <span class="mb-4 inline-flex rounded-xl bg-indigo-50 p-3 text-indigo-600"><x-icon :name="$icon" class="size-6" /></span>
+                            <span class="mb-4 inline-flex rounded-xl bg-brand-50 p-3 text-brand-600"><x-icon :name="$icon" class="size-6" /></span>
                             <h3 class="font-bold text-slate-900">{{ __($title) }}</h3>
                             <p class="mt-2 text-sm text-slate-600">{{ __($text) }}</p>
                         </article>
@@ -230,7 +230,7 @@
             <h3 class="mt-20 text-2xl font-extrabold text-slate-900">{{ __('Všetko, čo škola potrebuje, na jednom mieste') }}</h3>
             <ul class="mt-6 grid gap-x-8 gap-y-3 text-slate-700 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($features as $feature)
-                    <li class="flex items-start gap-2"><x-icon name="check-circle" class="mt-0.5 size-5 shrink-0 text-indigo-600" />{{ __($feature) }}</li>
+                    <li class="flex items-start gap-2"><x-icon name="check-circle" class="mt-0.5 size-5 shrink-0 text-brand-600" />{{ __($feature) }}</li>
                 @endforeach
             </ul>
         </section>
@@ -294,7 +294,7 @@
 
     <footer class="border-t border-slate-200 bg-white">
         <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-slate-600 sm:flex-row sm:px-6">
-            <a href="{{ route('home') }}" class="flex items-center gap-2 text-indigo-700">
+            <a href="{{ route('home') }}" class="flex items-center gap-2 text-brand-700">
                 <x-icon name="shield" class="size-6" /><span class="font-bold">{{ config('app.name') }}</span>
             </a>
             <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2" aria-label="{{ __('Pätička') }}">

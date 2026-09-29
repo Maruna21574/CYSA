@@ -1,6 +1,6 @@
 <x-layouts::app :title="$course->title">
     @if ($isPreview)
-        <div class="mb-4 rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-sm text-indigo-800" role="status">
+        <div class="mb-4 rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm text-brand-800" role="status">
             {{ __('Náhľad kurzu tak, ako ho vidia študenti. Skryté kapitoly a nepublikované testy sú zobrazené iba vám.') }}
             <a href="{{ route('teacher.courses.show', $course) }}" class="font-semibold underline">{{ __('Späť na úpravu') }}</a>
         </div>
@@ -18,7 +18,7 @@
             <div class="flex flex-wrap gap-2">
                 <x-badge>{{ $course->difficulty->label() }}</x-badge>
                 @if ($course->category)
-                    <x-badge color="indigo">{{ $course->category->name }}</x-badge>
+                    <x-badge color="brand">{{ $course->category->name }}</x-badge>
                 @endif
             </div>
             @if ($course->description)
@@ -54,7 +54,7 @@
                             @endphp
                             <li>
                                 @if ($isOpen)
-                                    <a href="{{ route('chapters.show', [$course, $chapter]) }}" class="flex items-center gap-3 py-3 text-sm hover:text-indigo-700">
+                                    <a href="{{ route('chapters.show', [$course, $chapter]) }}" class="flex items-center gap-3 py-3 text-sm hover:text-brand-700">
                                 @else
                                     <div class="flex items-center gap-3 py-3 text-sm text-slate-400" aria-disabled="true">
                                 @endif

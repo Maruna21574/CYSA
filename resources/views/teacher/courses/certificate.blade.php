@@ -15,7 +15,7 @@
             <x-card :title="__('Povinné kapitoly')">
                 <p class="mb-3 text-xs text-slate-500">{{ __('Ak nevyberiete žiadnu, musia byť dokončené všetky zverejnené kapitoly.') }}</p>
                 @forelse ($chapters as $chapter)
-                    <label class="flex items-center gap-2 py-1 text-sm"><input type="checkbox" name="chapters[]" value="{{ $chapter->id }}" @checked(in_array($chapter->id, old('chapters', $selectedChapters))) class="size-4 rounded text-indigo-600">{{ $chapter->title }}</label>
+                    <label class="flex items-center gap-2 py-1 text-sm"><input type="checkbox" name="chapters[]" value="{{ $chapter->id }}" @checked(in_array($chapter->id, old('chapters', $selectedChapters))) class="size-4 rounded text-brand-600">{{ $chapter->title }}</label>
                 @empty
                     <p class="text-sm text-slate-500">{{ __('Kurz nemá zverejnené kapitoly.') }}</p>
                 @endforelse
@@ -25,7 +25,7 @@
             <x-card :title="__('Povinné testy')">
                 <p class="mb-3 text-xs text-slate-500">{{ __('Ak nevyberiete žiadny, musia byť úspešne absolvované všetky publikované testy a výstupné testy (precvičovacie kvízy a vstupný test sa nepočítajú).') }}</p>
                 @forelse ($quizzes as $quiz)
-                    <label class="flex items-center gap-2 py-1 text-sm"><input type="checkbox" name="quizzes[]" value="{{ $quiz->id }}" @checked(in_array($quiz->id, old('quizzes', $selectedQuizzes))) class="size-4 rounded text-indigo-600">{{ $quiz->title }} <span class="text-xs text-slate-500">({{ $quiz->purpose->label() }})</span></label>
+                    <label class="flex items-center gap-2 py-1 text-sm"><input type="checkbox" name="quizzes[]" value="{{ $quiz->id }}" @checked(in_array($quiz->id, old('quizzes', $selectedQuizzes))) class="size-4 rounded text-brand-600">{{ $quiz->title }} <span class="text-xs text-slate-500">({{ $quiz->purpose->label() }})</span></label>
                 @empty
                     <p class="text-sm text-slate-500">{{ __('Kurz nemá publikované testy.') }}</p>
                 @endforelse
@@ -41,7 +41,7 @@
                     <div class="flex items-center justify-between gap-2">
                         <span class="font-medium text-slate-900">{{ $certificate->holder_name }}</span>
                         @if ($certificate->isValid())
-                            <a href="{{ route('certificates.download', $certificate) }}" class="text-indigo-700 hover:underline">PDF</a>
+                            <a href="{{ route('certificates.download', $certificate) }}" class="text-brand-700 hover:underline">PDF</a>
                         @else
                             <x-badge color="red">{{ __('Zrušený') }}</x-badge>
                         @endif

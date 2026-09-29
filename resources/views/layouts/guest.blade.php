@@ -13,7 +13,7 @@
     <x-toasts />
 
     <main class="flex min-h-full flex-col items-center justify-center px-4 py-12">
-        <a href="{{ route('home') }}" class="mb-8 flex items-center gap-2 text-indigo-700">
+        <a href="{{ route('home') }}" class="mb-8 flex items-center gap-2 text-brand-700">
             <x-icon name="shield" class="size-9" />
             <span class="text-2xl font-bold tracking-tight">{{ config('app.name') }}</span>
         </a>

@@ -8,11 +8,11 @@
     <style>
         body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f8fafc; color: #0f172a; }
         main { max-width: 28rem; padding: 2rem; text-align: center; }
-        .code { font-size: 4rem; font-weight: 800; color: #4f46e5; margin: 0; }
+        .code { font-size: 4rem; font-weight: 800; color: #1c3763; margin: 0; }
         h1 { font-size: 1.25rem; margin: .5rem 0; }
         p { color: #475569; line-height: 1.6; }
-        a { display: inline-block; margin-top: 1rem; padding: .6rem 1.2rem; border-radius: .5rem; background: #4f46e5; color: #fff; text-decoration: none; font-weight: 600; }
-        a:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 2px; }
+        a { display: inline-block; margin-top: 1rem; padding: .6rem 1.2rem; border-radius: .5rem; background: #1c3763; color: #fff; text-decoration: none; font-weight: 600; }
+        a:focus-visible { outline: 3px solid #8ea6cb; outline-offset: 2px; }
     </style>
 </head>
 <body>

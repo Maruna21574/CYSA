@@ -4,7 +4,7 @@
     <form method="GET" action="{{ route('search') }}" class="mb-6 flex max-w-xl gap-2" role="search">
         <label for="search-page" class="sr-only">{{ __('Hľadaný výraz') }}</label>
         <input id="search-page" name="q" type="search" value="{{ $term }}" minlength="2" maxlength="100" autofocus
-               class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+               class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
         <x-button>{{ __('Hľadať') }}</x-button>
     </form>
 
@@ -19,7 +19,7 @@
                     <ul class="flex flex-col divide-y divide-slate-100">
                         @foreach ($results as $result)
                             <li>
-                                <a href="{{ $result['url'] }}" class="block py-2 hover:text-indigo-700">
+                                <a href="{{ $result['url'] }}" class="block py-2 hover:text-brand-700">
                                     <span class="block text-sm font-medium">{{ $result['title'] }}</span>
                                     @if ($result['subtitle'])
                                         <span class="text-xs text-slate-500">{{ $result['subtitle'] }}</span>

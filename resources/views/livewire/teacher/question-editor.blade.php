@@ -34,8 +34,8 @@
                 @if ($currentType === \App\Enums\QuestionType::TrueFalse)
                     <div class="flex flex-col gap-2 sm:flex-row" role="radiogroup" aria-label="{{ __('Správna odpoveď') }}">
                         @foreach ($options as $index => $option)
-                            <label wire:key="tf-{{ $index }}" class="flex flex-1 cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 has-checked:border-indigo-600 has-checked:bg-indigo-50">
-                                <input type="radio" name="tf-correct" wire:click="markCorrect({{ $index }})" @checked($option['is_correct']) class="size-4 text-indigo-600">
+                            <label wire:key="tf-{{ $index }}" class="flex flex-1 cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 has-checked:border-brand-600 has-checked:bg-brand-50">
+                                <input type="radio" name="tf-correct" wire:click="markCorrect({{ $index }})" @checked($option['is_correct']) class="size-4 text-brand-600">
                                 <span class="text-sm font-medium">{{ __('Tvrdenie je :value', ['value' => mb_strtolower($option['body'])]) }}</span>
                             </label>
                         @endforeach
@@ -46,10 +46,10 @@
                             <li wire:key="option-{{ $index }}-{{ $option['id'] ?? 'new' }}" class="flex items-start gap-3">
                                 @if ($currentType === \App\Enums\QuestionType::SingleChoice)
                                     <input type="radio" name="single-correct" wire:click="markCorrect({{ $index }})" @checked($option['is_correct'])
-                                           class="mt-2.5 size-4 text-indigo-600" aria-label="{{ __('Správna odpoveď') }}">
+                                           class="mt-2.5 size-4 text-brand-600" aria-label="{{ __('Správna odpoveď') }}">
                                 @elseif ($currentType === \App\Enums\QuestionType::MultipleChoice)
                                     <input type="checkbox" wire:model="options.{{ $index }}.is_correct"
-                                           class="mt-2.5 size-4 rounded text-indigo-600" aria-label="{{ __('Správna odpoveď') }}">
+                                           class="mt-2.5 size-4 rounded text-brand-600" aria-label="{{ __('Správna odpoveď') }}">
                                 @elseif ($currentType === \App\Enums\QuestionType::FillBlank)
                                     <div class="w-24 shrink-0">
                                         <label for="blank-{{ $index }}" class="sr-only">{{ __('Medzera') }}</label>
@@ -70,14 +70,14 @@
                                                    \App\Enums\QuestionType::Matching => __('Položka vľavo, napr. Phishing'),
                                                    default => __('Možnosť :n', ['n' => $index + 1]),
                                                } }}"
-                                               class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+                                               class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                                         @error("options.$index.body") <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                                     </div>
                                     @if ($currentType === \App\Enums\QuestionType::Matching)
                                         <div class="flex-1">
                                             <label for="match-{{ $index }}" class="sr-only">{{ __('Položka vpravo') }}</label>
                                             <input id="match-{{ $index }}" type="text" wire:model="options.{{ $index }}.match_body" maxlength="1000" placeholder="{{ __('Položka vpravo, napr. Podvodný e-mail') }}"
-                                                   class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/30">
+                                                   class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
                                         </div>
                                     @endif
                                 </div>
@@ -90,7 +90,7 @@
                     </ul>
 
                     @if (count($options) < \App\Services\Questions\QuestionValidator::MAX_OPTIONS)
-                        <button type="button" wire:click="addOption" class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-indigo-700 hover:underline">
+                        <button type="button" wire:click="addOption" class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline">
                             <x-icon name="plus" class="size-4" />
                             {{ match ($currentType) {
                                 \App\Enums\QuestionType::ShortAnswer, \App\Enums\QuestionType::FillBlank => __('Pridať akceptovanú odpoveď'),
@@ -112,7 +112,7 @@
             <x-card>
                 <x-form.textarea name="explanation" id="question-explanation" :label="__('Vysvetlenie (zobrazí sa po vyhodnotení)')" wire:model="explanation" rows="3" maxlength="5000" />
                 @if ($aiAvailable)
-                    <button type="button" wire:click="suggestExplanation" class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-indigo-700 hover:underline">
+                    <button type="button" wire:click="suggestExplanation" class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline">
                         <x-icon name="sparkles" class="size-4" />
                         <span wire:loading.remove wire:target="suggestExplanation">{{ __('Navrhnúť vysvetlenie pomocou AI') }}</span>
                         <span wire:loading wire:target="suggestExplanation">{{ __('AI premýšľa…') }}</span>
@@ -136,7 +136,7 @@
                 <div class="flex flex-col gap-2">
                     @foreach ($topics as $id => $name)
                         <label wire:key="topic-{{ $id }}" class="flex items-center gap-2 text-sm">
-                            <input type="checkbox" wire:model="topicIds" value="{{ $id }}" class="size-4 rounded text-indigo-600">{{ $name }}
+                            <input type="checkbox" wire:model="topicIds" value="{{ $id }}" class="size-4 rounded text-brand-600">{{ $name }}
                         </label>
                     @endforeach
                 </div>
@@ -153,7 +153,7 @@
                 <div>
                     <label for="question-image" class="sr-only">{{ __('Obrázok') }}</label>
                     <input id="question-image" type="file" wire:model="image" accept=".jpg,.jpeg,.png,.webp"
-                           class="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-indigo-700">
+                           class="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700">
                     @error('image') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
             </x-card>
