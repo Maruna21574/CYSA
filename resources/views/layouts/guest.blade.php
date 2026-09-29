@@ -22,7 +22,7 @@
             {{ $slot }}
         </div>
 
-        <p class="mt-8 text-center text-xs text-slate-500">{{ __('Vzdelávacia platforma kybernetickej bezpečnosti pre školy') }}</p>
+        <p class="mt-8 text-center text-xs text-slate-500">{{ __('Vzdelávacia aplikácia kybernetickej bezpečnosti') }}</p>
     </main>
 
     @livewireScripts
