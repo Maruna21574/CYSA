@@ -20,13 +20,13 @@
     $features = [
         'Vstupný a výstupný test na meranie pokroku', 'Automatické vyhodnotenie všetkých typov otázok', 'Certifikáty v PDF s QR overením',
         'Náhodné poradie otázok a časový limit', 'Notifikácie o nových testoch a termínoch', 'Analytika úspešnosti podľa tém',
-        'Pozvánky pre žiakov aj zamestnancov e-mailom', 'Oznámenia pre celú triedu alebo tím', 'Audit a ochrana osobných údajov',
+        'Pozvánky pre študentov aj zamestnancov e-mailom', 'Oznámenia pre celú triedu alebo tím', 'Audit a ochrana osobných údajov',
     ];
 
     $steps = [
         ['Organizácia sa zaregistruje', 'Administrátor školy alebo firmy dostane prístup a pridá učiteľov, školiteľov a skupiny.'],
         ['Pripraví sa kurz', 'Použijete hotový kurz alebo si vytvoríte vlastný – s materiálmi a testami.'],
-        ['Účastníci sa učia', 'Žiaci aj zamestnanci prechádzajú kapitoly, riešia testy a hneď vidia výsledok aj vysvetlenie.'],
+        ['Účastníci sa učia', 'Študenti aj zamestnanci prechádzajú kapitoly, riešia testy a hneď vidia výsledok aj vysvetlenie.'],
         ['Vidíte pokrok', 'Vstupný a výstupný test ukáže, čo sa ľudia naozaj naučili, a prehľad, kto má povinný kurz splnený.'],
     ];
 @endphp
@@ -35,7 +35,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ __('CYSA – online vzdelávacia platforma kybernetickej bezpečnosti pre školy aj firmy. Kurzy, testy a certifikáty pre žiakov aj zamestnancov – phishing, heslá, GDPR a ďalšie základy.') }}">
+    <meta name="description" content="{{ __('CYSA – online vzdelávacia platforma kybernetickej bezpečnosti pre školy aj firmy. Kurzy, testy a certifikáty pre študentov aj zamestnancov – phishing, heslá, GDPR a ďalšie základy.') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }} · {{ __('Kybernetická bezpečnosť pre školy a firmy') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -107,10 +107,8 @@
                     <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('školy') }}</span> {{ __('a') }}
                     <span class="underline decoration-brand-600 decoration-4 underline-offset-8">{{ __('firmy') }}</span>
                 </h1>
-                <p class="mt-2 -rotate-3 pl-24 text-3xl font-semibold text-accent italic sm:pl-40" aria-hidden="true">{{ __('hravo a bezpečne') }}</p>
-
                 <p class="mt-8 max-w-lg text-lg text-slate-700">
-                    {{ __('Online kurzy, testy a certifikáty, ktoré naučia žiakov aj zamestnancov chrániť heslá, rozpoznať phishing a bezpečne sa správať na internete.') }}
+                    {{ __('Online kurzy, testy a certifikáty, ktoré naučia študentov aj zamestnancov chrániť heslá, rozpoznať phishing a bezpečne sa správať na internete.') }}
                     <strong class="font-semibold text-slate-900">{{ __('Učiteľ aj zamestnávateľ vidí, kto má kurz splnený.') }}</strong>
                 </p>
 
@@ -148,12 +146,6 @@
                         <span class="block text-sm font-bold text-slate-900">{{ __('Expert na phishing') }}</span>
                     </span>
                 </div>
-
-                <div class="absolute -top-6 -right-2 w-44 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:-right-8">
-                    <span class="block text-xs text-slate-500">{{ __('Pokrok triedy 4.A') }}</span>
-                    <span class="mt-1 block text-2xl font-bold text-slate-900">+38 %</span>
-                    <span class="mt-2 block h-2 overflow-hidden rounded-full bg-slate-100"><span class="block h-full w-4/5 rounded-full bg-brand-600"></span></span>
-                </div>
             </div>
         </section>
 
@@ -182,10 +174,10 @@
             <div>
                 <h2 id="o-nas-nadpis" class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">{{ __('O nás') }}</h2>
                 <p class="mt-6 text-lg text-slate-700">
-                    {{ __('CYSA vznikla ako súčasť diplomovej práce zameranej na kybernetickú bezpečnosť žiakov základných a stredných škôl. Obsah kurzov vychádza z prieskumu medzi študentmi a učiteľmi – zameriava sa na oblasti, v ktorých majú žiaci najväčšie medzery.') }}
+                    {{ __('CYSA vznikla ako súčasť diplomovej práce zameranej na kybernetickú bezpečnosť študentov základných a stredných škôl. Obsah kurzov vychádza z prieskumu medzi študentmi a učiteľmi – zameriava sa na oblasti, v ktorých majú študenti najväčšie medzery.') }}
                 </p>
                 <p class="mt-4 text-slate-700">
-                    {{ __('Naším cieľom je, aby sa bezpečné správanie na internete učilo prakticky, na príkladoch zo života žiakov – a aby škola vedela zmerať, čo sa žiaci naozaj naučili.') }}
+                    {{ __('Naším cieľom je, aby sa bezpečné správanie na internete učilo prakticky, na príkladoch zo života študentov – a aby škola vedela zmerať, čo sa študenti naozaj naučili.') }}
                 </p>
                 <p class="mt-4 text-slate-700">
                     {{ __('Rovnaké základy – rozpoznať phishing, chrániť heslá a osobné údaje – dnes potrebuje každý zamestnanec. Preto CYSA ponúka kurzy aj firmám a organizáciám ako povinné bezpečnostné školenie s dokladom o absolvovaní.') }}
@@ -312,7 +304,7 @@
                         <span class="text-2xl font-bold tracking-tight">{{ config('app.name') }}</span>
                     </a>
                     <p class="mt-4 max-w-xs leading-6 text-slate-600">
-                        {{ __('Online vzdelávacia platforma kybernetickej bezpečnosti pre školy aj firmy. Kurzy, testy a certifikáty pre žiakov aj zamestnancov na jednom mieste.') }}
+                        {{ __('Online vzdelávacia platforma kybernetickej bezpečnosti pre školy aj firmy. Kurzy, testy a certifikáty pre študentov aj zamestnancov na jednom mieste.') }}
                     </p>
                     <a href="#kontakt" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 font-semibold text-white shadow-sm transition hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
                         {{ __('Chcem ukážku') }}<x-icon name="chevron-right" class="size-4" />
