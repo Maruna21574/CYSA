@@ -19,6 +19,9 @@
     --color-brand-800: #122442;
     --color-brand-900: #0d1b32;
     --color-brand-950: #081120;
+
+    /* Hover colour of primary buttons */
+    --color-accent: #3a99f9;
 }
 
 [x-cloak] {
