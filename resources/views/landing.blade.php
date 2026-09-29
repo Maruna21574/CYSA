@@ -292,19 +292,76 @@
         </section>
     </main>
 
-    <footer class="border-t border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-slate-600 sm:flex-row sm:px-6">
-            <a href="{{ route('home') }}" class="flex items-center gap-2 text-brand-700">
-                <x-icon name="shield" class="size-6" /><span class="font-bold">{{ config('app.name') }}</span>
-            </a>
-            <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2" aria-label="{{ __('Pätička') }}">
-                <a href="#o-nas" class="hover:text-slate-900">{{ __('O nás') }}</a>
-                <a href="#kurzy" class="hover:text-slate-900">{{ __('Kurzy') }}</a>
-                <a href="#kontakt" class="hover:text-slate-900">{{ __('Kontakt') }}</a>
-                <a href="{{ route('certificates.verify') }}" class="hover:text-slate-900">{{ __('Overiť certifikát') }}</a>
-                <a href="{{ route('login') }}" class="hover:text-slate-900">{{ __('Prihlásenie') }}</a>
-            </nav>
-            <p>© {{ now()->year }} {{ config('app.name') }}</p>
+    <footer class="relative overflow-hidden border-t-4 border-brand-600 bg-brand-50 text-sm text-slate-700">
+        {{-- Decorative circles --}}
+        <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div class="absolute -top-24 -right-24 size-80 rounded-full bg-brand-100"></div>
+            <div class="absolute -bottom-32 -left-20 size-72 rounded-full border-[2.5rem] border-white/70"></div>
+        </div>
+
+        <div class="relative mx-auto max-w-6xl px-4 pt-16 pb-8 sm:px-6">
+            <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+                <div class="lg:col-span-4">
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-brand-600">
+                        <x-icon name="shield" class="size-8" />
+                        <span class="text-2xl font-bold tracking-tight">{{ config('app.name') }}</span>
+                    </a>
+                    <p class="mt-4 max-w-xs leading-6 text-slate-600">
+                        {{ __('Online vzdelávacia platforma kybernetickej bezpečnosti pre základné a stredné školy. Kurzy, testy a certifikáty na jednom mieste.') }}
+                    </p>
+                    <a href="#kontakt" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 font-semibold text-white shadow-sm hover:bg-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+                        {{ __('Chcem ukážku pre školu') }}<x-icon name="chevron-right" class="size-4" />
+                    </a>
+                </div>
+
+                <nav class="lg:col-span-2" aria-labelledby="footer-platforma">
+                    <h2 id="footer-platforma" class="text-xs font-bold tracking-wider text-brand-600 uppercase">{{ __('Platforma') }}</h2>
+                    <ul class="mt-4 flex flex-col gap-3">
+                        @foreach (['o-nas' => 'O nás', 'sluzby' => 'Služby', 'ako-to-funguje' => 'Ako to funguje', 'kontakt' => 'Kontakt'] as $anchor => $label)
+                            <li><a href="#{{ $anchor }}" class="hover:text-brand-600 hover:underline">{{ __($label) }}</a></li>
+                        @endforeach
+                    </ul>
+                </nav>
+
+                <nav class="lg:col-span-3" aria-labelledby="footer-kurzy">
+                    <h2 id="footer-kurzy" class="text-xs font-bold tracking-wider text-brand-600 uppercase">{{ __('Témy kurzov') }}</h2>
+                    <ul class="mt-4 flex flex-col gap-3">
+                        @foreach (array_slice($topics, 0, 5) as [$icon, $title])
+                            <li><a href="#kurzy" class="hover:text-brand-600 hover:underline">{{ __($title) }}</a></li>
+                        @endforeach
+                    </ul>
+                </nav>
+
+                <div class="lg:col-span-3">
+                    <h2 class="text-xs font-bold tracking-wider text-brand-600 uppercase">{{ __('Kontakt a prístup') }}</h2>
+                    <ul class="mt-4 flex flex-col gap-3">
+                        @if (config('cysa.contact_email'))
+                            <li>
+                                <a href="mailto:{{ config('cysa.contact_email') }}" class="inline-flex items-center gap-2 hover:text-brand-600 hover:underline">
+                                    <x-icon name="mail" class="size-5 text-brand-500" />{{ config('cysa.contact_email') }}
+                                </a>
+                            </li>
+                        @endif
+                        <li>
+                            <a href="{{ route('certificates.verify') }}" class="inline-flex items-center gap-2 hover:text-brand-600 hover:underline">
+                                <x-icon name="badge" class="size-5 text-brand-500" />{{ __('Overiť certifikát') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}" class="inline-flex items-center gap-2 hover:text-brand-600 hover:underline">
+                                <x-icon name="lock" class="size-5 text-brand-500" />{{ __('Prihlásenie') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-brand-200 pt-6 text-slate-600 sm:flex-row">
+                <p>© {{ now()->year }} {{ config('app.name') }} · {{ __('Kybernetická bezpečnosť pre školy') }}</p>
+                <a href="#obsah" class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-semibold text-brand-600 shadow-xs ring-1 ring-brand-200 hover:bg-brand-100">
+                    <x-icon name="arrow-up" class="size-4" />{{ __('Späť hore') }}
+                </a>
+            </div>
         </div>
     </footer>
 
