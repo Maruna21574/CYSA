@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Enums\AuditAction;
 use App\Models\User;
 use App\Services\Audit\AuditLogger;
+use App\Services\Users\Impersonation;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Auth\Events\Login;
@@ -22,7 +23,8 @@ class RecordAuthenticationEvents
 
     public function handleLogin(Login $event): void
     {
-        if (! $event->user instanceof User) {
+        // Switching accounts is audited by the Impersonation service, not as a sign-in.
+        if (! $event->user instanceof User || session()->has(Impersonation::SESSION_KEY)) {
             return;
         }
 
@@ -62,7 +64,9 @@ class RecordAuthenticationEvents
             return;
         }
 
-        $this->audit->log(AuditAction::Logout, auditable: $event->user, user: $event->user);
+        $realUser = session()->has(Impersonation::SESSION_KEY) ? User::find(session(Impersonation::SESSION_KEY)) : $event->user;
+
+        $this->audit->log(AuditAction::Logout, auditable: $realUser ?? $event->user, user: $realUser ?? $event->user);
     }
 
     public function handlePasswordReset(PasswordReset $event): void

@@ -3,13 +3,13 @@
         :title="$classroom->name"
         :description="__('Školský rok :year', ['year' => $classroom->school_year])"
         :breadcrumbs="[
-            ['label' => __('Triedy'), 'url' => route('school.classrooms.index')],
+            ['label' => \App\Support\Terms::of('Triedy'), 'url' => route('school.classrooms.index')],
             ['label' => $classroom->name],
         ]"
     >
         <x-slot:actions>
             @can('update', $classroom)
-                <x-link-button variant="secondary" :href="route('school.classrooms.edit', $classroom)">{{ __('Upraviť triedu') }}</x-link-button>
+                <x-link-button variant="secondary" :href="route('school.classrooms.edit', $classroom)">{{ \App\Support\Terms::of('Upraviť triedu') }}</x-link-button>
             @endcan
         </x-slot:actions>
     </x-page-header>

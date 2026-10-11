@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Number;
 
-#[Fillable(['type', 'title', 'disk', 'path', 'original_name', 'mime_type', 'size', 'url', 'position', 'uploaded_by'])]
+#[Fillable(['type', 'title', 'disk', 'path', 'original_name', 'mime_type', 'page_count', 'size', 'url', 'position', 'uploaded_by'])]
 class Material extends Model
 {
     use SoftDeletes;
@@ -23,6 +23,7 @@ class Material extends Model
     {
         return [
             'type' => MaterialType::class,
+            'page_count' => 'integer',
             'size' => 'integer',
         ];
     }
@@ -46,6 +47,16 @@ class Material extends Model
     public function isFile(): bool
     {
         return $this->type->isFile();
+    }
+
+    public function isPdf(): bool
+    {
+        return $this->mime_type === 'application/pdf';
+    }
+
+    public function pageCount(): int
+    {
+        return max(1, (int) ($this->page_count ?? 1));
     }
 
     /**

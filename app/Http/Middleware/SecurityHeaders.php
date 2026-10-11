@@ -54,7 +54,7 @@ class SecurityHeaders
             "font-src 'self' data:",
             "media-src 'self' blob:",
             "connect-src 'self'",
-            'frame-src https://www.youtube-nocookie.com',
+            "frame-src 'self' https://www.youtube-nocookie.com",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",

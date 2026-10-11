@@ -8,6 +8,7 @@ use App\Models\Chapter;
 use App\Models\ChapterProgress;
 use App\Models\Course;
 use App\Models\CourseProgress;
+use App\Models\MaterialProgress;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
@@ -50,6 +51,8 @@ class ProgressService
 
     public function markCompleted(User $user, Chapter $chapter): void
     {
+        abort_if(! $this->allRequiredMaterialsRead($user, $chapter), 422, __('Najprv otvor a prejdi všetky PDF materiály v kapitole.'));
+
         $progress = ChapterProgress::firstOrCreate(
             ['user_id' => $user->id, 'chapter_id' => $chapter->id],
             ['course_id' => $chapter->course_id, 'started_at' => now()],
@@ -63,6 +66,22 @@ class ProgressService
         ChapterCompleted::dispatch($user, $chapter);
 
         $this->refreshCourse($user, $chapter->loadMissing('course')->course);
+    }
+
+    public function allRequiredMaterialsRead(User $user, Chapter $chapter): bool
+    {
+        $materialIds = $chapter->materials()
+            ->where('mime_type', 'application/pdf')
+            ->pluck('id');
+
+        if ($materialIds->isEmpty()) {
+            return true;
+        }
+
+        return MaterialProgress::where('user_id', $user->id)
+            ->whereIn('material_id', $materialIds)
+            ->whereNotNull('completed_at')
+            ->count() === $materialIds->count();
     }
 
     /**

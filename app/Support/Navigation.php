@@ -14,23 +14,24 @@ use Illuminate\Support\Facades\Route;
 class Navigation
 {
     /**
-     * @return list<array{label: string, route: string, icon: string, active: string|list<string>}>
+     * @return list<array{label: string, route: string, icon: string, active: string|list<string>, color?: string}>
      */
     public static function for(User $user): array
     {
         $items = match ($user->role) {
             UserRole::SuperAdmin => [
-                ['label' => __('Prehľad'), 'route' => 'admin.dashboard', 'icon' => 'home', 'active' => 'admin.dashboard'],
-                ['label' => __('Školy'), 'route' => 'admin.schools.index', 'icon' => 'building', 'active' => 'admin.schools.*'],
-                ['label' => __('Používatelia'), 'route' => 'users.index', 'icon' => 'users', 'active' => 'users.*'],
-                ['label' => __('Audit log'), 'route' => 'admin.audit-logs.index', 'icon' => 'document', 'active' => 'admin.audit-logs.*'],
-                ['label' => __('Nastavenia'), 'route' => 'admin.settings.edit', 'icon' => 'adjustments', 'active' => 'admin.settings.*'],
+                ['label' => __('Prehľad'), 'route' => 'admin.dashboard', 'icon' => 'home', 'active' => 'admin.dashboard', 'color' => 'blue'],
+                ['label' => __('Školy'), 'route' => 'admin.schools.index', 'icon' => 'building', 'active' => 'admin.schools.*', 'color' => 'violet'],
+                ['label' => __('Organizácie'), 'route' => 'admin.organizations.index', 'icon' => 'building', 'active' => 'admin.organizations.*', 'color' => 'emerald'],
+                ['label' => __('Používatelia'), 'route' => 'users.index', 'icon' => 'users', 'active' => 'users.*', 'color' => 'amber'],
+                ['label' => __('Audit log'), 'route' => 'admin.audit-logs.index', 'icon' => 'document', 'active' => 'admin.audit-logs.*', 'color' => 'rose'],
+                ['label' => __('Nastavenia'), 'route' => 'admin.settings.edit', 'icon' => 'adjustments', 'active' => 'admin.settings.*', 'color' => 'slate'],
             ],
             UserRole::SchoolAdmin => [
-                ['label' => __('Prehľad školy'), 'route' => 'school.dashboard', 'icon' => 'home', 'active' => 'school.dashboard'],
-                ['label' => __('Používatelia'), 'route' => 'users.index', 'icon' => 'users', 'active' => ['users.*', 'school.students.*']],
-                ['label' => __('Triedy'), 'route' => 'school.classrooms.index', 'icon' => 'squares', 'active' => 'school.classrooms.*'],
-                ['label' => __('Nastavenia školy'), 'route' => 'school.settings.edit', 'icon' => 'adjustments', 'active' => 'school.settings.*'],
+                ['label' => Terms::of('Prehľad školy'), 'route' => 'school.dashboard', 'icon' => 'home', 'active' => 'school.dashboard'],
+                ['label' => Terms::of('Používatelia'), 'route' => 'users.index', 'icon' => 'users', 'active' => ['users.*', 'school.students.*']],
+                ['label' => Terms::of('Triedy'), 'route' => 'school.classrooms.index', 'icon' => 'squares', 'active' => 'school.classrooms.*'],
+                ['label' => Terms::of('Nastavenia školy'), 'route' => 'school.settings.edit', 'icon' => 'adjustments', 'active' => 'school.settings.*'],
                 ...self::teacherItems(),
             ],
             UserRole::Teacher => [

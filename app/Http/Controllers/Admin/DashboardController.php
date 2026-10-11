@@ -29,8 +29,10 @@ class DashboardController extends Controller
             ->countBy(fn (Carbon $date): string => $date->toDateString());
 
         return view('admin.dashboard', [
-            'schools' => School::count(),
-            'activeSchools' => School::where('is_active', true)->count(),
+            'schools' => School::schools()->count(),
+            'activeSchools' => School::schools()->where('is_active', true)->count(),
+            'organizations' => School::companies()->count(),
+            'activeOrganizations' => School::companies()->where('is_active', true)->count(),
             'usersByRole' => collect(UserRole::cases())->mapWithKeys(fn (UserRole $role): array => [$role->label() => User::where('role', $role)->count()]),
             'activeUsers' => User::where('last_login_at', '>=', now()->subDays(30))->count(),
             'courses' => Course::count(),

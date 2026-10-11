@@ -11,8 +11,17 @@
     <div class="grid gap-4 sm:grid-cols-2">
         <x-form.select name="role" :label="__('Rola')" :options="$roles" :selected="$user->role" required />
 
-        @if ($schools)
-            <x-form.select name="school_id" :label="__('Škola')" :options="$schools" :selected="$user->school_id" :placeholder="__('— bez školy (iba super admin) —')" />
+        @if ($organization)
+            {{-- Only the super admin chooses the organization; everyone else is bound to their own on the server. --}}
+            @if (auth()->user()->isSuperAdmin())
+                <input type="hidden" name="school_id" value="{{ $organization->id }}">
+            @endif
+            <div>
+                <span class="mb-1 block text-sm font-medium text-slate-700">{{ __('Organizácia') }}</span>
+                <p class="rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{{ $organization->name }}</p>
+            </div>
+        @elseif ($schools)
+            <x-form.select name="school_id" :label="__('Škola / organizácia')" :options="$schools" :selected="$user->school_id" :placeholder="__('— bez školy (iba super admin) —')" />
         @endif
     </div>
 </x-card>

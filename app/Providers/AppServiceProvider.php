@@ -6,11 +6,13 @@ use App\Gamification\GamificationSubscriber;
 use App\Models\User;
 use App\Services\AI\Clients\AnthropicClient;
 use App\Services\AI\Contracts\AiClient;
+use App\Support\OrganizationTranslator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Translation\Translator;
 use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +22,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Company users see department / employee / trainer instead of classroom / student / teacher.
+        $this->app->extend('translator', function (Translator $translator): OrganizationTranslator {
+            $organizationTranslator = new OrganizationTranslator($translator->getLoader(), $translator->getLocale());
+            $organizationTranslator->setFallback($translator->getFallback());
+
+            return $organizationTranslator;
+        });
+
         // AI provider behind a provider-independent interface (AI_PROVIDER in .env).
         $this->app->bind(AiClient::class, fn (): AiClient => match (config('cysa.ai.provider')) {
             'anthropic' => new AnthropicClient(

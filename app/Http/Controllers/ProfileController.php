@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\AuditAction;
 use App\Services\Audit\AuditLogger;
+use App\Services\Users\Impersonation;
 use App\Services\Users\PersonalDataExporter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -27,6 +28,8 @@ class ProfileController extends Controller
      */
     public function export(Request $request, PersonalDataExporter $exporter, AuditLogger $audit): JsonResponse
     {
+        $this->ensureOwnAccount();
+
         $audit->log(AuditAction::DataExported, $request->user(), metadata: ['type' => 'personal_data']);
 
         return response()->json($exporter->export($request->user()), 200, [
@@ -46,6 +49,8 @@ class ProfileController extends Controller
 
     public function updatePassword(Request $request, AuditLogger $audit): RedirectResponse
     {
+        $this->ensureOwnAccount();
+
         $data = $request->validate([
             'current_password' => ['required', 'current_password'],
             'password' => ['required', 'confirmed', Password::defaults()],
@@ -60,5 +65,13 @@ class ProfileController extends Controller
         $audit->log(AuditAction::PasswordChanged, $request->user());
 
         return back()->with('success', __('Heslo bolo zmenené.'));
+    }
+
+    /**
+     * Personal data and the password belong to the account holder, not to someone who switched to it.
+     */
+    private function ensureOwnAccount(): void
+    {
+        abort_if(app(Impersonation::class)->isActive(), 403, __('Počas prepnutia na iný účet to nie je možné.'));
     }
 }

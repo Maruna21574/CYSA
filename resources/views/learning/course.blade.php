@@ -1,7 +1,7 @@
 <x-layouts::app :title="$course->title">
     @if ($isPreview)
         <div class="mb-4 rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm text-brand-800" role="status">
-            {{ __('Náhľad kurzu tak, ako ho vidia študenti. Skryté kapitoly a nepublikované testy sú zobrazené iba vám.') }}
+            {{ \App\Support\Terms::of('Náhľad kurzu tak, ako ho vidia študenti. Skryté kapitoly a nepublikované testy sú zobrazené iba vám.') }}
             <a href="{{ route('teacher.courses.show', $course) }}" class="font-semibold underline">{{ __('Späť na úpravu') }}</a>
         </div>
     @endif
@@ -85,7 +85,7 @@
 
         <div class="flex flex-col gap-4">
             @if ($announcements->isNotEmpty())
-                <x-card :title="__('Oznámenia učiteľa')">
+                <x-card :title="\App\Support\Terms::of('Oznámenia učiteľa')">
                     @foreach ($announcements as $announcement)
                         <article class="border-b border-slate-100 py-3 first:pt-0 last:border-0">
                             <h3 class="text-sm font-semibold text-slate-900">{{ $announcement->title }}</h3>

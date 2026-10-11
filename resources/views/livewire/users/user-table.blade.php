@@ -12,11 +12,11 @@
             </select>
         </div>
 
-        @if ($this->schoolOptions)
+        @if ($this->schoolOptions && ! $organization)
             <div class="sm:w-56">
-                <label for="filter-school" class="sr-only">{{ __('Škola') }}</label>
+                <label for="filter-school" class="sr-only">{{ __('Škola / organizácia') }}</label>
                 <select id="filter-school" wire:model.live="schoolId" class="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/30">
-                    <option value="">{{ __('Všetky školy') }}</option>
+                    <option value="">{{ __('Všetky školy a organizácie') }}</option>
                     @foreach ($this->schoolOptions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
@@ -42,8 +42,8 @@
                 <tr>
                     <x-table.th>{{ __('Meno') }}</x-table.th>
                     <x-table.th>{{ __('Rola') }}</x-table.th>
-                    @if ($this->schoolOptions)
-                        <x-table.th>{{ __('Škola') }}</x-table.th>
+                    @if ($this->schoolOptions && ! $organization)
+                        <x-table.th>{{ __('Škola / organizácia') }}</x-table.th>
                     @endif
                     <x-table.th>{{ __('Posledné prihlásenie') }}</x-table.th>
                     <x-table.th>{{ __('Stav') }}</x-table.th>
@@ -58,9 +58,9 @@
                             <span class="text-slate-500">{{ $user->email }}</span>
                         </td>
                         <td class="px-4 py-3">
-                            <x-badge :color="$user->role->canTeach() ? 'brand' : 'slate'">{{ $user->role->label() }}</x-badge>
+                            <x-badge :color="$user->role->canTeach() ? 'brand' : 'slate'">{{ $user->role->label($user->school) }}</x-badge>
                         </td>
-                        @if ($this->schoolOptions)
+                        @if ($this->schoolOptions && ! $organization)
                             <td class="px-4 py-3 text-slate-700">{{ $user->school?->name ?? '—' }}</td>
                         @endif
                         <td class="px-4 py-3 whitespace-nowrap text-slate-600">
@@ -80,6 +80,14 @@
                                         {{ $user->is_active ? __('Deaktivovať') : __('Aktivovať') }}<span class="sr-only"> {{ $user->name }}</span>
                                     </button>
                                 @endunless
+                                @if ($user->is_active && ! $user->isSuperAdmin() && ! $user->is(auth()->user()))
+                                    <form method="POST" action="{{ route('impersonation.start', $user) }}">
+                                        @csrf
+                                        <button type="submit" class="font-medium text-slate-600 hover:text-slate-900 hover:underline">
+                                            {{ __('Prepnúť') }}<span class="sr-only"> {{ __('na účet') }} {{ $user->name }}</span>
+                                        </button>
+                                    </form>
+                                @endif
                                 <a href="{{ route('users.edit', $user) }}" class="font-medium text-brand-700 hover:underline">
                                     {{ __('Upraviť') }}<span class="sr-only"> {{ $user->name }}</span>
                                 </a>

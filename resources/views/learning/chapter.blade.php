@@ -23,7 +23,11 @@
             <section aria-labelledby="materials-heading" class="flex flex-col gap-4">
                 <h2 id="materials-heading" class="text-lg font-semibold text-slate-900">{{ __('Študijné materiály') }}</h2>
                 @foreach ($chapter->materials as $material)
-                    @include('learning._material', ['material' => $material])
+                    @include('learning._material', [
+                        'material' => $material,
+                        'materialProgress' => $materialProgresses->get($material->id),
+                        'isPreview' => $isPreview,
+                    ])
                 @endforeach
             </section>
         @endif
@@ -42,6 +46,10 @@
             @if ($isCompleted)
                 <p class="flex items-center justify-center gap-2 rounded-lg bg-emerald-50 p-3 text-sm font-medium text-emerald-800" role="status">
                     <x-icon name="check-circle" class="size-5" />{{ __('Túto kapitolu máš dokončenú.') }}
+                </p>
+            @elseif (! $allRequiredMaterialsRead)
+                <p class="flex items-center justify-center gap-2 rounded-lg bg-amber-50 p-3 text-sm font-medium text-amber-800" role="status">
+                    <x-icon name="eye" class="size-5" />{{ __('Najprv otvor a prejdi všetky PDF materiály v kapitole.') }}
                 </p>
             @else
                 <form method="POST" action="{{ route('student.chapters.complete', [$course, $chapter]) }}" class="flex justify-center">

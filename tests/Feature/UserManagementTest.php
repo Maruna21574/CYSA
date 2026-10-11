@@ -115,6 +115,27 @@ class UserManagementTest extends TestCase
             ->assertDontSee('Cudzí');
     }
 
+    public function test_super_admin_role_filter_names_student_as_employee_too(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        Livewire::actingAs($superAdmin)
+            ->test(UserTable::class)
+            ->assertSee('Študent / zamestnanec');
+    }
+
+    public function test_super_admin_create_form_offers_roles_for_schools_and_companies(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+
+        $this->actingAs($superAdmin)
+            ->get(route('users.create'))
+            ->assertOk()
+            ->assertSee('Administrátor školy / firmy')
+            ->assertSee('Učiteľ / školiteľ')
+            ->assertSee('Študent / zamestnanec');
+    }
+
     public function test_deactivation_of_foreign_user_through_livewire_is_refused(): void
     {
         $foreignStudent = User::factory()->student()->create();

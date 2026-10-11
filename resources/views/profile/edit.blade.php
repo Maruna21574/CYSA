@@ -20,7 +20,7 @@
             <x-card :title="__('Upozornenia')" class="flex flex-col gap-4">
                 <x-form.checkbox name="email_notifications" :checked="$user->email_notifications"
                     :label="__('Posielať upozornenia aj e-mailom')"
-                    :hint="__('Nový kurz, nový test, blížiaci sa termín, certifikát a oznámenia učiteľa. V aplikácii ich uvidíte vždy.')" />
+                    :hint="\App\Support\Terms::of('Nový kurz, nový test, blížiaci sa termín, certifikát a oznámenia učiteľa. V aplikácii ich uvidíte vždy.')" />
                 <div><x-button>{{ __('Uložiť') }}</x-button></div>
             </x-card>
         </form>
@@ -37,7 +37,7 @@
         </form>
 
         <x-card :title="__('Moje údaje (GDPR)')">
-            <p class="text-sm text-slate-600">{{ __('Stiahnite si všetky údaje, ktoré o vás platforma uchováva (účet, triedy, progres, výsledky testov, certifikáty, notifikácie). Ak chcete účet vymazať, obráťte sa na administrátora školy.') }}</p>
+            <p class="text-sm text-slate-600">{{ \App\Support\Terms::of('Stiahnite si všetky údaje, ktoré o vás platforma uchováva (účet, triedy, progres, výsledky testov, certifikáty, notifikácie). Ak chcete účet vymazať, obráťte sa na administrátora školy.') }}</p>
             <x-link-button variant="secondary" class="mt-3" :href="route('profile.export')"><x-icon name="download" class="size-4" />{{ __('Stiahnuť moje údaje (JSON)') }}</x-link-button>
         </x-card>
     </div>

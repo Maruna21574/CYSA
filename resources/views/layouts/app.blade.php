@@ -1,6 +1,17 @@
 @php
     $user = auth()->user();
     $navigation = \App\Support\Navigation::for($user);
+    $impersonation = app(\App\Services\Users\Impersonation::class);
+    $realUser = $impersonation->isActive() ? $impersonation->realUser() : $user;
+    $navigationColors = [
+        'blue' => 'bg-blue-50 text-blue-700',
+        'violet' => 'bg-violet-50 text-violet-700',
+        'emerald' => 'bg-emerald-50 text-emerald-700',
+        'amber' => 'bg-amber-50 text-amber-800',
+        'rose' => 'bg-rose-50 text-rose-700',
+        'slate' => 'bg-slate-100 text-slate-700',
+        'brand' => 'bg-brand-50 text-brand-700',
+    ];
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-slate-50">
@@ -48,7 +59,7 @@
                             @if ($active) aria-current="page" @endif
                             @class([
                                 'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition',
-                                'bg-brand-50 text-brand-700' => $active,
+                                $navigationColors[$item['color'] ?? 'brand'] => $active,
                                 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' => ! $active,
                             ])
                         >
@@ -110,6 +121,12 @@
                         <span class="block font-medium text-slate-900">{{ $user->name }}</span>
                         <span class="block truncate text-slate-500">{{ $user->email }}</span>
                     </div>
+                    @if ($realUser && $impersonation->canSwitch($realUser))
+                        <a href="{{ route('impersonation.index') }}" class="flex w-full items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                            <x-icon name="switch" class="size-4" />
+                            {{ __('Prepnúť účet') }}
+                        </a>
+                    @endif
                     <a href="{{ route('profile.edit') }}" class="flex w-full items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                         <x-icon name="adjustments" class="size-4" />
                         {{ __('Môj profil') }}
@@ -124,6 +141,21 @@
                 </div>
             </div>
         </header>
+
+        @if ($impersonation->isActive())
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 bg-amber-100 px-4 py-2 text-sm text-amber-950 sm:px-6 lg:px-8" role="status">
+                <span class="flex items-center gap-2">
+                    <x-icon name="switch" class="size-4" />
+                    {!! __('Prezeráte aplikáciu ako <strong>:name</strong> (:role).', ['name' => e($user->name), 'role' => e($user->role->label($user->school))]) !!}
+                </span>
+                <form method="POST" action="{{ route('impersonation.stop') }}" class="ml-auto">
+                    @csrf
+                    <button type="submit" class="rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-900 shadow-xs hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+                        {{ __('Vrátiť sa na môj účet') }}@if ($realUser) ({{ $realUser->name }})@endif
+                    </button>
+                </form>
+            </div>
+        @endif
 
         <x-system-banner />
 

@@ -66,6 +66,9 @@ enum AuditAction: string
 
     case AiQuestionsRequested = 'ai.questions_requested';
 
+    case ImpersonationStarted = 'auth.impersonation_started';
+    case ImpersonationStopped = 'auth.impersonation_stopped';
+
     public function label(): string
     {
         return match ($this) {
@@ -117,6 +120,8 @@ enum AuditAction: string
             self::SystemSettingsChanged => __('Zmena systémových nastavení'),
             self::UserAnonymized => __('Anonymizácia používateľa'),
             self::AiQuestionsRequested => __('Generovanie otázok pomocou AI'),
+            self::ImpersonationStarted => __('Prepnutie na iný účet'),
+            self::ImpersonationStopped => __('Návrat na pôvodný účet'),
         };
     }
 }

@@ -1,7 +1,7 @@
 @csrf
 
 <x-card class="flex flex-col gap-4">
-    <x-form.input name="name" :label="__('Názov triedy')" :value="$classroom->name" :hint="__('Napríklad 4.A alebo I.B')" required maxlength="50" />
+    <x-form.input name="name" :label="\App\Support\Terms::of('Názov triedy')" :value="$classroom->name" :hint="\App\Support\Terms::of('Napríklad 4.A alebo I.B')" required maxlength="50" />
 
     <div class="grid gap-4 sm:grid-cols-2">
         <x-form.input name="grade_level" type="number" :label="__('Ročník')" :value="$classroom->grade_level" min="1" max="13" />

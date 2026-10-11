@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\SchoolType;
 use Database\Factories\SchoolFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,6 +29,31 @@ class School extends Model
             'settings' => 'array',
             'is_active' => 'boolean',
         ];
+    }
+
+    public function isCompany(): bool
+    {
+        return $this->type === SchoolType::Company;
+    }
+
+    /**
+     * Only schools (primary, secondary, other) - without companies.
+     *
+     * @param  Builder<School>  $query
+     */
+    public function scopeSchools(Builder $query): void
+    {
+        $query->where('type', '!=', SchoolType::Company);
+    }
+
+    /**
+     * Only companies / organizations.
+     *
+     * @param  Builder<School>  $query
+     */
+    public function scopeCompanies(Builder $query): void
+    {
+        $query->where('type', SchoolType::Company);
     }
 
     public function setting(string $key, mixed $default = null): mixed

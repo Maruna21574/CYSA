@@ -1,5 +1,5 @@
 <x-layouts::app :title="$user->name">
-    <x-page-header :title="$user->name" :description="$user->role->label()" :breadcrumbs="[
+    <x-page-header :title="$user->name" :description="$user->role->label($organization)" :breadcrumbs="[
         ['label' => __('Používatelia'), 'url' => route('users.index')],
         ['label' => $user->name],
     ]">

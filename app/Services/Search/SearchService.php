@@ -54,7 +54,11 @@ class SearchService
 
         if ($user->isSuperAdmin()) {
             $sections[__('Školy')] = School::where('name', 'like', $like)->orWhere('city', 'like', $like)->limit(self::LIMIT)->get()
-                ->map(fn (School $school): array => ['title' => $school->name, 'subtitle' => $school->city, 'url' => route('admin.schools.edit', $school)]);
+                ->map(fn (School $school): array => [
+                    'title' => $school->name,
+                    'subtitle' => $school->city,
+                    'url' => route($school->isCompany() ? 'admin.organizations.edit' : 'admin.schools.edit', $school),
+                ]);
         }
 
         return array_filter($sections, fn (Collection $results): bool => $results->isNotEmpty());

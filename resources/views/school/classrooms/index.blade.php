@@ -1,25 +1,26 @@
-<x-layouts::app :title="__('Triedy')">
-    <x-page-header :title="__('Triedy')" :description="__('Triedy školy a ich učitelia a študenti.')">
+@php use App\Support\Terms; @endphp
+<x-layouts::app :title="Terms::of('Triedy')">
+    <x-page-header :title="Terms::of('Triedy')" :description="Terms::of('Triedy školy a ich učitelia a študenti.')">
         <x-slot:actions>
-            <x-link-button :href="route('school.classrooms.create')">{{ __('Nová trieda') }}</x-link-button>
+            <x-link-button :href="route('school.classrooms.create')">{{ Terms::of('Nová trieda') }}</x-link-button>
         </x-slot:actions>
     </x-page-header>
 
     <form method="GET" action="{{ route('school.classrooms.index') }}" class="mb-4 flex gap-2" role="search">
-        <x-search-input name="q" :value="$search" :label="__('Hľadať triedu')" />
+        <x-search-input name="q" :value="$search" :label="Terms::of('Hľadať triedu')" />
         <x-button variant="secondary">{{ __('Hľadať') }}</x-button>
     </form>
 
     @if ($classrooms->isEmpty())
-        <x-empty-state icon="squares" :title="__('Žiadne triedy')" :description="$search ? __('Skúste upraviť hľadaný výraz.') : __('Vytvorte prvú triedu, napríklad 4.A.')" />
+        <x-empty-state icon="squares" :title="Terms::of('Žiadne triedy')" :description="$search ? __('Skúste upraviť hľadaný výraz.') : Terms::of('Vytvorte prvú triedu, napríklad 4.A.')" />
     @else
         <x-table.wrapper>
             <thead class="bg-slate-50">
                 <tr>
-                    <x-table.th>{{ __('Trieda') }}</x-table.th>
+                    <x-table.th>{{ Terms::of('Trieda') }}</x-table.th>
                     <x-table.th>{{ __('Školský rok') }}</x-table.th>
                     <x-table.th class="text-right">{{ __('Učitelia') }}</x-table.th>
-                    <x-table.th class="text-right">{{ __('Študenti') }}</x-table.th>
+                    <x-table.th class="text-right">{{ Terms::of('Študenti') }}</x-table.th>
                     <x-table.th><span class="sr-only">{{ __('Akcie') }}</span></x-table.th>
                 </tr>
             </thead>

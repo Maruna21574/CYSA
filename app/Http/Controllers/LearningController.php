@@ -6,6 +6,7 @@ use App\Enums\QuizStatus;
 use App\Models\Chapter;
 use App\Models\Course;
 use App\Models\CourseProgress;
+use App\Models\MaterialProgress;
 use App\Models\Quiz;
 use App\Models\QuizAttempt;
 use App\Models\User;
@@ -67,16 +68,23 @@ class LearningController extends Controller
 
         $chapters = $course->orderedChapters(publishedOnly: ! $isPreview);
         $index = $chapters->search(fn (Chapter $item): bool => $item->is($chapter));
+        $chapter = $chapter->load(['module', 'materials']);
+        $materialProgresses = MaterialProgress::where('user_id', $user->id)
+            ->whereIn('material_id', $chapter->materials->pluck('id'))
+            ->get()
+            ->keyBy('material_id');
 
         return view('learning.chapter', [
             'course' => $course,
-            'chapter' => $chapter->load(['module', 'materials']),
+            'chapter' => $chapter,
             'previous' => $index > 0 ? $chapters[$index - 1] : null,
             'next' => $chapters[$index + 1] ?? null,
             'position' => $index + 1,
             'total' => $chapters->count(),
             'isPreview' => $isPreview,
             'isCompleted' => $this->progress->completedIds($user, $course)->contains($chapter->id),
+            'materialProgresses' => $materialProgresses,
+            'allRequiredMaterialsRead' => $isPreview || $this->progress->allRequiredMaterialsRead($user, $chapter),
             'quizzes' => $this->quizzes($course, $isPreview)->where('chapter_id', $chapter->id),
             'bestResults' => $this->bestResults($course, $user),
         ]);

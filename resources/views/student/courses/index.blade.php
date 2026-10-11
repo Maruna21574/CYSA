@@ -1,8 +1,8 @@
 <x-layouts::app :title="__('Moje kurzy')">
-    <x-page-header :title="__('Moje kurzy')" :description="__('Kurzy, ktoré ti priradil učiteľ.')" />
+    <x-page-header :title="__('Moje kurzy')" :description="\App\Support\Terms::of('Kurzy, ktoré ti priradil učiteľ.')" />
 
     @if ($courses->isEmpty())
-        <x-empty-state icon="book" :title="__('Zatiaľ nemáš priradené žiadne kurzy')" :description="__('Keď ti učiteľ priradí kurz, nájdeš ho tu.')" />
+        <x-empty-state icon="book" :title="__('Zatiaľ nemáš priradené žiadne kurzy')" :description="\App\Support\Terms::of('Keď ti učiteľ priradí kurz, nájdeš ho tu.')" />
     @else
         <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             @foreach ($courses as $course)

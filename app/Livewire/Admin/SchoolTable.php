@@ -4,13 +4,20 @@ namespace App\Livewire\Admin;
 
 use App\Models\School;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ * List of schools, or of companies when $companies is true (Organizations section).
+ */
 class SchoolTable extends Component
 {
     use WithPagination;
+
+    #[Locked]
+    public bool $companies = false;
 
     #[Url(as: 'q', except: '')]
     public string $search = '';
@@ -30,6 +37,7 @@ class SchoolTable extends Component
         $like = '%'.addcslashes(trim($this->search), '%_\\').'%';
 
         $schools = School::query()
+            ->when($this->companies, fn ($query) => $query->companies(), fn ($query) => $query->schools())
             ->when(trim($this->search) !== '', fn ($query) => $query->where(fn ($query) => $query
                 ->where('name', 'like', $like)
                 ->orWhere('city', 'like', $like)))

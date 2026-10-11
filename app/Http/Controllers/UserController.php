@@ -20,11 +20,11 @@ class UserController extends Controller
 {
     public function __construct(private UserManager $users) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('viewAny', User::class);
 
-        return view('users.index');
+        return view('users.index', ['organization' => $this->organizationContext($request)]);
     }
 
     public function create(Request $request): View
@@ -32,10 +32,12 @@ class UserController extends Controller
         Gate::authorize('create', User::class);
 
         $role = UserRole::tryFrom((string) $request->query('role')) ?? UserRole::Student;
+        $organization = $this->organizationContext($request);
 
         return view('users.create', [
-            'user' => new User(['role' => $role, 'is_active' => true]),
-            ...$this->formOptions($request->user()),
+            'user' => new User(['role' => $role, 'is_active' => true, 'school_id' => $organization?->id]),
+            'organization' => $organization,
+            ...$this->formOptions($request->user(), $organization),
         ]);
     }
 
@@ -56,7 +58,9 @@ class UserController extends Controller
     {
         Gate::authorize('update', $user);
 
-        return view('users.edit', ['user' => $user, ...$this->formOptions($request->user())]);
+        $organization = $user->school?->isCompany() ? $user->school : null;
+
+        return view('users.edit', ['user' => $user, 'organization' => $organization, ...$this->formOptions($request->user(), $organization)]);
     }
 
     public function update(UserRequest $request, User $user): RedirectResponse
@@ -103,15 +107,29 @@ class UserController extends Controller
     /**
      * @return array{roles: array<string, string>, schools: array<int, string>}
      */
-    private function formOptions(User $actor): array
+    private function formOptions(User $actor, ?School $organization = null): array
     {
         return [
             'roles' => collect(UserRole::assignableBy($actor->role))
-                ->mapWithKeys(fn (UserRole $role): array => [$role->value => $role->label()])
+                ->mapWithKeys(fn (UserRole $role): array => [
+                    // Outside an organization the super admin picks the school or company below the role.
+                    $role->value => $actor->isSuperAdmin() && ! $organization ? $role->genericLabel() : $role->label($organization),
+                ])
                 ->all(),
-            'schools' => $actor->isSuperAdmin()
+            'schools' => $actor->isSuperAdmin() && ! $organization
                 ? School::orderBy('name')->pluck('name', 'id')->all()
                 : [],
         ];
+    }
+
+    private function organizationContext(Request $request): ?School
+    {
+        if (! $request->user()->isSuperAdmin()) {
+            return $request->user()->school?->isCompany() ? $request->user()->school : null;
+        }
+
+        $schoolId = (int) $request->query('school');
+
+        return $schoolId > 0 ? School::companies()->find($schoolId) : null;
     }
 }

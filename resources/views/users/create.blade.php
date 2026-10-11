@@ -1,7 +1,9 @@
-<x-layouts::app :title="__('Nový používateľ')">
-    <x-page-header :title="__('Nový používateľ')" :breadcrumbs="[
+@php $title = $organization ? __('Nový zamestnanec') : __('Nový používateľ'); @endphp
+
+<x-layouts::app :title="$title">
+    <x-page-header :title="$title" :breadcrumbs="[
         ['label' => __('Používatelia'), 'url' => route('users.index')],
-        ['label' => __('Nový používateľ')],
+        ['label' => $title],
     ]" />
 
     <form method="POST" action="{{ route('users.store') }}" class="max-w-2xl">

@@ -6,7 +6,7 @@
     @endif
 
     @if ($courses->isEmpty())
-        <x-empty-state icon="book" :title="__('Zatiaľ nemáš priradené žiadne kurzy')" :description="__('Keď ti učiteľ priradí kurz, nájdeš ho tu.')" />
+        <x-empty-state icon="book" :title="__('Zatiaľ nemáš priradené žiadne kurzy')" :description="\App\Support\Terms::of('Keď ti učiteľ priradí kurz, nájdeš ho tu.')" />
     @else
         @if ($continue->isNotEmpty())
             <section aria-labelledby="continue-heading" class="mb-6">

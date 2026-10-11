@@ -22,7 +22,8 @@ class DashboardController extends Controller
 
         return view('school.dashboard', [
             'school' => $school,
-            'teachers' => User::where('school_id', $school->id)->whereIn('role', [UserRole::Teacher, UserRole::SchoolAdmin])->count(),
+            'teachers' => User::where('school_id', $school->id)->where('role', UserRole::Teacher)->count(),
+            'admins' => User::where('school_id', $school->id)->where('role', UserRole::SchoolAdmin)->count(),
             'students' => User::where('school_id', $school->id)->where('role', UserRole::Student)->count(),
             'activeStudents' => User::where('school_id', $school->id)->where('role', UserRole::Student)->where('last_login_at', '>=', now()->subDays(30))->count(),
             'classrooms' => Classroom::where('school_id', $school->id)->withCount('students')->orderByDesc('school_year')->orderBy('name')->limit(10)->get(),

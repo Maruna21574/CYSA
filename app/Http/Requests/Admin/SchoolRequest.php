@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Enums\SchoolType;
+use App\Http\Controllers\Admin\SchoolController;
 use App\Models\School;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -22,6 +23,11 @@ class SchoolRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge(['slug' => Str::slug((string) ($this->input('slug') ?: $this->input('name')))]);
+
+        // In the organizations section the type is always "company" (the form has no type field).
+        if (SchoolController::inCompanySection()) {
+            $this->merge(['type' => SchoolType::Company->value]);
+        }
     }
 
     /**
@@ -32,7 +38,7 @@ class SchoolRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', Rule::unique('schools', 'slug')->ignore($this->route('school'))],
-            'type' => ['required', Rule::enum(SchoolType::class)],
+            'type' => ['required', Rule::enum(SchoolType::class)->only(SchoolController::inCompanySection() ? [SchoolType::Company] : SchoolType::schoolTypes())],
             'city' => ['nullable', 'string', 'max:255'],
             'is_active' => ['boolean'],
         ];
@@ -43,6 +49,11 @@ class SchoolRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return ['slug' => __('skratka v URL'), 'type' => __('typ školy'), 'city' => __('mesto')];
+        return [
+            'name' => SchoolController::inCompanySection() ? __('názov organizácie') : __('názov školy'),
+            'slug' => __('skratka v URL'),
+            'type' => __('typ školy'),
+            'city' => __('mesto'),
+        ];
     }
 }

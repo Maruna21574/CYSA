@@ -6,9 +6,11 @@ use App\Http\Controllers\AttemptResultController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImpersonationController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\MaterialProgressController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionImageController;
@@ -51,6 +53,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', LogoutController::class)->name('logout');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
+    // Switching to a lower-role account and back; who may switch to whom is decided by Impersonation.
+    Route::get('/prepnut-ucet', [ImpersonationController::class, 'index'])->name('impersonation.index');
+    Route::post('/prepnut-ucet/spat', [ImpersonationController::class, 'stop'])->name('impersonation.stop');
+    Route::post('/prepnut-ucet/{user}', [ImpersonationController::class, 'start'])
+        ->whereNumber('user')
+        ->middleware('throttle:30,1')
+        ->name('impersonation.start');
+
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/read', [NotificationController::class, 'markAllRead'])->name('notifications.read');
 
@@ -78,6 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->middleware('role:super_admin')->group(function () {
         Route::get('/', Admin\DashboardController::class)->name('dashboard');
         Route::resource('schools', SchoolController::class)->except('show');
+        // Companies are schools of type "company" - same controller, own section.
+        Route::resource('organizations', SchoolController::class)->except('show')->parameters(['organizations' => 'school']);
         Route::view('/audit-logs', 'admin.audit-logs')->name('audit-logs.index');
         Route::get('/settings', [Admin\SettingsController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [Admin\SettingsController::class, 'update'])->name('settings.update');
@@ -177,6 +189,7 @@ Route::middleware('auth')->group(function () {
         ->name('chapters.show');
     Route::get('/courses/{course}/cover', [MaterialController::class, 'cover'])->name('courses.cover');
     Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
+    Route::post('/materials/{material}/progress', [MaterialProgressController::class, 'store'])->name('materials.progress');
     Route::get('/questions/{question}/image', QuestionImageController::class)->name('questions.image');
     Route::get('/attempts/{attempt}', AttemptResultController::class)->name('attempts.show');
     Route::get('/certificates/{certificate}/download', [CertificateController::class, 'download'])->name('certificates.download');

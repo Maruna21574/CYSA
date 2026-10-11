@@ -1,13 +1,20 @@
-<x-layouts::app :title="__('Používatelia')">
+@php
+    $isOrganization = (bool) $organization;
+    $title = $isOrganization ? __('Zamestnanci') : __('Používatelia');
+@endphp
+
+<x-layouts::app :title="$title">
     <x-page-header
-        :title="__('Používatelia')"
-        :description="auth()->user()->isSuperAdmin() ? __('Všetky účty v systéme.') : __('Učitelia a študenti školy :school.', ['school' => auth()->user()->school?->name])"
+        :title="$title"
+        :description="$isOrganization ? __('Zamestnanci organizácie :organization.', ['organization' => $organization->name]) : (auth()->user()->isSuperAdmin() ? __('Všetky účty v systéme.') : __('Učitelia a študenti školy :school.', ['school' => auth()->user()->school?->name]))"
     >
         <x-slot:actions>
             @if (Route::has('school.students.import') && auth()->user()->can('create', \App\Models\User::class) && ! auth()->user()->isSuperAdmin())
                 <x-link-button variant="secondary" :href="route('school.students.import')">{{ __('Import študentov (CSV)') }}</x-link-button>
             @endif
-            <x-link-button :href="route('users.create')">{{ __('Nový používateľ') }}</x-link-button>
+            <x-link-button :href="$isOrganization ? route('users.create', ['school' => $organization->id]) : route('users.create')">
+                {{ $isOrganization ? __('Nový zamestnanec') : __('Nový používateľ') }}
+            </x-link-button>
         </x-slot:actions>
     </x-page-header>
 

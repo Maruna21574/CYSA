@@ -1,11 +1,12 @@
 <x-layouts::app :title="__('Administrácia systému')">
     <x-page-header :title="__('Administrácia systému')" :description="__('Využitie platformy a bezpečnostné udalosti.')" />
 
-    <div class="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <x-stat :label="__('Školy')" :value="$schools" :hint="__(':n aktívnych', ['n' => $activeSchools])" icon="building" />
-        <x-stat :label="__('Používatelia')" :value="$usersByRole->sum()" :hint="__(':n aktívnych za 30 dní', ['n' => $activeUsers])" icon="users" />
-        <x-stat :label="__('Kurzy / testy')" :value="$courses.' / '.$quizzes" icon="book" />
-        <x-stat :label="__('Odovzdané testy')" :value="$attempts" :hint="__(':n certifikátov', ['n' => $certificates])" icon="shield" />
+    <div class="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <x-stat color="blue" :label="__('Školy')" :value="$schools" :hint="__(':n aktívnych', ['n' => $activeSchools])" icon="building" />
+        <x-stat color="emerald" :label="__('Organizácie')" :value="$organizations" :hint="__(':n aktívnych', ['n' => $activeOrganizations])" icon="building" />
+        <x-stat color="violet" :label="__('Používatelia')" :value="$usersByRole->sum()" :hint="__(':n aktívnych za 30 dní', ['n' => $activeUsers])" icon="users" />
+        <x-stat color="amber" :label="__('Kurzy / testy')" :value="$courses.' / '.$quizzes" icon="book" />
+        <x-stat color="rose" :label="__('Odovzdané testy')" :value="$attempts" :hint="__(':n certifikátov', ['n' => $certificates])" icon="shield" />
     </div>
 
     <div class="grid items-start gap-6 lg:grid-cols-3">

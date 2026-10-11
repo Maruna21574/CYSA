@@ -68,9 +68,24 @@ class UserTable extends Component
     #[Computed]
     public function roleOptions(): array
     {
+        $organization = $this->organization();
+
         return collect(UserRole::assignableBy(auth()->user()->role))
-            ->mapWithKeys(fn (UserRole $role): array => [$role->value => $role->label()])
+            ->mapWithKeys(fn (UserRole $role): array => [
+                $role->value => auth()->user()->isSuperAdmin() && ! $organization
+                    ? $role->genericLabel()
+                    : $role->label($organization),
+            ])
             ->all();
+    }
+
+    public function organization(): ?School
+    {
+        if (! auth()->user()->isSuperAdmin() || $this->schoolId === '') {
+            return auth()->user()->school?->isCompany() ? auth()->user()->school : null;
+        }
+
+        return School::companies()->find((int) $this->schoolId);
     }
 
     /**
@@ -84,17 +99,19 @@ class UserTable extends Component
 
     public function render(): View
     {
+        $organization = $this->organization();
+
         $users = User::query()
             ->manageableBy(auth()->user())
             ->search($this->search)
             ->when(UserRole::tryFrom($this->role), fn ($query, UserRole $role) => $query->where('role', $role))
             ->when($this->schoolId !== '' && auth()->user()->isSuperAdmin(), fn ($query) => $query->where('school_id', (int) $this->schoolId))
             ->when($this->status !== '', fn ($query) => $query->where('is_active', $this->status === 'active'))
-            ->with('school:id,name')
+            ->with('school:id,name,type')
             ->orderBy('last_name')
             ->orderBy('first_name')
             ->paginate(25);
 
-        return view('livewire.users.user-table', ['users' => $users]);
+        return view('livewire.users.user-table', ['users' => $users, 'organization' => $organization]);
     }
 }

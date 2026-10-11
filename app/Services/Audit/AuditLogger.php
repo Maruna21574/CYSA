@@ -5,6 +5,7 @@ namespace App\Services\Audit;
 use App\Enums\AuditAction;
 use App\Models\AuditLog;
 use App\Models\User;
+use App\Services\Users\Impersonation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -28,6 +29,13 @@ class AuditLogger
     ): AuditLog {
         $user ??= Auth::user();
         $request = request();
+
+        // Actions done while switched to another account keep a trace of the real person.
+        $impersonatorId = $request->hasSession() ? $request->session()->get(Impersonation::SESSION_KEY) : null;
+
+        if ($impersonatorId && $impersonatorId !== $user?->getKey()) {
+            $metadata = [...($metadata ?? []), 'impersonated_by' => $impersonatorId];
+        }
 
         return AuditLog::create([
             'user_id' => $user?->getKey(),

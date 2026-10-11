@@ -48,7 +48,7 @@
                     <td>
                         <div class="sign">
                             {{ $certificate->teacher_name }}<br>
-                            <span class="small">{{ __('učiteľ / autor kurzu') }}</span>
+                            <span class="small">{{ \App\Support\Terms::of('učiteľ / autor kurzu', school: $certificate->user?->school) }}</span>
                         </div>
                     </td>
                     <td>

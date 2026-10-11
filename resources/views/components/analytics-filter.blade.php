@@ -2,7 +2,7 @@
 
 {{-- GET filter form shared by the analytics pages. --}}
 <form method="GET" action="{{ $action }}" class="mb-6 grid gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs sm:grid-cols-2 lg:grid-cols-6 lg:items-end">
-    @foreach ([['classroom', __('Trieda'), $classrooms, $filter->classroomId], ['course', __('Kurz'), $courses, $filter->courseId], ['quiz', __('Test'), $quizzes, $filter->quizId]] as [$name, $label, $options, $selected])
+    @foreach ([['classroom', \App\Support\Terms::of('Trieda'), $classrooms, $filter->classroomId], ['course', __('Kurz'), $courses, $filter->courseId], ['quiz', __('Test'), $quizzes, $filter->quizId]] as [$name, $label, $options, $selected])
         @if ($options !== [])
             <div>
                 <label for="filter-{{ $name }}" class="block text-xs font-medium text-slate-600">{{ $label }}</label>

@@ -11,6 +11,7 @@ use App\Rules\AllowedMaterialFile;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Smalot\PdfParser\Parser as PdfParser;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -28,7 +29,7 @@ class MaterialStorage
     /**
      * Stores an already validated upload and returns the attributes for the Material record.
      *
-     * @return array{type: MaterialType, disk: string, path: string, original_name: string, mime_type: string, size: int}
+     * @return array{type: MaterialType, disk: string, path: string, original_name: string, mime_type: string, page_count: int|null, size: int}
      */
     public function storeMaterial(UploadedFile $file, Chapter $chapter): array
     {
@@ -40,6 +41,7 @@ class MaterialStorage
             'path' => $this->put($file, "courses/{$chapter->course_id}/chapters/{$chapter->id}", $extension),
             'original_name' => Str::limit(basename($file->getClientOriginalName()), 250, ''),
             'mime_type' => AllowedMaterialFile::CANONICAL_MIME[$extension],
+            'page_count' => $this->pageCount($file, $extension),
             'size' => (int) $file->getSize(),
         ];
     }
@@ -93,6 +95,19 @@ class MaterialStorage
     {
         // Random name: the original file name never reaches the file system.
         return Storage::disk($this->disk())->putFileAs($directory, $file, Str::uuid()->toString().'.'.$extension);
+    }
+
+    private function pageCount(UploadedFile $file, string $extension): ?int
+    {
+        if ($extension !== 'pdf' || ! is_string($file->getRealPath())) {
+            return null;
+        }
+
+        try {
+            return max(1, count((new PdfParser)->parseFile($file->getRealPath())->getPages()));
+        } catch (\Throwable) {
+            return 1;
+        }
     }
 
     private function respond(string $disk, string $path, string $mime, string $name, bool $attachment): Response

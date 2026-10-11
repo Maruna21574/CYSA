@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+use App\Models\School;
+use App\Support\Terms;
+
 enum UserRole: string
 {
     case SuperAdmin = 'super_admin';
@@ -9,13 +12,30 @@ enum UserRole: string
     case Teacher = 'teacher';
     case Student = 'student';
 
-    public function label(): string
+    /**
+     * Role name in the wording of the organization (a company has trainers and employees).
+     * Without an organization the signed-in user's one is used.
+     */
+    public function label(?School $school = null): string
     {
         return match ($this) {
             self::SuperAdmin => __('Super administrátor'),
-            self::SchoolAdmin => __('Administrátor školy'),
-            self::Teacher => __('Učiteľ'),
-            self::Student => __('Študent'),
+            self::SchoolAdmin => Terms::of('Administrátor školy', school: $school),
+            self::Teacher => Terms::of('Učiteľ', school: $school),
+            self::Student => Terms::of('Študent', school: $school),
+        };
+    }
+
+    /**
+     * Role name covering both schools and companies, for the super admin who works with both.
+     */
+    public function genericLabel(): string
+    {
+        return match ($this) {
+            self::SuperAdmin => __('Super administrátor'),
+            self::SchoolAdmin => __('Administrátor školy / firmy'),
+            self::Teacher => __('Učiteľ / školiteľ'),
+            self::Student => __('Študent / zamestnanec'),
         };
     }
 
