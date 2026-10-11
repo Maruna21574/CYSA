@@ -71,17 +71,15 @@ Hodnoty SMTP overte v administrácii e-mailov Websupportu.
 
 ## 5. Frontend (CSS/JS)
 
-Na hostingu nie je potrebný Node.js. Assety sa zostavia lokálne a nahrajú:
+Na hostingu nie je potrebný Node.js. Priečinok `public/build` je commitnutý v repozitári, takže ho
+`git clone`/`git pull` prenesie na server. Po každej zmene v `resources/css` alebo `resources/js`
+zostavte assety lokálne a commitnite ich:
 
 ```bash
-# lokálne
 npm ci
 npm run build
-scp -r public/build uzivatel@server:~/cysa/public/
+git add public/build
 ```
-
-(Alternatívne cez SFTP – nahrajte celý priečinok `public/build`.)
-Po každej zmene v `resources/css` alebo `resources/js` build zopakujte.
 
 ## 6. Databáza a prvý administrátor
 
@@ -126,7 +124,6 @@ php artisan event:cache
 ```bash
 cd ~/cysa
 bash deploy.sh          # git pull, composer, migrácie, cache
-# + nahrať nový public/build, ak sa menil frontend
 ```
 
 ## 10. Kontrolný zoznam bezpečnosti
